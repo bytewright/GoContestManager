@@ -1,5 +1,6 @@
 # intelij
 .idea/
+*.iml
 
 target/
 
