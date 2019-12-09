@@ -45,13 +45,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+
     <wicket.version>9.0.0-M3</wicket.version>
     <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+    <spring-core.version>5.1.9.RELEASE</spring-core.version>
     <jetty9.version>9.4.18.v20190429</jetty9.version>
     <slf4j.version>1.7.25</slf4j.version>
     <junit.version>4.12</junit.version>
     <!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
-    <wtp.version>none</wtp.version>
+    <!--    <wtp.version>none</wtp.version>-->
   </properties>
 
   <dependencies>
@@ -84,7 +86,6 @@
       <version>${wicket.version}</version>
     </dependency>
 
-
     <!-- OTHER DEPENDENCIES -->
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -114,15 +115,19 @@
       <version>1.2.3</version>
     </dependency>
 
-    <!--  JUNIT DEPENDENCY FOR TESTING -->
+    <!--  TEST SCOPED DEPENDENCIES -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-
-    <!--  JETTY DEPENDENCIES FOR TESTING  -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring-core.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
@@ -209,15 +214,15 @@
           <jettyXml>${project.basedir}/src/test/jetty/jetty.xml,${project.basedir}/src/test/jetty/jetty-ssl.xml,${project.basedir}/src/test/jetty/jetty-http.xml,${project.basedir}/src/test/jetty/jetty-https.xml</jettyXml>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <version>2.10</version>
-        <configuration>
-          <downloadSources>true</downloadSources>
-          <wtpversion>${wtp.version}</wtpversion>
-        </configuration>
-      </plugin>
+      <!--      <plugin>-->
+      <!--        <groupId>org.apache.maven.plugins</groupId>-->
+      <!--        <artifactId>maven-eclipse-plugin</artifactId>-->
+      <!--        <version>2.10</version>-->
+      <!--        <configuration>-->
+      <!--          <downloadSources>true</downloadSources>-->
+      <!--          <wtpversion>${wtp.version}</wtpversion>-->
+      <!--        </configuration>-->
+      <!--      </plugin>-->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
