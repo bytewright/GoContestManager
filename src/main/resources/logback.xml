@@ -21,6 +21,7 @@
 
   <logger name="org.bytewright" level="debug" />
   <logger name="com.giffing.wicket.spring.boot.starter.app.WicketBootStandardWebApplication" level="warn" />
+  <logger name="org.springframework.context.support.PostProcessorRegistrationDelegate" level="warn" />
 
   <root>
     <level value="info" />
