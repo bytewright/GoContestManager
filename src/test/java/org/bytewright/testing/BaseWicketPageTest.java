@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ContextConfiguration(classes = SpringTestContext.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BaseWicketPageTest {
+public abstract class BaseWicketPageTest {
 
   @Autowired
   protected WicketApplication wicketApplication;
