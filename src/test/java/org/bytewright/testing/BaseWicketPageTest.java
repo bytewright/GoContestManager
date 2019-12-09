@@ -1,7 +1,7 @@
 package org.bytewright.testing;
 
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
-import org.bytewright.frontend.WicketApplication;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class BaseWicketPageTest {
 
   @Autowired
-  protected WicketApplication wicketApplication;
+  protected WebApplication wicketApplication;
 
   protected WicketTester tester;
 

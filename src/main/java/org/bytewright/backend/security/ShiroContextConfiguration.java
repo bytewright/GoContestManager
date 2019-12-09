@@ -9,9 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 import com.giffing.wicket.spring.boot.context.security.AuthenticatedWebSessionConfig;
 
+/**
+ * https://github.com/ceefour/paxwicket-shiro/blob/master/app/src/main/java/com/hendyirawan/paxwicketshiro/app/ShiroRealm.java
+ */
 @Configuration
-public class ShiroConfig {
-  private static final Logger LOGGER = LoggerFactory.getLogger(ShiroConfig.class);
+public class ShiroContextConfiguration {
+  private static final Logger LOGGER = LoggerFactory.getLogger(ShiroContextConfiguration.class);
 
   @Bean
   public Realm realm() {
@@ -32,22 +35,4 @@ public class ShiroConfig {
   public AuthenticatedWebSessionConfig authenticatedWebSessionConfig() {
     return () -> ShiroAuthenticatedWebSession.class;
   }
-
-  //
-  //  @Bean
-  //  public ShiroFilterChainDefinition shiroFilterChainDefinition() {
-  //    /* https://shiro.apache.org/web.html#web-ini-configuration */
-  //    DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-  //
-  //    // logged in users with the 'admin' role
-  //    chainDefinition.addPathDefinition("/admin/**", DefaultFilter.authc.name() + ", roles[admin]");
-  //
-  //    // logged in users with the 'document:read' permission
-  //    chainDefinition.addPathDefinition("/docs/**", DefaultFilter.authc.name() + ", perms[document:read]");
-  //
-  //    // all other paths are open
-  //    chainDefinition.addPathDefinition("/**", DefaultFilter.anon.name());
-  //    LOGGER.debug("Created Filter chain: {}", chainDefinition);
-  //    return chainDefinition;
-  //  }
 }
