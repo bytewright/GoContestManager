@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="10 seconds">
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%-24(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}) %-5level %logger{40} - %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <!--  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+  <!--    <file>log/log.log</file>-->
+  <!--    <encoding>UTF-8</encoding>-->
+  <!--    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+  <!--      <fileNamePattern>log/%d{yyyy/MM, aux}/log.%d{yyyy-MM-dd}.log.gz</fileNamePattern>-->
+  <!--      <maxHistory>30</maxHistory>-->
+  <!--    </rollingPolicy>-->
+  <!--    <encoder>-->
+  <!--      <pattern>%-24(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}) %-5level %-40(%logger{40}) - %m%n</pattern>-->
+  <!--    </encoder>-->
+  <!--  </appender>-->
+
+  <logger name="org.bytewright" level="debug" />
+  <logger name="com.giffing.wicket.spring.boot.starter.app.WicketBootStandardWebApplication" level="warn" />
+
+  <root>
+    <level value="info" />
+    <appender-ref ref="CONSOLE" />
+  </root>
+
+</configuration>

@@ -46,6 +46,7 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <wicket.version>9.0.0-M3</wicket.version>
+    <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
     <jetty9.version>9.4.18.v20190429</jetty9.version>
     <slf4j.version>1.7.25</slf4j.version>
     <junit.version>4.12</junit.version>
@@ -56,9 +57,25 @@
   <dependencies>
     <!--  WICKET DEPENDENCIES -->
     <dependency>
+      <groupId>com.giffing.wicket.spring.boot.starter</groupId>
+      <artifactId>wicket-spring-boot-starter</artifactId>
+      <version>3.0.2-RC</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-core</artifactId>
       <version>${wicket.version}</version>
+    </dependency>
+    <!-- SECURITY DEPENDENCY -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring-boot-web-starter</artifactId>
+      <version>1.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.wicketstuff</groupId>
+      <artifactId>wicketstuff-shiro</artifactId>
+      <version>9.0.1-M3</version>
     </dependency>
     <!-- OPTIONAL DEPENDENCY -->
     <dependency>
@@ -66,6 +83,7 @@
       <artifactId>wicket-extensions</artifactId>
       <version>${wicket.version}</version>
     </dependency>
+
 
     <!-- OTHER DEPENDENCIES -->
     <dependency>
@@ -89,11 +107,11 @@
       <version>3.6.1</version>
     </dependency>
 
-    <!-- LOGGING DEPENDENCIES - SLF4J-SIMPLE -->
+    <!-- LOGGING DEPENDENCIES -->
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
     </dependency>
 
     <!--  JUNIT DEPENDENCY FOR TESTING -->
@@ -199,6 +217,11 @@
           <downloadSources>true</downloadSources>
           <wtpversion>${wtp.version}</wtpversion>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>

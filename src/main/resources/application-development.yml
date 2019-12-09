@@ -1,0 +1,61 @@
+spring:
+  devtools:
+    restart:
+      additional-exclude: /**/*.js, /**/*.css, /**/*.html, /**/*.htm
+shiro:
+  enabled: true
+wicket:
+  core:
+    settings:
+      general:
+        configuration-type: development
+      debug:
+        enabled: true
+        component-use-check: true
+        development-utilities-enabled: true
+      markup:
+        strip-wicket-tags: false
+        default-markup-encoding: UTF-8
+        automatic-linking: false
+        compress-whitespace: false
+        strip-comments: false
+    csrf:
+      enabled: true
+      no-origin-action: allow
+      conflicting-origin-action: abort
+      error-code: 400
+      error-message: Origin does not correspond to request
+  stuff:
+    htmlcompressor:
+      enabled: false
+      features:
+        removeComments: false
+        removeMultiSpaces: false
+        removeIntertagSpaces: false
+        removeQuotes: false
+        compressJavaScript: false
+        compressCss: false
+        simpleDoctype: false
+        removeScriptAttributes: false
+        removeStyleAttributes: false
+        removeLinkAttributes: false
+        removeFormAttributes: false
+        removeInputAttributes: false
+        simpleBooleanAttributes: false
+        removeJavaScriptProtocol: false
+        removeHttpProtocol: false
+        removeHttpsProtocol: false
+        preserveLineBreaks: false
+    restannotations:
+      enabled: true
+  external:
+    development:
+      devutils:
+        statelesschecker:
+          enabled: true
+        interceptor:
+          enable-live-sessions-page: true
+        diskstorebrowser:
+          enabled: true
+      wicketsource:
+        enabled: true
