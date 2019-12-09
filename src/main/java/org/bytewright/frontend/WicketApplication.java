@@ -2,7 +2,9 @@ package org.bytewright.frontend;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.bytewright.frontend.pages.HomePage;
+import org.springframework.stereotype.Component;
 
 /**
  * Application object for your web application.
@@ -10,6 +12,7 @@ import org.bytewright.frontend.pages.HomePage;
  *
  * @see org.bytewright.Start#main(String[])
  */
+@Component
 public class WicketApplication extends WebApplication {
   /**
    * @see org.apache.wicket.Application#getHomePage()
@@ -26,6 +29,7 @@ public class WicketApplication extends WebApplication {
   public void init() {
     super.init();
 
+    getComponentInstantiationListeners().add(new SpringComponentInjector(this));
     // add your configuration here
   }
 }
