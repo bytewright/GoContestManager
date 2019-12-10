@@ -1,8 +1,10 @@
 package org.bytewright.frontend;
 
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
+import org.apache.wicket.settings.SecuritySettings;
 import org.bytewright.frontend.pages.LoginPage;
 import org.bytewright.frontend.pages.SecuredPage;
+import org.bytewright.frontend.pages.TestHelloPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,11 +27,14 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
 
     // Enable Shiro security
     AnnotationsShiroAuthorizationStrategy authz = new AnnotationsShiroAuthorizationStrategy();
-    getSecuritySettings().setAuthorizationStrategy(authz);
-    getSecuritySettings().setUnauthorizedComponentInstantiationListener(
-        new ShiroUnauthorizedComponentListener(LoginPage.class, AccessDeniedPage.class, authz));
+    SecuritySettings securitySettings = getSecuritySettings();
+    securitySettings.setAuthorizationStrategy(authz);
+    ShiroUnauthorizedComponentListener listener = new ShiroUnauthorizedComponentListener(
+        LoginPage.class, AccessDeniedPage.class, authz);
+    securitySettings.setUnauthorizedComponentInstantiationListener(listener);
 
     mountPage("login", LoginPage.class);
     mountPage("secure", SecuredPage.class);
+    mountPackage("1", TestHelloPage.class);
   }
 }
