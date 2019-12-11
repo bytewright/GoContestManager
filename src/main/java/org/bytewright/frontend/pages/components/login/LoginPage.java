@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages;
+package org.bytewright.frontend.pages.components.login;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

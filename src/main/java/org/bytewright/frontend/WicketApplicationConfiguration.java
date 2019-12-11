@@ -2,9 +2,9 @@ package org.bytewright.frontend;
 
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.settings.SecuritySettings;
-import org.bytewright.frontend.pages.LoginPage;
-import org.bytewright.frontend.pages.SecuredPage;
 import org.bytewright.frontend.pages.TestHelloPage;
+import org.bytewright.frontend.pages.components.admin.SecuredPage;
+import org.bytewright.frontend.pages.components.login.LoginPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -33,8 +33,9 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
         LoginPage.class, AccessDeniedPage.class, authz);
     securitySettings.setUnauthorizedComponentInstantiationListener(listener);
 
+    mountPage("home", getHomePage());
     mountPage("login", LoginPage.class);
     mountPage("secure", SecuredPage.class);
-    mountPackage("1", TestHelloPage.class);
+    mountPage("test", TestHelloPage.class);
   }
 }

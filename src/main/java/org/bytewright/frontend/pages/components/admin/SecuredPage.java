@@ -1,10 +1,11 @@
-package org.bytewright.frontend.pages;
+package org.bytewright.frontend.pages.components.admin;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
+import org.bytewright.frontend.pages.HomePage;
+import org.wicketstuff.lambda.components.ComponentFactory;
 import org.wicketstuff.shiro.ShiroConstraint;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 import org.wicketstuff.shiro.page.LogoutPage;
@@ -18,17 +19,8 @@ public class SecuredPage extends WebPage {
     Subject subject = SecurityUtils.getSubject();
     add(new Label("name", (String) subject.getPrincipal()));
 
-    Link<Void> logoutLink = new Link<Void>("logoutLink") {
-
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public void onClick() {
-        new LogoutPage(HomePage.class);
-      }
-    };
-    add(logoutLink);
-
+    add(ComponentFactory.link("logoutLink", components -> new LogoutPage(HomePage.class)));
+/*
     if (subject.isPermitted("war:start")) {
       add(new Label("startWar", "You can start a war"));
     } else {
@@ -46,6 +38,7 @@ public class SecuredPage extends WebPage {
     } else {
       add(new Label("watchWar", "You can't watch a war"));
     }
+    */
   }
 
 }

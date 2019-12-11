@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages;
+package org.bytewright.frontend.pages.error;
 
 import org.apache.wicket.markup.html.WebPage;
 
