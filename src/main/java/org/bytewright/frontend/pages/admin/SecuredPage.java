@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages.components.admin;
+package org.bytewright.frontend.pages.admin;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

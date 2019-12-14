@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages.template;
+package org.bytewright.frontend.components.template;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -8,6 +8,8 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public class HeaderPanel extends Panel {
   public HeaderPanel(String id) {
     super(id);
+    //   BookmarkablePageLink bpl = new BookmarkablePageLink<Void>("home", HomePage.class, new PageParameters());
+    // add(bpl);
   }
 
   @Override

@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages.template;
+package org.bytewright.frontend.components.template;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -12,15 +12,24 @@ public class GcmTemplate extends WebPage {
   protected static final String CONTENT_ID = "contentComponent";
 
   private Component headerPanel;
-  private Component menuPanel;
   private Component footerPanel;
+
+  public GcmTemplate() {
+    super();
+    add(headerPanel = new HeaderPanel("headerMenu"));
+    add(footerPanel = new FooterPanel("footerPanel"));
+    add(getContent(CONTENT_ID));
+  }
 
   public GcmTemplate(PageParameters parameters) {
     super(parameters);
-    add(headerPanel = new HeaderPanel("headerPanel"));
-    add(menuPanel = new MenuPanel("menuPanel"));
+    add(headerPanel = new HeaderPanel("headerMenu"));
     add(footerPanel = new FooterPanel("footerPanel"));
-    add(new Label(CONTENT_ID, "Put your content here"));
+    add(getContent(CONTENT_ID));
+  }
+
+  protected Component getContent(String contentId) {
+    return new Label(CONTENT_ID, "Put your content here");
   }
 
   @Override
@@ -34,10 +43,6 @@ public class GcmTemplate extends WebPage {
 
   public Component getHeaderPanel() {
     return headerPanel;
-  }
-
-  public Component getMenuPanel() {
-    return menuPanel;
   }
 
   public Component getFooterPanel() {

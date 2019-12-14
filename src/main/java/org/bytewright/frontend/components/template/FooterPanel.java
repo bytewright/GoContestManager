@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages.template;
+package org.bytewright.frontend.components.template;
 
 import org.apache.wicket.markup.html.panel.Panel;
 

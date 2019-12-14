@@ -1,4 +1,4 @@
-package org.bytewright.frontend.pages.components.home;
+package org.bytewright.frontend.components.home;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -18,11 +18,10 @@ public class HomePanel extends Panel {
   public HomePanel(String contentId) {
     super(contentId);
 
-    add(new Label("version", getApplication().getFrameworkSettings().getVersion()));
-    add(new Label("word", hiSayer.sayHi()));
-
-    // TODO Add your page's components here
-
+    add(new Label("AppVersion", getApplication().getFrameworkSettings().getVersion()));
+    add(new Label("WicketVersion", getApplication().getFrameworkSettings().getVersion()));
+    add(new Label("SpringVersion", getApplication().getFrameworkSettings().getVersion()));
+    add(new Label("springBeanTest", hiSayer.sayHi()));
   }
 
   @Override

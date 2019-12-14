@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<!--<html xmlns:wicket="http://wicket.apache.org">-->
+<head>
+  <meta charset="utf-8"/>
+  <title>GO Contest Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<wicket:panel>
+  <div id="hd">
+    <div id="logo">
+      <img alt="Wicket Logo" height="50px" src="logo.png" width="50px"/>
+      <h1>Apache Wicket</h1>
+    </div>
+  </div>
+  <div id="bd">
+    <h2>Welcome to Go contest Manager version <span wicket:id="AppVersion">1.0-SNAPSHOT</span>!</h2>
+    <p>
+      App framework versions overview:
+    </p>
+    <ul>
+      <li>
+        Wicket version:
+        <wicket:container wicket:id="WicketVersion">1.5-SNAPSHOT</wicket:container>
+      </li>
+      <li>
+        Spring version: <span wicket:id="SpringVersion">1.0-SNAPSHOT</span>
+      </li>
+    </ul>
+  </div>
+  <div id="ft">
+    Test for Spring Bean injection and value retrieval:<span wicket:id="springBeanTest">!!ERROR!!</span>
+  </div>
+</wicket:panel>
+</body>
+</html>

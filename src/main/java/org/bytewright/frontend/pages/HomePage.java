@@ -1,8 +1,8 @@
 package org.bytewright.frontend.pages;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.bytewright.frontend.pages.components.home.HomePanel;
-import org.bytewright.frontend.pages.template.GcmTemplate;
+import org.bytewright.frontend.components.home.HomePanel;
+import org.bytewright.frontend.components.template.GcmTemplate;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 

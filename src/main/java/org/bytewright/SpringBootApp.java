@@ -16,6 +16,8 @@ public class SpringBootApp {
 
   public static void main(String[] args) throws Exception {
     new SpringApplicationBuilder()
+        .logStartupInfo(true)
+        .addCommandLineProperties(true)
         .sources(SpringBootApp.class)
         .run(args);
   }
@@ -30,6 +32,7 @@ public class SpringBootApp {
     registration.addInitParameter("configuration", RuntimeConfigurationType.DEVELOPMENT.name());
     registration.setName("myWicketFilter");
     registration.setOrder(1);
+    LOGGER.info("Created Wicket Filter Registration: {}", registration);
     return registration;
   }
 }

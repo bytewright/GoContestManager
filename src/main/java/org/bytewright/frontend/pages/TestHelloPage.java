@@ -2,7 +2,7 @@ package org.bytewright.frontend.pages;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.bytewright.frontend.pages.template.GcmTemplate;
+import org.bytewright.frontend.components.template.GcmTemplate;
 
 public class TestHelloPage extends GcmTemplate {
   public TestHelloPage(PageParameters parameters) {

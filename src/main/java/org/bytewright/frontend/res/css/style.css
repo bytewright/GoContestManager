@@ -1,80 +1,80 @@
-body, p, li, a { font-family: georgia, times, serif;font-size:13pt;}
-h1, h2, h3 { font-family: 'Yanone Kaffeesatz', arial, serif; }
-body { margin:0;padding:0;}
-#hd {
-	width : 100%;
-	height : 87px;
-	background-color : #092E67;
-	margin-top : 0;
-	padding-top : 10px;
-	border-bottom : 1px solid #888;
-	z-index : 0;
-}
-#ft {
-	position : absolute;
-	bottom : 0;
-	width : 100%;
-	height : 99px;
-	background-color : #6493D2;
-	border-top : 1px solid #888;
-	z-index : 0;
-}
-#logo,#bd {
-	width : 650px;
-	margin: 0 auto;
-	padding: 25px 50px 0 50px;
-}
-#logo h1 {
-	color : white;
-	font-size:36pt;
-	display: inline;
-}
-#logo img { 
-	display:inline;
-	vertical-align: bottom;
-	margin-left : 50px;
-	margin-right : 5px;
-}
-body { margin-top : 0; padding-top : 0;}
-#logo, #logo h1 { margin-top : 0; padding-top : 0;}
-#bd {
-	position : absolute;
-	top : 75px;
-	bottom : 75px;
-	left : 50%;
-	margin-left : -325px;
-	z-index : 1;
-	overflow: auto;
-	background-color : #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-moz-box-shadow: 0px 0px 10px #888;
-	-webkit-box-shadow: 0px 0px 10px #888;
-	box-shadow: 0px 0px 10px #888;
-}
-a, a:visited, a:hover, a:active {
-	color : #6493D2;
-}
-h2 {
-	padding : 0; margin:0;
-	font-size:36pt;
-	color:#FF5500;
-}
-h3 {
-	padding : 0; margin:0;
-	font-size:24pt;
-	color:#092E67;
+body, p, li, a {
+    font-family: georgia, times, serif;
+    font-size: 13pt;
 }
 
-/* Add a black background color to the top navigation */
-.topnav {
+h1, h2, h3 {
+    font-family: 'Yanone Kaffeesatz', arial, serif;
+}
+
+h2 {
+    padding: 0;
+    margin: 0;
+    font-size: 36pt;
+    color: #FF5500;
+}
+
+h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 24pt;
+    color: #092E67;
+}
+
+#pageBody {
+    background-color: #333333;
+    margin: 0 auto;
+    padding: 0;
+    width: 60%;
+}
+
+#pageBody #headerMenu {
+    border-bottom: #888888 3px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+#pageBody #content {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    background-color: white;
+}
+
+#pageBody #footer {
+    background-color: #6493D2;
+    border-top: #888888 3px;
+}
+
+#logo, #bd {
+    width: 650px;
+    margin: 0 auto;
+    padding: 25px 50px 0 50px;
+}
+
+#logo h1 {
+    color: white;
+    font-size: 36pt;
+    display: inline;
+}
+
+#logo img {
+    display: inline;
+    vertical-align: bottom;
+    margin-left: 50px;
+    margin-right: 5px;
+}
+
+#logo, #logo h1 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#headerNav {
     background-color: #333;
     overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
+#headerNav a {
     float: left;
     color: #f2f2f2;
     text-align: center;
@@ -84,13 +84,13 @@ h3 {
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
+#headerNav a:hover {
     background-color: #ddd;
     color: black;
 }
 
 /* Add a color to the active/current link */
-.topnav a.active {
+#headerNav a.active {
     background-color: #4CAF50;
     color: white;
 }
