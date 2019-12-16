@@ -5,20 +5,16 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.HiSayer;
+import org.bytewright.backend.dto.Contest;
 import org.bytewright.frontend.res.css.Marker;
 
 public class OverviewPanel extends Panel {
   private static final long serialVersionUID = 1L;
 
-  @SpringBean
-  private HiSayer hiSayer;
-
-  public OverviewPanel(String contentId) {
+  public OverviewPanel(String contentId, Contest contest) {
     super(contentId);
 
-    add(new Label("contestName", "JCC - Jena CrossCut"));
+    add(new Label("contestName", contest.getName()));
     add(new Label("contestDate", "20.09.2020"));
     add(new Label("playerCount", "55"));
   }

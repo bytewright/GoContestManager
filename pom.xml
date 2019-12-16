@@ -90,6 +90,11 @@
       <version>${wicket-stuff.version}</version>
     </dependency>
     <!-- OTHER DEPENDENCIES -->
+    <!--<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <version>${spring-boot.version}</version>
+    </dependency>-->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
@@ -221,6 +226,26 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+            <configuration>
+              <additionalProperties>
+                <spring.version>
+                  ${spring-core.version}
+                </spring.version>
+                <spring.boot.version>
+                  ${spring-boot.version}
+                </spring.boot.version>
+                <java.version>
+                  ${maven.compiler.source}
+                </java.version>
+              </additionalProperties>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>

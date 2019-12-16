@@ -14,22 +14,38 @@
       <h1>Apache Wicket</h1>
     </div>
   </div>
-  <div id="bd">
+  <div>
     <h2>Welcome to Go contest Manager version <span wicket:id="AppVersion">1.0-SNAPSHOT</span>!</h2>
+
+    <div style="display: table-row;" wicket:id="contests">
+      <div style="display: table-cell;"><b>contest name: </b></div>
+      <div style="display: table-cell;" wicket:id="contestName"></div>
+      <div style="display: table-cell;" wicket:id="contestLink"></div>
+    </div>
+
     <p>
       App framework versions overview:
     </p>
-    <ul>
-      <li>
-        Wicket version:
-        <wicket:container wicket:id="WicketVersion">1.5-SNAPSHOT</wicket:container>
-      </li>
-      <li>
-        Spring version: <span wicket:id="SpringVersion">1.0-SNAPSHOT</span>
-      </li>
-    </ul>
+    <table>
+      <tr>
+        <td>
+          Wicket version:
+        </td>
+        <td>
+          <wicket:container wicket:id="WicketVersion">1.5-SNAPSHOT</wicket:container>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Spring version:
+        </td>
+        <td>
+          <wicket:container wicket:id="SpringVersion">1.5-SNAPSHOT</wicket:container>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div id="ft">
+  <div>
     Test for Spring Bean injection and value retrieval:<span wicket:id="springBeanTest">!!ERROR!!</span>
   </div>
 </wicket:panel>
