@@ -252,6 +252,7 @@
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
+        <version>3.2.3</version>
       </plugin>
     </plugins>
   </build>

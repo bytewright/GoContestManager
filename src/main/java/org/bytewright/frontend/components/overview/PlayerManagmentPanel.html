@@ -8,19 +8,29 @@
 </head>
 <body>
 <wicket:panel>
-  <h2>Overview for <span wicket:id="contestName">contestName</span></h2>
-  <p>
-    Contest date: <span wicket:id="contestDate">20.09.2020</span>
-  </p>
-  <p>
-    Preregistered contestants: <span wicket:id="playerCount">50</span>
-  </p>
-  <div wicket:id="playerManagment">
-    playerManagment
-  </div>
-  <div wicket:id="contestManagment">
-    playerManagment
-  </div>
+  <h3>Player management</h3>
+  <table>
+    <thead>
+    <th>
+      Name
+    </th>
+    <th>
+      Rank
+    </th>
+    <th>
+      Paid?
+    </th>
+    <th>
+      Student?
+    </th>
+    </thead>
+    <tr wicket:id="players">
+      <td wicket:id="name"></td>
+      <td wicket:id="rank"></td>
+      <td wicket:id="paymentStatus"></td>
+      <td wicket:id="isStudent"></td>
+    </tr>
+  </table>
 </wicket:panel>
 </body>
 </html>

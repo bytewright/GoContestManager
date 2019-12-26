@@ -16,12 +16,13 @@
   </div>
   <div>
     <h2>Welcome to Go contest Manager version <span wicket:id="AppVersion">1.0-SNAPSHOT</span>!</h2>
-
-    <div style="display: table-row;" wicket:id="contests">
-      <div style="display: table-cell;"><b>contest name: </b></div>
-      <div style="display: table-cell;" wicket:id="contestName"></div>
-      <div style="display: table-cell;" wicket:id="contestLink"></div>
-    </div>
+    <table>
+      <tr wicket:id="contests">
+        <td><b>contest name: </b></td>
+        <td wicket:id="contestName"></td>
+        <td wicket:id="contestLink">Link to Contest</td>
+      </tr>
+    </table>
 
     <p>
       App framework versions overview:

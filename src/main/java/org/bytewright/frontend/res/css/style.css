@@ -22,7 +22,7 @@ h3 {
 }
 
 #pageBody {
-    background-color: #333333;
+    background-color: #f1f1f1;
     margin: 0 auto;
     padding: 0;
     width: 60%;
@@ -70,7 +70,7 @@ h3 {
 }
 
 #headerNav {
-    background-color: #333;
+    background-color: #f2f2f2;
     overflow: hidden;
 }
 
