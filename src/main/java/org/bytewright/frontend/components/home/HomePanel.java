@@ -26,13 +26,12 @@ import java.util.List;
 public class HomePanel extends Panel {
   private static final Logger LOGGER = LoggerFactory.getLogger(HomePanel.class);
   private static final long serialVersionUID = 1L;
-
-  @SpringBean
-  private HiSayer hiSayer;
   //  @SpringBean
 //  private BuildProperties buildProperties;
   @SpringBean
   private ContestService contestService;
+  @SpringBean
+  private HiSayer hiSayer;
 
   public HomePanel(String contentId) {
     super(contentId);
@@ -64,7 +63,6 @@ public class HomePanel extends Panel {
     protected void populateItem(ListItem<Contest> item) {
       IModel<Contest> model = item.getModel();
       var label = new Label("contestName", new PropertyModel<>(model, "name"));
-      var link = new Label("contestLink", new PropertyModel<>(model, "identifier"));
       Link<Void> contestLink = ComponentFactory.link("contestLink",
         components -> toContest(new PropertyModel<>(model, "identifier")));
       item.add(label);
@@ -73,7 +71,7 @@ public class HomePanel extends Panel {
 
     private void toContest(PropertyModel<String> identifier) {
       PageParameters pageParameters = new PageParameters();
-      pageParameters.add(OverviewPage.PATH_PARAM, identifier.toString());
+      pageParameters.set(0, identifier.toString()); // todo get correct identifier
       setResponsePage(OverviewPage.class, pageParameters);
     }
   }

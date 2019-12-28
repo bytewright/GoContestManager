@@ -3,9 +3,10 @@ package org.bytewright.backend.dto;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-  private String name;
+  private Location address;
   private String emailAddr;
-  private Location adress;
+  private String name;
+  private String surname;
 
   public String getName() {
     return name;
@@ -15,11 +16,27 @@ public class Person implements Serializable {
     this.name = name;
   }
 
-  public Location getAdress() {
-    return adress;
+  public String getSurname() {
+    return surname;
   }
 
-  public void setAdress(Location adress) {
-    this.adress = adress;
+  public void setSurname(String surname) {
+    this.surname = surname;
+  }
+
+  public String getEmailAddr() {
+    return emailAddr;
+  }
+
+  public void setEmailAddr(String emailAddr) {
+    this.emailAddr = emailAddr;
+  }
+
+  public Location getAddress() {
+    return address;
+  }
+
+  public void setAddress(Location address) {
+    this.address = address;
   }
 }

@@ -2,7 +2,7 @@ package org.bytewright.backend.services;
 
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Location;
-import org.bytewright.backend.dto.ParticipationSettings;
+import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.util.PersonUtil;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +18,19 @@ public class ContestService {
 
   public Contest getContest(String contestId) {
     Contest contest = new Contest();
-    contest.setIdentifier("jcc" + contestId + "2020");
+    contest.setuId("jcc" + contestId + "2020");
     contest.setName("JCC - Jena CrossCut" + contestId);
-    contest.setStartDate(Instant.now().plus(random.nextLong(), ChronoUnit.MONTHS));
-    contest.setEndDate(contest.getStartDate().plus(random.nextLong(), ChronoUnit.DAYS));
+    contest.setDateStart(Instant.now().plus(random.nextInt(400), ChronoUnit.DAYS));
+    contest.setDateEnd(contest.getDateStart().plus(random.nextInt(20), ChronoUnit.DAYS));
     Location location = new Location();
     location.setCity("Jena");
     location.setName("Schule abc bla");
     location.setStreet("Some Street");
     location.setStreetNum("1337");
     contest.setLocation(location);
-    ParticipationSettings pSettings = new ParticipationSettings();
+    ContestSettings pSettings = new ContestSettings();
     pSettings.setStartingFee(12);
-    contest.setParticipationSettings(pSettings);
+    contest.setContestSettings(pSettings);
     contest.setOrganisers(Set.of(PersonUtil.rndOrga()));
     contest.setHelpers(Set.of(PersonUtil.rndHelper(), PersonUtil.rndHelper(), PersonUtil.rndHelper()));
     contest.setPlayers(PersonUtil.rndPlayers(30));

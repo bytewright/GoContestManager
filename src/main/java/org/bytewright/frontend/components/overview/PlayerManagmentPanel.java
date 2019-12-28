@@ -1,6 +1,7 @@
 package org.bytewright.frontend.components.overview;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -34,9 +35,13 @@ public class PlayerManagmentPanel extends Panel {
     protected void populateItem(ListItem<Player> item) {
       IModel<Player> model = item.getModel();
       item.add(new Label("name", new PropertyModel<>(model, "name")));
-      item.add(new Label("name", new PropertyModel<>(model, "rank")));
-      item.add(new Label("name", new PropertyModel<>(model, "paymentStatus")));
-      item.add(new Label("name", new PropertyModel<>(model, "isStudent")));
+      item.add(new Label("goClub", new PropertyModel<>(model, "goClub")));
+      item.add(new Label("rank", new PropertyModel<>(model, "goRank")));
+      item.add(new Label("paymentStatus", new PropertyModel<>(model, "paymentStatus")));
+      item.add(new Label("isStudent", new PropertyModel<>(model, "isStudent")));
+      item.add(new Label("isSenior", new PropertyModel<>(model, "isSenior")));
+      item.add(new Label("isFemale", new PropertyModel<>(model, "isFemale")));
+      item.add(new Label("isU10", new PropertyModel<>(model, "isU10")));
     }
   }
 }

@@ -9,26 +9,32 @@
 <body>
 <wicket:panel>
   <h3>Player management</h3>
-  <table>
+  <p>
+    <button name="addPlayer">Add</button>
+    <button>Export to McMahon</button>
+  </p>
+  <table style="alignment: center;border: #333333 2px ">
     <thead>
-    <th>
-      Name
-    </th>
-    <th>
-      Rank
-    </th>
-    <th>
-      Paid?
-    </th>
-    <th>
-      Student?
-    </th>
+    <th> Name</th>
+    <th> Go Club</th>
+    <th> Rank</th>
+    <th> Paid?</th>
+    <th> Student</th>
+    <th> Senior</th>
+    <th> Female</th>
+    <th> U10</th>
+    <th> Admin</th>
     </thead>
     <tr wicket:id="players">
       <td wicket:id="name"></td>
+      <td wicket:id="goClub"></td>
       <td wicket:id="rank"></td>
       <td wicket:id="paymentStatus"></td>
       <td wicket:id="isStudent"></td>
+      <td wicket:id="isSenior"></td>
+      <td wicket:id="isFemale"></td>
+      <td wicket:id="isU10"></td>
+      <td style="text-decoration-color: orange">[DEL] [PAID]</td>
     </tr>
   </table>
 </wicket:panel>

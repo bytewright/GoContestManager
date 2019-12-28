@@ -4,6 +4,9 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.LambdaModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.frontend.res.css.Marker;
@@ -15,12 +18,12 @@ public class OverviewPanel extends Panel {
 
   public OverviewPanel(String contentId, Contest contest) {
     super(contentId);
-
-    add(new Label("contestName", contest.getName()));
-    add(new Label("contestDate", contest.getStartDate()));
-    add(new Label("playerCount", "55"));
+    setDefaultModel(new CompoundPropertyModel<>(contest));
+    add(new Label("contestName", LambdaModel.of(contest::getName, contest::setName)));
+    add(new Label("contestDate", Model.of(contest.getDateStart())));
+    add(new Label("playerCount", Model.of(contest.getPlayers().size())));
     add(new PlayerManagmentPanel(ID_PLAYER_MANAGMENT, contest));
-    add(new ContestManagmentPanel(ID_PLAYER_MANAGMENT, contest));
+    add(new ContestManagmentPanel(ID_CONTEST_MANAGMENT, contest));
   }
 
   @Override

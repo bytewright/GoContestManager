@@ -22,13 +22,13 @@ public class OverviewPage extends GcmTemplate {
 
   public OverviewPage(final PageParameters parameters) {
     super(parameters);
-    String contestId = parameters.get(PATH_PARAM).toString();
+    String contestId = parameters.get(0).toString();
     Contest contest = contestService.getContest(contestId);
     replace(new OverviewPanel(CONTENT_ID, contest));
   }
 
   public static String getMountPath() {
-    return "/{" + PATH_PARAM + "}/overview";
+    return "/${" + PATH_PARAM + "}/overview";
   }
 
 }

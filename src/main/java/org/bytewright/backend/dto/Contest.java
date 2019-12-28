@@ -5,15 +5,15 @@ import java.time.Instant;
 import java.util.Set;
 
 public class Contest implements Serializable {
-  private String identifier;
-  private String name;
+  private ContestSettings contestSettings;
+  private Instant dateEnd;
+  private Instant dateStart;
+  private Set<Helper> helpers;
   private Location location;
-  private Instant startDate;
-  private Instant endDate;
-  private ParticipationSettings participationSettings;
+  private String name;
   private Set<Organiser> organisers;
   private Set<Player> players;
-  private Set<Helper> helpers;
+  private String uId;
 
   public Contest() {
   }
@@ -26,20 +26,20 @@ public class Contest implements Serializable {
     this.location = location;
   }
 
-  public Instant getEndDate() {
-    return endDate;
+  public Instant getDateEnd() {
+    return dateEnd;
   }
 
-  public void setEndDate(Instant endDate) {
-    this.endDate = endDate;
+  public void setDateEnd(Instant dateEnd) {
+    this.dateEnd = dateEnd;
   }
 
-  public ParticipationSettings getParticipationSettings() {
-    return participationSettings;
+  public ContestSettings getContestSettings() {
+    return contestSettings;
   }
 
-  public void setParticipationSettings(ParticipationSettings participationSettings) {
-    this.participationSettings = participationSettings;
+  public void setContestSettings(ContestSettings contestSettings) {
+    this.contestSettings = contestSettings;
   }
 
   public Set<Organiser> getOrganisers() {
@@ -66,12 +66,12 @@ public class Contest implements Serializable {
     this.helpers = helpers;
   }
 
-  public String getIdentifier() {
-    return identifier;
+  public String getuId() {
+    return uId;
   }
 
-  public void setIdentifier(String identifier) {
-    this.identifier = identifier;
+  public void setuId(String uId) {
+    this.uId = uId;
   }
 
   public String getName() {
@@ -82,11 +82,11 @@ public class Contest implements Serializable {
     this.name = name;
   }
 
-  public Instant getStartDate() {
-    return startDate;
+  public Instant getDateStart() {
+    return dateStart;
   }
 
-  public void setStartDate(Instant startDate) {
-    this.startDate = startDate;
+  public void setDateStart(Instant dateStart) {
+    this.dateStart = dateStart;
   }
 }

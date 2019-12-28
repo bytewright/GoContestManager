@@ -31,29 +31,35 @@ public class PersonUtil {
       .skip(rnd.nextInt(values.length - 1))
       .findFirst().orElse(GoRank.KYU_30);
     player.setGoRank(rank);
+    player.setPaymentStatus(rnd.nextBoolean() ? PaymentStatus.NOT_PAID : PaymentStatus.FULLY_PAID);
     player.setSenior(rnd.nextBoolean());
     player.setStudent(!player.isSenior() && rnd.nextBoolean());
+    player.setU10(!player.isSenior() && !player.isStudent() && rnd.nextBoolean());
+    if (player.isU10()) {
+      player.setAge(rnd.nextInt(10));
+    }
+    player.setFemale(rnd.nextBoolean());
     return player;
   }
 
-  static String generateRandomWord(int wordLength) {
-    Random r = new Random(); // Intialize a Random Number Generator with SysTime as the seed
+  private static String generateRandomWord(int wordLength) {
     StringBuilder sb = new StringBuilder(wordLength);
     for (int i = 0; i < wordLength; i++) { // For each letter in the word
-      char tmp = (char) ('a' + r.nextInt('z' - 'a')); // Generate a letter between a and z
+      char tmp = (char) ('a' + rnd.nextInt('z' - 'a')); // Generate a letter between a and z
       sb.append(tmp); // Add it to the String
     }
     return sb.toString();
   }
 
   private static <T extends Person> T rndPerson(T person) {
-    // TODO
-    person.setName("rndString");
+    person.setName(generateRandomWord(3 + rnd.nextInt(12)));
+    person.setSurname(generateRandomWord(3 + rnd.nextInt(12)));
+    person.setEmailAddr(person.getName() + "." + person.getSurname() + "@some.mail.com");
     Location rndAdress = new Location();
-    rndAdress.setStreet("rndStreet");
-    rndAdress.setStreetNum("42");
-    rndAdress.setCity("rndCity");
-    person.setAdress(rndAdress);
+    rndAdress.setStreet(6 + generateRandomWord(rnd.nextInt(6)));
+    rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
+    rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
+    person.setAddress(rndAdress);
     return person;
   }
 
