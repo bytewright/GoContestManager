@@ -15,6 +15,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.HiSayer;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.ContestService;
+import org.bytewright.backend.services.PropertiesService;
 import org.bytewright.frontend.pages.OverviewPage;
 import org.bytewright.frontend.res.css.Marker;
 import org.slf4j.Logger;
@@ -26,21 +27,19 @@ import java.util.List;
 public class HomePanel extends Panel {
   private static final Logger LOGGER = LoggerFactory.getLogger(HomePanel.class);
   private static final long serialVersionUID = 1L;
-  //  @SpringBean
-//  private BuildProperties buildProperties;
   @SpringBean
   private ContestService contestService;
   @SpringBean
   private HiSayer hiSayer;
+  @SpringBean
+  private PropertiesService propertiesService;
 
   public HomePanel(String contentId) {
     super(contentId);
 
-    //add(new Label("AppVersion", buildProperties.getVersion()));
-    add(new Label("AppVersion", 1));
-    add(new Label("WicketVersion", getApplication().getFrameworkSettings().getVersion()));
-    //add(new Label("SpringVersion", buildProperties.get("spring.version")));
-    add(new Label("SpringVersion", 5));
+    add(new Label("AppVersion", propertiesService.getAppVersion()));
+    add(new Label("WicketVersion", propertiesService.getWicketVersion()));
+    add(new Label("SpringVersion", propertiesService.getSpringVersion()));
     add(new Label("springBeanTest", hiSayer.sayHi()));
 
     add(new ContestListView(contestService.getValidContests()));
