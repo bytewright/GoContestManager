@@ -17,7 +17,6 @@ import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtensio
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @ApplicationInitExtension
-@Component
 public class WicketApplicationConfiguration extends WicketBootSecuredWebApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(WicketApplicationConfiguration.class);
 

@@ -10,16 +10,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * https://ci.apache.org/projects/wicket/guide/6.x/guide/testingspring.html
- *
  */
 @ContextConfiguration(classes = SpringTestContext.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class BaseWicketPageTest {
 
+  protected WicketTester tester;
   @Autowired
   protected WebApplication wicketApplication;
-
-  protected WicketTester tester;
 
   @Before
   public void setUp() {

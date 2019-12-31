@@ -10,22 +10,24 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class GcmTemplate extends WebPage {
   protected static final String CONTENT_ID = "contentComponent";
-
-  private Component headerPanel;
   private Component footerPanel;
+  private Component headerPanel;
 
   public GcmTemplate() {
-    super();
-    add(headerPanel = new HeaderPanel("headerMenu"));
-    add(footerPanel = new FooterPanel("footerPanel"));
+    headerPanel = new HeaderPanel("headerMenu");
+    footerPanel = new FooterPanel("footerPanel");
+    add(headerPanel);
     add(getContent(CONTENT_ID));
+    add(footerPanel);
   }
 
   public GcmTemplate(PageParameters parameters) {
     super(parameters);
-    add(headerPanel = new HeaderPanel("headerMenu"));
-    add(footerPanel = new FooterPanel("footerPanel"));
+    headerPanel = new HeaderPanel("headerMenu");
+    footerPanel = new FooterPanel("footerPanel");
+    add(headerPanel);
     add(getContent(CONTENT_ID));
+    add(footerPanel);
   }
 
   protected Component getContent(String contentId) {
@@ -36,7 +38,7 @@ public class GcmTemplate extends WebPage {
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     PackageResourceReference cssFile = new PackageResourceReference(GcmTemplate.class,
-        "baseStyle.css");
+      "baseStyle.css");
     CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
     response.render(cssItem);
   }
