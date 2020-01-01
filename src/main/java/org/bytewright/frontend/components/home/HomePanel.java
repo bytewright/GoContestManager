@@ -11,7 +11,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.bytewright.backend.HiSayer;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.PropertiesService;
 import org.bytewright.frontend.pages.OverviewPage;
@@ -23,27 +22,28 @@ import java.util.List;
 public class HomePanel extends Panel {
   private static final long serialVersionUID = 1L;
 
-  public HomePanel(String contentId, PropertiesService propertiesService, HiSayer hiSayer, List<Contest> validContests) {
+  public HomePanel(String contentId, PropertiesService propertiesService, List<Contest> validContests) {
     super(contentId, null);
     add(new Label("AppVersion", propertiesService.getAppVersion()));
     add(new Label("WicketVersion", propertiesService.getWicketVersion()));
     add(new Label("SpringVersion", propertiesService.getSpringVersion()));
-    add(new Label("springBeanTest", hiSayer.sayHi()));
 
-    add(new ContestListView(validContests));
+    add(new ContestListView(validContests, "contests"));
+    add(new ContestListView(validContests, "contests2"));
   }
 
   @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "style.css");
-    CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
-    response.render(cssItem);
+    response.render(CssHeaderItem.forReference(cssFile));
+    cssFile = new PackageResourceReference(Marker.class, "div-as-table.css");
+    response.render(CssHeaderItem.forReference(cssFile));
   }
 
   private static class ContestListView extends ListView<Contest> {
-    public ContestListView(List<Contest> validContests) {
-      super("contests", validContests);
+    ContestListView(List<Contest> validContests, String contests) {
+      super(contests, validContests);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class HomePanel extends Panel {
 
     private void toContest(String identifier) {
       PageParameters pageParameters = new PageParameters();
-      pageParameters.set(0, identifier); // todo get correct identifier
+      pageParameters.set(0, identifier);
       setResponsePage(OverviewPage.class, pageParameters);
     }
   }

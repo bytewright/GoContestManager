@@ -38,6 +38,6 @@ public class ContestService {
   }
 
   public List<Contest> getValidContests() {
-    return List.of(getContest("1"), getContest("2"));
+    return List.of(getContest("ID1"), getContest("ID2"));
   }
 }
