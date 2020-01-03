@@ -1,8 +1,9 @@
 package org.bytewright.backend.util;
 
-import org.bytewright.backend.dto.Contest;
-
 import java.time.Instant;
+import java.util.Optional;
+
+import org.bytewright.backend.dto.Contest;
 
 public class SessionInfo {
   private Instant creationInstant;
@@ -16,8 +17,8 @@ public class SessionInfo {
     this.creationInstant = creationInstant;
   }
 
-  public Contest getSelectedContest() {
-    return selectedContest;
+  public Optional<Contest> getSelectedContest() {
+    return Optional.ofNullable(selectedContest);
   }
 
   public void setSelectedContest(Contest selectedContest) {
@@ -27,7 +28,7 @@ public class SessionInfo {
   @Override
   public String toString() {
     return "SessionInfo{" +
-      "creationInstant=" + creationInstant +
+        "creationInstant=" + creationInstant +
       ", selectedContest=" + selectedContest +
       '}';
   }

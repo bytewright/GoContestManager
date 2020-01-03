@@ -1,25 +1,50 @@
 package org.bytewright.backend.services;
 
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.Location;
-import org.bytewright.backend.dto.ContestSettings;
-import org.bytewright.backend.util.PersonUtil;
-import org.springframework.stereotype.Component;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.dto.ContestSettings;
+import org.bytewright.backend.dto.Location;
+import org.bytewright.backend.util.PersonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ContestService {
-  private Random random = new Random();
+  private static final Logger LOGGER = LoggerFactory.getLogger(ContestService.class);
+  private static Random random = new Random();
+  private static Map<String, Contest> knownContests = IntStream.range(2020, 2035)
+      .mapToObj(value -> "jcc" + value)
+      .map(value -> Pair.of(value, createContest(value)))
+      .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 
-  public Contest getContest(String contestId) {
+  public Optional<Contest> getContest(String contestId) {
+    Contest contest = knownContests.get(contestId);
+    LOGGER.debug("contest with id {} requested, found: {}", contestId, contest);
+    return Optional.ofNullable(contest);
+  }
+
+  public List<Contest> getValidContests() {
+    Instant now = Instant.now();
+    return knownContests.values().stream()
+        .filter(contest -> contest.getDateEnd().isAfter(now))
+        .collect(Collectors.toList());
+  }
+
+  private static Contest createContest(String uId) {
     Contest contest = new Contest();
-    contest.setuId("jcc" + contestId + "2020");
-    contest.setName("JCC - Jena CrossCut" + contestId);
+    contest.setuId(uId);
+    contest.setName("Jena CrossCut - " + uId);
     contest.setDateStart(Instant.now().plus(random.nextInt(400), ChronoUnit.DAYS));
     contest.setDateEnd(contest.getDateStart().plus(random.nextInt(20), ChronoUnit.DAYS));
     Location location = new Location();
@@ -35,9 +60,5 @@ public class ContestService {
     contest.setHelpers(Set.of(PersonUtil.rndHelper(), PersonUtil.rndHelper(), PersonUtil.rndHelper()));
     contest.setPlayers(PersonUtil.rndPlayers(30));
     return contest;
-  }
-
-  public List<Contest> getValidContests() {
-    return List.of(getContest("ID1"), getContest("ID2"));
   }
 }

@@ -1,35 +1,42 @@
 package org.bytewright.frontend.components.home;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.PropertiesService;
-import org.bytewright.frontend.pages.OverviewPage;
 import org.bytewright.frontend.res.css.Marker;
-import org.wicketstuff.lambda.components.ComponentFactory;
-
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomePanel extends Panel {
+  private static final Logger LOGGER = LoggerFactory.getLogger(HomePanel.class);
   private static final long serialVersionUID = 1L;
+  @SpringBean
+  private PropertiesService propertiesService;
 
-  public HomePanel(String contentId, PropertiesService propertiesService, List<Contest> validContests) {
+  public HomePanel(String contentId, List<Contest> validContests, Optional<Contest> selectedContest) {
     super(contentId, null);
     add(new Label("AppVersion", propertiesService.getAppVersion()));
     add(new Label("WicketVersion", propertiesService.getWicketVersion()));
     add(new Label("SpringVersion", propertiesService.getSpringVersion()));
-
-    add(new ContestListView(validContests, "contests"));
-    add(new ContestListView(validContests, "contests2"));
+    add(new ContestListView(validContests, selectedContest.orElse(null), "contestsTable"));
   }
 
   @Override
@@ -42,25 +49,35 @@ public class HomePanel extends Panel {
   }
 
   private static class ContestListView extends ListView<Contest> {
-    ContestListView(List<Contest> validContests, String contests) {
+    private final Contest selectedContest;
+
+    ContestListView(List<Contest> validContests, @Nullable Contest selectedContest, String contests) {
       super(contests, validContests);
+      this.selectedContest = selectedContest;
     }
 
     @Override
     protected void populateItem(ListItem<Contest> item) {
       IModel<Contest> model = item.getModel();
       PropertyModel<String> identifier = new PropertyModel<>(model, "uId");
-      var label = new Label("contestName", new PropertyModel<>(model, "name"));
-      Link<Void> contestLink = ComponentFactory.link("contestLink",
-        components -> toContest(identifier.getObject()));
-      item.add(label);
-      item.add(contestLink);
+      Form<String> selection = new ContestSelectionForm("contestSelection", identifier);
+      var nameLabel = new Label("contestName", new PropertyModel<>(model, "name"));
+      var startLabel = new Label("contestStart", new PropertyModel<>(model, "dateStart"));
+      var endLabel = new Label("contestEnd", new PropertyModel<>(model, "dateEnd"));
+      if (selectedContest != null && selectedContest.equals(model.getObject())) {
+        nameLabel.add(new SetSelectedBehavior());
+      }
+      item.add(nameLabel);
+      item.add(startLabel);
+      item.add(endLabel);
+      item.add(selection);
     }
 
-    private void toContest(String identifier) {
-      PageParameters pageParameters = new PageParameters();
-      pageParameters.set(0, identifier);
-      setResponsePage(OverviewPage.class, pageParameters);
+    static class SetSelectedBehavior extends Behavior {
+      @Override
+      public void onComponentTag(Component component, ComponentTag tag) {
+        tag.put("class", "selectedContest");
+      }
     }
   }
 }
