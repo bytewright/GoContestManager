@@ -2,14 +2,12 @@ package org.bytewright.frontend;
 
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.settings.SecuritySettings;
+import org.bytewright.frontend.pages.LoginPage;
 import org.bytewright.frontend.pages.PageMountRegistry;
-import org.bytewright.frontend.pages.TestHelloPage;
 import org.bytewright.frontend.pages.admin.SecuredPage;
-import org.bytewright.frontend.pages.login.LoginPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.wicketstuff.shiro.annotation.AnnotationsShiroAuthorizationStrategy;
 import org.wicketstuff.shiro.authz.ShiroUnauthorizedComponentListener;
 
@@ -45,9 +43,7 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
         .peek(mountable -> LOGGER.info("registering mount: {}", mountable))
         .forEach(mountable -> mountPage(mountable.getMountPath(), mountable.getPageClass()));
 
-    mountPage("home", getHomePage());
-    mountPage("login", LoginPage.class);
+    //    mountPage("home", getHomePage());
     mountPage("secure", SecuredPage.class);
-    mountPage("test", TestHelloPage.class);
   }
 }

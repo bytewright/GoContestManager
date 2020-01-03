@@ -26,8 +26,12 @@ public class GcmTemplate extends WebPage {
     headerPanel = new HeaderPanel("headerMenu");
     footerPanel = new FooterPanel("footerPanel");
     add(headerPanel);
-    add(getContent(CONTENT_ID));
+    add(getContent(CONTENT_ID, parameters));
     add(footerPanel);
+  }
+
+  protected Component getContent(String contentId, PageParameters parameters) {
+    return getContent(contentId);
   }
 
   protected Component getContent(String contentId) {
@@ -38,7 +42,7 @@ public class GcmTemplate extends WebPage {
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     PackageResourceReference cssFile = new PackageResourceReference(GcmTemplate.class,
-      "baseStyle.css");
+        "baseStyle.css");
     CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
     response.render(cssItem);
   }

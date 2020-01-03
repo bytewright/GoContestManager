@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.ContestService;
@@ -29,12 +28,8 @@ public class HomePage extends GcmTemplate {
   @SpringBean
   private UserService userService;
 
-  public HomePage() {
-    super();
-  }
-
-  public HomePage(final PageParameters parameters) {
-    super(parameters);
+  public static String getMountPath() {
+    return "/home";
   }
 
   @Override

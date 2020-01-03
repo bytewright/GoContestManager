@@ -16,6 +16,13 @@ div.td {
     padding: 5px;
 }
 
+div.th {
+    display: table-cell;
+    border: thin solid red;
+    text-align: center;
+    padding: 5px;
+}
+
 span.selectedContest {
     font-weight: bold;
 }

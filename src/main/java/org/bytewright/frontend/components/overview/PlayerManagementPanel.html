@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<!--<html xmlns:wicket="http://wicket.apache.org">-->
+<head>
+  <meta charset="utf-8"/>
+  <title>GO Contest Manager</title>
+  <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<wicket:panel>
+  <h3>Player management</h3>
+  <p>
+    <a wicket:id="addPlayerLink">Add Player</a><br>
+    <a wicket:id="exportPlayerLink">Export Players</a>
+  </p>
+  <div class="table">
+    <div class="tr">
+      <div class="th"> Name</div>
+      <div class="th"> Go Club</div>
+      <div class="th"> Rank</div>
+      <div class="th"> Paid?</div>
+      <div class="th"> Student</div>
+      <div class="th"> Senior</div>
+      <div class="th"> Female</div>
+      <div class="th"> U10</div>
+      <div class="th"> Admin</div>
+    </div>
+    <div class="tr" wicket:id="players">
+      <div class="td" wicket:id="name"></div>
+      <div class="td" wicket:id="goClub"></div>
+      <div class="td" wicket:id="rank"></div>
+      <div class="td" wicket:id="paymentStatus"></div>
+      <div class="td"><input type="checkbox" wicket:id="isStudent"/></div>
+      <div class="td"><input type="checkbox" wicket:id="isSenior"/></div>
+      <div class="td"><input type="checkbox" wicket:id="isFemale"/></div>
+      <div class="td"><input type="checkbox" wicket:id="isU10"/></div>
+      <div class="td">
+        <form wicket:id="playerEditForm">
+          <input type="submit" value="EDIT">
+        </form>
+        <button value="PAID">PAID</button>
+        <button value="DEL">DEL</button>
+      </div>
+    </div>
+  </div>
+</wicket:panel>
+</body>
+</html>

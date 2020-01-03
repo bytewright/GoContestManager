@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<wicket:panel>
+  <div wicket:id="creationSuccess"></div>
+  <form id="contestCreation" method="get" wicket:id="contestCreation">
+    <fieldset>
+      <legend style="color: #F90">Creation</legend>
+      <span>Contest Name: </span><input id="name" type="text" wicket:id="name"/><br/>
+      <span>Id: </span><input id="uId" type="text" wicket:id="uId"/><br/>
+      <span>Start date: </span><input id="startDate" type="text" wicket:id="startDate"/><br/>
+      <span>End date: </span><input id="endDate" type="text" wicket:id="endDate"/><br/>
+      <p>
+        <input name="Create" type="submit" value="Create"/>
+      </p>
+    </fieldset>
+  </form>
+</wicket:panel>
+</body>
+</html>

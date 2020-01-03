@@ -1,13 +1,13 @@
 package org.bytewright.frontend.components.overview;
 
+import java.time.Duration;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.bytewright.backend.dto.Contest;
 
-import java.time.Duration;
-
-public class ContestManagmentPanel extends Panel {
-  public ContestManagmentPanel(String contentId, Contest contest) {
+public class ContestManagementPanel extends Panel {
+  public ContestManagementPanel(String contentId, Contest contest) {
     super(contentId);
 
     add(new Label("contestName", contest.getName()));

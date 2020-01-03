@@ -6,32 +6,25 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.UserService;
 import org.bytewright.backend.util.SessionInfo;
-import org.bytewright.frontend.components.overview.OverviewPanel;
+import org.bytewright.frontend.components.overview.PlayerManagementPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
 import org.bytewright.frontend.res.css.Marker;
+import org.wicketstuff.shiro.ShiroConstraint;
+import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-public class OverviewPage extends GcmTemplate {
-  private static final long serialVersionUID = 1L;
+@ShiroSecurityConstraint(constraint = ShiroConstraint.IsAuthenticated, loginMessage = "Login message", unauthorizedMessage = "Not authorized message")
+public class PlayerManagementPage extends GcmTemplate {
 
   @SpringBean
   private UserService userService;
 
-  public OverviewPage() {
-    super();
-  }
-
-  public OverviewPage(final PageParameters parameters) {
-    super(parameters);
-  }
-
   public static String getMountPath() {
-    return "/overview";
+    return "/players/manage";
   }
 
   @Override
@@ -42,7 +35,7 @@ public class OverviewPage extends GcmTemplate {
       return new Label(contentId, "Select a contest on the homepage!");
     }
     Contest contest = selectedContest.get();
-    return new OverviewPanel(contentId, contest);
+    return new PlayerManagementPanel(contentId, contest);
   }
 
   @Override
@@ -51,5 +44,7 @@ public class OverviewPage extends GcmTemplate {
     PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "style.css");
     CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
     response.render(cssItem);
+    cssFile = new PackageResourceReference(Marker.class, "div-as-table.css");
+    response.render(CssHeaderItem.forReference(cssFile));
   }
 }

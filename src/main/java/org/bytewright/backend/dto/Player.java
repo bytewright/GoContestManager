@@ -76,4 +76,19 @@ public class Player extends Person {
   public void setPaymentStatus(PaymentStatus paymentStatus) {
     this.paymentStatus = paymentStatus;
   }
+
+  @Override
+  public String toString() {
+    return "Player{" +
+        super.toString() +
+        ", age=" + age +
+        ", goClub='" + goClub + '\'' +
+        ", goRank=" + goRank +
+        ", isFemale=" + isFemale +
+        ", isSenior=" + isSenior +
+        ", isStudent=" + isStudent +
+        ", isU10=" + isU10 +
+        ", paymentStatus=" + paymentStatus +
+        '}';
+  }
 }

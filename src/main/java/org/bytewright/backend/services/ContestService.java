@@ -25,7 +25,7 @@ public class ContestService {
   private static Random random = new Random();
   private static Map<String, Contest> knownContests = IntStream.range(2020, 2035)
       .mapToObj(value -> "jcc" + value)
-      .map(value -> Pair.of(value, createContest(value)))
+      .map(value -> Pair.of(value, createDummyContest(value)))
       .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 
   public Optional<Contest> getContest(String contestId) {
@@ -41,7 +41,11 @@ public class ContestService {
         .collect(Collectors.toList());
   }
 
-  private static Contest createContest(String uId) {
+  public boolean createContest() {
+    return false;
+  }
+
+  private static Contest createDummyContest(String uId) {
     Contest contest = new Contest();
     contest.setuId(uId);
     contest.setName("Jena CrossCut - " + uId);

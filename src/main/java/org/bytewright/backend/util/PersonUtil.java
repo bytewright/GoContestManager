@@ -1,15 +1,21 @@
 package org.bytewright.backend.util;
 
-import org.bytewright.backend.dto.*;
-
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.bytewright.backend.dto.Helper;
+import org.bytewright.backend.dto.Location;
+import org.bytewright.backend.dto.Organiser;
+import org.bytewright.backend.dto.Person;
+import org.bytewright.backend.dto.Player;
+
 public class PersonUtil {
   private static Random rnd = new Random();
+  private static AtomicLong nextId = new AtomicLong(1);
 
   public static Helper rndHelper() {
     Helper helper = rndPerson(new Helper());
@@ -28,8 +34,8 @@ public class PersonUtil {
     player.setGoClub(generateRandomWord(8));
     GoRank[] values = GoRank.values();
     GoRank rank = Arrays.stream(values)
-      .skip(rnd.nextInt(values.length - 1))
-      .findFirst().orElse(GoRank.KYU_30);
+        .skip(rnd.nextInt(values.length - 1))
+        .findFirst().orElse(GoRank.KYU_30);
     player.setGoRank(rank);
     player.setPaymentStatus(rnd.nextBoolean() ? PaymentStatus.NOT_PAID : PaymentStatus.FULLY_PAID);
     player.setSenior(rnd.nextBoolean());
@@ -42,6 +48,12 @@ public class PersonUtil {
     return player;
   }
 
+  public static Set<Player> rndPlayers(int num) {
+    return IntStream.range(0, num)
+        .mapToObj(value -> rndPlayer())
+        .collect(Collectors.toSet());
+  }
+
   private static String generateRandomWord(int wordLength) {
     StringBuilder sb = new StringBuilder(wordLength);
     for (int i = 0; i < wordLength; i++) { // For each letter in the word
@@ -52,6 +64,7 @@ public class PersonUtil {
   }
 
   private static <T extends Person> T rndPerson(T person) {
+    person.setUniqueId(nextId.getAndIncrement());
     person.setName(generateRandomWord(3 + rnd.nextInt(12)));
     person.setSurname(generateRandomWord(3 + rnd.nextInt(12)));
     person.setEmailAddr(person.getName() + "." + person.getSurname() + "@some.mail.com");
@@ -61,11 +74,5 @@ public class PersonUtil {
     rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
     person.setAddress(rndAdress);
     return person;
-  }
-
-  public static Set<Player> rndPlayers(int num) {
-    return IntStream.range(0, num)
-      .mapToObj(value -> rndPlayer())
-      .collect(Collectors.toSet());
   }
 }

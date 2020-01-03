@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<wicket:panel>
+  <form id="playerAdd" method="get" wicket:id="playerAdd">
+    <fieldset>
+      <legend style="color: #F90">Add Player manually</legend>
+      <div class="table">
+        <div class="tr">
+          <div class="td"><span>Name: </span></div>
+          <div class="td"><input id="name" type="text" wicket:id="name"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>Surname: </span></div>
+          <div class="td"><input id="surname" type="text" wicket:id="surname"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>Rank: </span></div>
+          <div class="td"><select id="rank" wicket:id="rank"></select></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>Email: </span></div>
+          <div class="td"><input id="emailAddr" type="email" wicket:id="emailAddr"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>Club: </span></div>
+          <div class="td"><input id="club" type="text" wicket:id="club"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>age: </span></div>
+          <div class="td"><input id="age" type="number" wicket:id="age"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>female: </span></div>
+          <div class="td"><input id="isFemale" type="checkbox" wicket:id="isFemale"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>senior: </span></div>
+          <div class="td"><input id="isSenior" type="checkbox" wicket:id="isSenior"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>student: </span></div>
+          <div class="td"><input id="isStudent" type="checkbox" wicket:id="isStudent"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>U10: </span></div>
+          <div class="td"><input id="isU10" type="checkbox" wicket:id="isU10"/></div>
+        </div>
+      </div>
+      <p>
+        <input name="Add" type="submit" value="Add"/>
+      </p>
+    </fieldset>
+  </form>
+  <hr>
+  <p>
+    Parse new Player from registration email. Copy email content here:
+  </p>
+  <form id="playerParse" method="get" wicket:id="playerParse">
+    <fieldset>
+      <legend style="color: #F90">Add Player from email</legend>
+      <label for="emailContent">Email content</label><br>
+      <textarea cols="50" id="emailContent" rows="4" wicket:id="emailContent">
+        content
+      </textarea>
+      <p>
+        <input name="Add" type="submit" value="Add"/>
+      </p>
+    </fieldset>
+  </form>
+</wicket:panel>
+</body>
+</html>

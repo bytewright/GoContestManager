@@ -3,10 +3,19 @@ package org.bytewright.backend.dto;
 import java.io.Serializable;
 
 public class Person implements Serializable {
+  private Long uniqueId;
   private Location address;
   private String emailAddr;
   private String name;
   private String surname;
+
+  public Long getUniqueId() {
+    return uniqueId;
+  }
+
+  public void setUniqueId(Long uniqueId) {
+    this.uniqueId = uniqueId;
+  }
 
   public String getName() {
     return name;
@@ -38,5 +47,15 @@ public class Person implements Serializable {
 
   public void setAddress(Location address) {
     this.address = address;
+  }
+
+  @Override
+  public String toString() {
+    return "Person{" +
+        "name='" + name + '\'' +
+        ", surname='" + surname + '\'' +
+        ", emailAddr='" + emailAddr + '\'' +
+        ", address=" + address +
+        '}';
   }
 }
