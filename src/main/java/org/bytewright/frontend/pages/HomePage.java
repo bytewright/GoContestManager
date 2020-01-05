@@ -35,7 +35,7 @@ public class HomePage extends GcmTemplate {
   @Override
   protected Component getContent(String contentId) {
     SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContest();
+    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
     List<Contest> validContests = contestService.getValidContests().stream()
         .sorted(Comparator.comparing(Contest::getDateStart))
         .collect(Collectors.toList());

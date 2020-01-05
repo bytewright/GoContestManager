@@ -12,9 +12,13 @@ import java.util.Set;
 public class ContestSettings implements Serializable {
   private CurrencyUnit currencyUnit;
   private MonetaryAmount discountClubMember;
-  private MonetaryAmount discountSenior;
-  private MonetaryAmount discountStudent;
-  private int roundCount;
+  private MonetaryAmount discounted; // todo
+  private MonetaryAmount discountSenior; // todo remove
+  private MonetaryAmount discountStudent; // todo remove
+  private MonetaryAmount discountPreRegistered; // todo
+  private MonetaryAmount breakfastCost; // todo
+
+  private int roundCount; // todo bis zu 20
   private MonetaryAmount startingFee;
   private Set<GoRank> startingFeeFreedRanks;
 

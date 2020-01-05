@@ -39,7 +39,7 @@ public class PlayerEditPage extends GcmTemplate {
   @Override
   protected Component getContent(String contentId, PageParameters pageParameters) {
     SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContest();
+    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
   private Long uniqueId;
-  private Location address;
+  private Location address; // not needed in player
   private String emailAddr;
   private String name;
   private String surname;

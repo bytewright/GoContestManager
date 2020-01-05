@@ -1,4 +1,4 @@
-package org.bytewright.frontend.spring;
+package org.bytewright.frontend.util;
 
 import org.apache.wicket.Page;
 

@@ -1,23 +1,17 @@
 package org.bytewright.frontend.components.manage.players;
 
-import java.util.List;
-
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.EmailTextField;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.NumberTextField;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LambdaModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.GoRank;
-import org.bytewright.backend.util.PaymentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class PlayerAddForm extends Form<Player> {
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerAddForm.class);
@@ -27,10 +21,10 @@ public class PlayerAddForm extends Form<Player> {
   @SpringBean
   private PersonService personService;
 
-  public PlayerAddForm(String playerAdd, Contest contest) {
-    super(playerAdd, Model.of(new Player()));
+  public PlayerAddForm(String contentId, IModel<Player> model, Contest contest) {
+    super(contentId, model);
     this.contest = contest;
-    this.player = getModelObject();
+    this.player = model.getObject();
     add(new TextField<>("name", LambdaModel.of(player::getName, player::setName), String.class));
     add(new TextField<>("surname", LambdaModel.of(player::getSurname, player::setSurname), String.class));
     add(new EmailTextField("emailAddr", LambdaModel.of(player::getEmailAddr, player::setEmailAddr)));
@@ -46,7 +40,6 @@ public class PlayerAddForm extends Form<Player> {
 
   @Override
   protected void onSubmit() {
-    player.setPaymentStatus(PaymentStatus.NOT_PAID);
     LOGGER.info("{} submitted! {}", this.getClass(), player);
     personService.addPlayer(contest, player);
   }

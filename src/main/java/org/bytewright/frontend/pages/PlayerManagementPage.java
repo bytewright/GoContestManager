@@ -30,7 +30,7 @@ public class PlayerManagementPage extends GcmTemplate {
   @Override
   protected Component getContent(String contentId) {
     SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContest();
+    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

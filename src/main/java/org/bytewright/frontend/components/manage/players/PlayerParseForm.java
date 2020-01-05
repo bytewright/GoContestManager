@@ -2,6 +2,7 @@ package org.bytewright.frontend.components.manage.players;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
@@ -14,8 +15,8 @@ public class PlayerParseForm extends Form<Player> {
   private final TextArea<String> textArea;
   private final Contest contest;
 
-  public PlayerParseForm(String playerParse, Contest contest) {
-    super(playerParse);
+  public PlayerParseForm(String contentId, IModel<Player> model, Contest contest) {
+    super(contentId, model);
     this.contest = contest;
     textArea = new TextArea<>("emailContent", Model.of(""));
     add(textArea);
@@ -23,6 +24,6 @@ public class PlayerParseForm extends Form<Player> {
 
   @Override
   protected void onSubmit() {
-    LOGGER.info("{} submitted!", this.getClass());
+    LOGGER.info("{} submitted! {}", this.getClass(), textArea.getModelObject());
   }
 }

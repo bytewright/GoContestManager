@@ -11,7 +11,12 @@ public class Player extends Person {
   private boolean isSenior;
   private boolean isStudent;
   private boolean isU10;
+  private boolean isFirstContest; // todo
+  private boolean isSeminarMember; // todo
   private PaymentStatus paymentStatus;
+  //todo uebernachtungen
+  // todo location is club location
+  // todo String MessageFromPreregisterForm
 
   public int getAge() {
     return age;
