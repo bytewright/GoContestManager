@@ -1,13 +1,13 @@
 package org.bytewright.backend.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 public class Contest implements Serializable {
   private ContestSettings contestSettings;
-  private Instant dateEnd;
-  private Instant dateStart;
+  private ZonedDateTime dateEnd;
+  private ZonedDateTime dateStart;
   private Set<Helper> helpers;
   private Location location;
   private String name;
@@ -26,11 +26,11 @@ public class Contest implements Serializable {
     this.location = location;
   }
 
-  public Instant getDateEnd() {
+  public ZonedDateTime getDateEnd() {
     return dateEnd;
   }
 
-  public void setDateEnd(Instant dateEnd) {
+  public void setDateEnd(ZonedDateTime dateEnd) {
     this.dateEnd = dateEnd;
   }
 
@@ -82,11 +82,11 @@ public class Contest implements Serializable {
     this.name = name;
   }
 
-  public Instant getDateStart() {
+  public ZonedDateTime getDateStart() {
     return dateStart;
   }
 
-  public void setDateStart(Instant dateStart) {
+  public void setDateStart(ZonedDateTime dateStart) {
     this.dateStart = dateStart;
   }
 }

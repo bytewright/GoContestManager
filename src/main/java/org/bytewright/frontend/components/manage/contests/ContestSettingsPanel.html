@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<wicket:panel>
+  <form id="contestSettings" method="get" wicket:id="contestSettings">
+    <fieldset>
+      <legend style="color: #F90">Edit contest settings</legend>
+      <span>Play rounds: </span><select id="roundCount" wicket:id="roundCount"></select><br/>
+      <p>
+        Configure the Starting fee. The selected currency is used for all other monetary values as well.<br>
+        This has to be in the lowest available currencyUnit, i.e. for EUR in Euro Cent:
+      </p>
+      <input id="startFee" type="number" style="width: 60px" wicket:id="startFee"/>
+      <select id="currencyUnit" wicket:id="currencyUnit"></select><br/>
+      <p>
+        Configure discounts applied to the starting fee:
+      </p>
+      <span>Discount go club members: </span>
+      <input id="discountClub" type="number" style="width: 60px" wicket:id="discountClub"/><br/>
+      <span>Discount seniors: </span>
+      <input id="discountSenior" type="number" style="width: 60px" wicket:id="discountSenior"/><br/>
+      <span>Discount students: </span>
+      <input id="discountStudent" type="number" style="width: 60px" wicket:id="discountStudent"/><br/>
+      <p>
+        <input name="Save" type="submit" value="Save"/>
+      </p>
+    </fieldset>
+  </form>
+  <form id="contestEdit" method="get" wicket:id="contestEdit">
+    <fieldset>
+      <legend style="color: #F90">Edit contest parameters</legend>
+      <span>Contest Name: </span><input id="name" type="text" wicket:id="name"/><br/>
+      <span>Id: </span><input id="uId" type="text" wicket:id="uId"/><br/>
+      <span>Start date: </span><input id="startDate" type="text" wicket:id="startDate"/><br/>
+      <span>End date: </span><input id="endDate" type="text" wicket:id="endDate"/><br/>
+      <p>
+        <input name="Save" type="submit" value="Save"/>
+      </p>
+    </fieldset>
+  </form>
+</wicket:panel>
+</body>
+</html>

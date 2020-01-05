@@ -14,6 +14,7 @@ public class PageMountRegistry {
       Mountable.of(PlayerEditPage.getMountPath(), PlayerEditPage.class),
       Mountable.of(LoginPage.getMountPath(), LoginPage.class),
       Mountable.of(OverviewPage.getMountPath(), OverviewPage.class),
+      Mountable.of(ContestSettingsPage.getMountPath(), ContestSettingsPage.class),
       Mountable.of(ContestCreationPage.getMountPath(), ContestCreationPage.class));
 
   public Set<Mountable> getMountables() {

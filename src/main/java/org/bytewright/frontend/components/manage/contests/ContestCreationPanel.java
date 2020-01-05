@@ -1,4 +1,4 @@
-package org.bytewright.frontend.components.contests;
+package org.bytewright.frontend.components.manage.contests;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -9,6 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.bytewright.backend.dto.Contest;
 import org.bytewright.frontend.res.css.Marker;
 
 public class ContestCreationPanel extends Panel {
@@ -20,7 +21,7 @@ public class ContestCreationPanel extends Panel {
     if (!parameters.isEmpty()) {
       successMsg = LambdaModel.of(() -> success ? "Contest created successfully!" : "Contest could not be created");
     }
-    Form<String> selection = new ContestCreationForm("contestCreation");
+    Form<Contest> selection = new ContestCreationForm("contestCreation");
     add(new Label("creationSuccess", successMsg));
     add(selection);
   }

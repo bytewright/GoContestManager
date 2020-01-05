@@ -1,7 +1,7 @@
 package org.bytewright.frontend.pages;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.bytewright.frontend.components.contests.ContestCreationPanel;
+import org.bytewright.frontend.components.manage.contests.ContestCreationPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
 import org.wicketstuff.shiro.ShiroConstraint;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
