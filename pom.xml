@@ -67,6 +67,11 @@
       <artifactId>wicket-core</artifactId>
       <version>${wicket.version}</version>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.apache.wicket</groupId>-->
+    <!--      <artifactId>wicket-bean-validation</artifactId>-->
+    <!--      <version>${wicket.version}</version>-->
+    <!--    </dependency>-->
     <!-- SECURITY DEPENDENCY -->
     <dependency>
       <groupId>org.apache.shiro</groupId>

@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.bytewright.frontend.res.css.Marker;
 
 public class GcmTemplate extends WebPage {
   protected static final String CONTENT_ID = "contentComponent";
@@ -30,19 +31,10 @@ public class GcmTemplate extends WebPage {
     add(footerPanel);
   }
 
-  protected Component getContent(String contentId, PageParameters parameters) {
-    return getContent(contentId);
-  }
-
-  protected Component getContent(String contentId) {
-    return new Label(CONTENT_ID, "Put your content here");
-  }
-
   @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
-    PackageResourceReference cssFile = new PackageResourceReference(GcmTemplate.class,
-        "baseStyle.css");
+    PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "baseStyle.css");
     CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
     response.render(cssItem);
   }
@@ -53,5 +45,13 @@ public class GcmTemplate extends WebPage {
 
   public Component getFooterPanel() {
     return footerPanel;
+  }
+
+  protected Component getContent(String contentId, PageParameters parameters) {
+    return getContent(contentId);
+  }
+
+  protected Component getContent(String contentId) {
+    return new Label(CONTENT_ID, "Put your content here");
   }
 }

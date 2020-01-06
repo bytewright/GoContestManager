@@ -46,5 +46,7 @@ public class PlayerAddPage extends GcmTemplate {
     response.render(cssItem);
     cssFile = new PackageResourceReference(Marker.class, "div-as-table.css");
     response.render(CssHeaderItem.forReference(cssFile));
+    cssFile = new PackageResourceReference(Marker.class, "feedbackPanel.css");
+    response.render(CssHeaderItem.forReference(cssFile));
   }
 }

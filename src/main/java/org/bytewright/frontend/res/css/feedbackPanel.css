@@ -1,0 +1,9 @@
+ul.feedbackPanel {
+    padding: 10px;
+}
+
+li.feedbackPanelERROR {
+    background-color: #FF9900;
+    border-color: #FF5500;
+    color: #000000;
+}

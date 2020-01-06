@@ -14,13 +14,15 @@ public class PersonService {
   private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
   @Autowired
   private ContestService contestService;
+  @Autowired
+  private UserService userService;
 
   public Set<Player> getPlayers(Contest contest) {
     return Set.of();
   }
 
   public void addPlayer(Contest contest, Player player) {
-    LOGGER.info("Adding Player {} to contest {}", player, contest.getuId());
+    LOGGER.info("Adding Player {} to contest {}", player, contest.getUniqueId());
   }
 
   public Player getPlayer(Long playerId) {
@@ -31,7 +33,17 @@ public class PersonService {
         .findFirst().orElseThrow();
   }
 
-  public void updatePlayer(Player modelObject) {
-    LOGGER.info("\nold: {}\nnew {}", getPlayer(modelObject.getUniqueId()), modelObject);
+  public Long saveOrUpdatePlayer(Contest contest, Player player) {
+    LOGGER.info("Adding/Updating Player {} to contest {}", player, contest.getUniqueId());
+    return player.getUniqueId();
+  }
+
+  public Long saveOrUpdatePlayer(Player player) {
+    return saveOrUpdatePlayer(userService.getSessionInfo().getSelectedContest(), player);
+  }
+
+  public void deletePlayer(Player player) {
+    Contest contest = userService.getSessionInfo().getSelectedContest();
+    LOGGER.info("Deleting Player {} from contest {}", player, contest);
   }
 }

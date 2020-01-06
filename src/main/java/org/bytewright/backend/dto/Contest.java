@@ -66,7 +66,7 @@ public class Contest implements Serializable {
     this.helpers = helpers;
   }
 
-  public String getuId() {
+  public String getUniqueId() {
     return uId;
   }
 

@@ -16,8 +16,11 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.services.PersonService;
+import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.PlayerExporter;
 import org.bytewright.frontend.pages.PlayerAddPage;
 import org.bytewright.frontend.pages.PlayerEditPage;
@@ -39,7 +42,7 @@ public class PlayerManagementPanel extends Panel {
   private File makeFile(Contest contest, Set<Player> players) {
     try {
       PlayerExporter playerExporter = new PlayerExporter(players);
-      Path tmpFile = Files.createTempFile(contest.getuId() + "_player_export", ".csv");
+      Path tmpFile = Files.createTempFile(contest.getUniqueId() + "_player_export", ".csv");
       Files.write(tmpFile, playerExporter.getLines());
       LOGGER.info("Created Export at: {}", tmpFile.toAbsolutePath().toString());
       return tmpFile.toFile();
@@ -49,6 +52,8 @@ public class PlayerManagementPanel extends Panel {
   }
 
   private static class PlayerListView extends ListView<Player> {
+    @SpringBean
+    private PersonService personService;
 
     public PlayerListView(String id, Set<Player> players) {
       super(id, List.copyOf(players));
@@ -58,6 +63,7 @@ public class PlayerManagementPanel extends Panel {
     protected void populateItem(ListItem<Player> item) {
       Player player = item.getModel().getObject();
       item.add(new Label("name", LambdaModel.of(player::getName, player::setName)));
+      item.add(new Label("surname", LambdaModel.of(player::getSurname, player::setSurname)));
       item.add(new Label("goClub", LambdaModel.of(player::getGoClub, player::setGoClub)));
       item.add(new Label("rank", LambdaModel.of(() -> player.getGoRank().getAbbreviation())));
       item.add(new Label("paymentStatus", LambdaModel.of(player::getPaymentStatus, player::setPaymentStatus)));
@@ -77,12 +83,26 @@ public class PlayerManagementPanel extends Panel {
         @Override
         protected void onSubmit() {
           PageParameters pageParameters = new PageParameters();
-          pageParameters.add("playerId", player.getUniqueId());
-          //          new PlayerEditPage(pageParameters)
+          pageParameters.add(PlayerEditPage.PLAYER_PARAM, player.getUniqueId());
           setResponsePage(PlayerEditPage.class, pageParameters);
         }
       };
       item.add(playerEditForm);
+      Form<String> playerPaidForm = new Form<>("playerPaidForm") {
+        @Override
+        protected void onSubmit() {
+          player.setPaymentStatus(PaymentStatus.FULLY_PAID);
+          personService.saveOrUpdatePlayer(player);
+        }
+      };
+      item.add(playerPaidForm);
+      Form<String> playerDeleteForm = new Form<>("playerDeleteForm") {
+        @Override
+        protected void onSubmit() {
+          personService.deletePlayer(player);
+        }
+      };
+      item.add(playerDeleteForm);
     }
   }
 }

@@ -8,7 +8,7 @@
 <wicket:panel>
   <form id="playerEdit" method="get" wicket:id="playerEdit">
     <fieldset>
-      <legend style="color: #F90">Edit Player</legend>
+      <legend style="color: #F90">Add Player manually</legend>
       <div class="table">
         <div class="tr">
           <div class="td"><span>Name: </span></div>
@@ -20,7 +20,10 @@
         </div>
         <div class="tr">
           <div class="td"><span>Rank: </span></div>
-          <div class="td"><select id="rank" wicket:id="rank"></select></div>
+          <div class="td">
+            <input id="rankNum" style="width: 60px" type="number" wicket:id="rankNum"/>
+            <select id="rank" wicket:id="rank"></select>
+          </div>
         </div>
         <div class="tr">
           <div class="td"><span>Email: </span></div>
@@ -50,9 +53,18 @@
           <div class="td"><span>U10: </span></div>
           <div class="td"><input id="isU10" type="checkbox" wicket:id="isU10"/></div>
         </div>
+        <div class="tr">
+          <div class="td"><span>First Contest: </span></div>
+          <div class="td"><input id="isFirstContest" type="checkbox" wicket:id="isFirstContest"/></div>
+        </div>
+        <div class="tr">
+          <div class="td"><span>Seminar Member: </span></div>
+          <div class="td"><input id="isSeminarMember" type="checkbox" wicket:id="isSeminarMember"/></div>
+        </div>
       </div>
+      <div wicket:id="feedback"></div>
       <p>
-        <input name="Submit" type="submit" value="Submit"/>
+        <input name="save" type="submit" value="save"/>
       </p>
     </fieldset>
   </form>

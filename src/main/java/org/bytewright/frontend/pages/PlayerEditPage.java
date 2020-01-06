@@ -22,6 +22,7 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
 @ShiroSecurityConstraint(constraint = ShiroConstraint.IsAuthenticated, loginMessage = "Login message", unauthorizedMessage = "Not authorized message")
 public class PlayerEditPage extends GcmTemplate {
+  public static final String PLAYER_PARAM = "playerId";
 
   @SpringBean
   private PersonService personService;
@@ -44,7 +45,7 @@ public class PlayerEditPage extends GcmTemplate {
       return new Label(contentId, "Select a contest on the homepage!");
     }
     Contest contest = selectedContest.get();
-    Long playerId = pageParameters.get("playerId").to(Long.class);
+    Long playerId = pageParameters.get(PLAYER_PARAM).to(Long.class);
     Player player = personService.getPlayer(playerId);
     return new PlayerEditPanel(contentId, contest, player);
   }

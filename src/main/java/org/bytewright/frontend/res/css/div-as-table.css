@@ -4,6 +4,7 @@ div.table {
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
+    width: 90%;
 }
 
 div.tr {

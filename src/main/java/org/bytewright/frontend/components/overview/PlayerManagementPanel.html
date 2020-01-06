@@ -27,6 +27,7 @@
     </div>
     <div class="tr" wicket:id="players">
       <div class="td" wicket:id="name"></div>
+      <div class="td" wicket:id="surname"></div>
       <div class="td" wicket:id="goClub"></div>
       <div class="td" wicket:id="rank"></div>
       <div class="td" wicket:id="paymentStatus"></div>
@@ -38,21 +39,24 @@
         <form wicket:id="playerEditForm">
           <input type="submit" value="EDIT">
         </form>
-        <button value="PAID">PAID</button> todo js warning
-        <button value="DEL">DEL</button>
+        <form wicket:id="playerPaidForm">
+          <input type="submit" value="PAID">
+        </form>
+        <form onsubmit="return confirm('Do you really want to delete this player?');" wicket:id="playerDeleteForm">
+          <input type="submit" value="DEL">
+        </form>
       </div>
     </div>
-    <hr>
-    TODO<br>
-    registered players: <br>
-    number of different clubs: <br>
-    expected total sum: <br>
-    expected sum starting fee money: <br>
-    expected sum breakfast money: <br>
-    Number of players with breakfast:<br>
-    Number of players with seminar:<br>
-
   </div>
+  <hr>
+  TODO<br>
+  registered players: <br>
+  number of different clubs: <br>
+  expected total sum: <br>
+  expected sum starting fee money: <br>
+  expected sum breakfast money: <br>
+  Number of players with breakfast:<br>
+  Number of players with seminar:<br>
 </wicket:panel>
 </body>
 </html>
