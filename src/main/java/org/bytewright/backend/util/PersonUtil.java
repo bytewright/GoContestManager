@@ -20,12 +20,22 @@ public class PersonUtil {
   public static Helper rndHelper() {
     Helper helper = rndPerson(new Helper());
     helper.setPhoneNumber(rnd.ints(10).mapToObj(Integer::toString).collect(Collectors.joining()));
+    Location rndAdress = new Location();
+    rndAdress.setStreet(6 + generateRandomWord(rnd.nextInt(6)));
+    rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
+    rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
+    helper.setAddress(rndAdress);
     return helper;
   }
 
   public static Organiser rndOrga() {
     Organiser organiser = rndPerson(new Organiser());
     organiser.setPhoneNumber(rnd.ints(10).mapToObj(Integer::toString).collect(Collectors.joining()));
+    Location rndAdress = new Location();
+    rndAdress.setStreet(6 + generateRandomWord(rnd.nextInt(6)));
+    rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
+    rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
+    organiser.setAddress(rndAdress);
     return organiser;
   }
 
@@ -68,11 +78,6 @@ public class PersonUtil {
     person.setName(generateRandomWord(3 + rnd.nextInt(12)));
     person.setSurname(generateRandomWord(3 + rnd.nextInt(12)));
     person.setEmailAddr(person.getName() + "." + person.getSurname() + "@some.mail.com");
-    Location rndAdress = new Location();
-    rndAdress.setStreet(6 + generateRandomWord(rnd.nextInt(6)));
-    rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
-    rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
-    person.setAddress(rndAdress);
     return person;
   }
 }

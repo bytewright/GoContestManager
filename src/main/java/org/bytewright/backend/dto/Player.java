@@ -6,17 +6,17 @@ import org.bytewright.backend.util.PaymentStatus;
 public class Player extends Person {
   private int age;
   private String goClub;
+  private String city;
   private GoRank goRank;
   private boolean isFemale;
   private boolean isSenior;
   private boolean isStudent;
   private boolean isU10;
-  private boolean isFirstContest; // todo
-  private boolean isSeminarMember; // todo
+  private boolean isFirstContest;
+  private boolean isSeminarMember;
   private PaymentStatus paymentStatus;
-  //todo uebernachtungen
-  // todo location is club location
-  // todo String MessageFromPreregisterForm
+  private boolean isNeedsSleepOver;
+  private String registrationFormMessage;
 
   public int getAge() {
     return age;
@@ -24,14 +24,6 @@ public class Player extends Person {
 
   public void setAge(int age) {
     this.age = age;
-  }
-
-  public boolean isFemale() {
-    return isFemale;
-  }
-
-  public void setFemale(boolean female) {
-    isFemale = female;
   }
 
   public String getGoClub() {
@@ -42,12 +34,28 @@ public class Player extends Person {
     this.goClub = goClub;
   }
 
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
   public GoRank getGoRank() {
     return goRank;
   }
 
   public void setGoRank(GoRank goRank) {
     this.goRank = goRank;
+  }
+
+  public boolean isFemale() {
+    return isFemale;
+  }
+
+  public void setFemale(boolean female) {
+    isFemale = female;
   }
 
   public boolean isSenior() {
@@ -74,6 +82,22 @@ public class Player extends Person {
     isU10 = u10;
   }
 
+  public boolean isFirstContest() {
+    return isFirstContest;
+  }
+
+  public void setFirstContest(boolean firstContest) {
+    isFirstContest = firstContest;
+  }
+
+  public boolean isSeminarMember() {
+    return isSeminarMember;
+  }
+
+  public void setSeminarMember(boolean seminarMember) {
+    isSeminarMember = seminarMember;
+  }
+
   public PaymentStatus getPaymentStatus() {
     return paymentStatus;
   }
@@ -82,18 +106,39 @@ public class Player extends Person {
     this.paymentStatus = paymentStatus;
   }
 
+  public boolean isNeedsSleepOver() {
+    return isNeedsSleepOver;
+  }
+
+  public void setNeedsSleepOver(boolean needsSleepOver) {
+    isNeedsSleepOver = needsSleepOver;
+  }
+
+  public String getRegistrationFormMessage() {
+    return registrationFormMessage;
+  }
+
+  public void setRegistrationFormMessage(String registrationFormMessage) {
+    this.registrationFormMessage = registrationFormMessage;
+  }
+
   @Override
   public String toString() {
     return "Player{" +
         super.toString() +
         ", age=" + age +
         ", goClub='" + goClub + '\'' +
+        ", city='" + city + '\'' +
         ", goRank=" + goRank +
         ", isFemale=" + isFemale +
         ", isSenior=" + isSenior +
         ", isStudent=" + isStudent +
         ", isU10=" + isU10 +
+        ", isFirstContest=" + isFirstContest +
+        ", isSeminarMember=" + isSeminarMember +
         ", paymentStatus=" + paymentStatus +
+        ", isNeedsSleepOver=" + isNeedsSleepOver +
+        ", registrationFormMessage='" + registrationFormMessage + '\'' +
         '}';
   }
 }
