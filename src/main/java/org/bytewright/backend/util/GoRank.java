@@ -1,6 +1,8 @@
 package org.bytewright.backend.util;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Optional;
 
 public enum GoRank implements Serializable {
   KYU_30(30, GoRankName.KYU, "30k"),
@@ -70,5 +72,12 @@ public enum GoRank implements Serializable {
 
   public String getAbbreviation() {
     return abbreviation;
+  }
+
+  public static Optional<GoRank> from(Integer rankNum, GoRankName goRankName) {
+    return Arrays.stream(GoRank.values())
+        .filter(goRank -> goRankName.equals(goRank.getGoRankName()))
+        .filter(goRank -> rankNum == goRank.getRank())
+        .findFirst();
   }
 }

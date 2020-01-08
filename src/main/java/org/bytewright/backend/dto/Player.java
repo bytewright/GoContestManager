@@ -17,6 +17,7 @@ public class Player extends Person {
   private PaymentStatus paymentStatus;
   private boolean isNeedsSleepOver;
   private String registrationFormMessage;
+  private String country; // todo in Form, must be "internet code"
 
   public int getAge() {
     return age;
@@ -140,5 +141,13 @@ public class Player extends Person {
         ", isNeedsSleepOver=" + isNeedsSleepOver +
         ", registrationFormMessage='" + registrationFormMessage + '\'' +
         '}';
+  }
+
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
   }
 }

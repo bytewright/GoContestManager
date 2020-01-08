@@ -149,10 +149,9 @@ public class PlayerForm extends Form<Player> { // todo FormComponentPanel
     public void validate(Form<?> form) {
       GoRankName goRankName = rankNameField.getConvertedInput();
       Integer rankNum = rankNumField.getConvertedInput();
-      Optional<GoRank> newRank = Arrays.stream(GoRank.values())
-          .filter(goRank -> goRankName.equals(goRank.getGoRankName()))
-          .filter(goRank -> rankNum == goRank.getRank())
-          .findFirst();
+
+      Optional<GoRank> newRank = GoRank.from(rankNum, goRankName);
+
       if (newRank.isEmpty()) {
         String msg = "Go Rank does not exist: " + rankNum + " " + goRankName.getName() +
             " (" + rankNum + goRankName.getLetter() + ")";
