@@ -24,6 +24,7 @@ import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.PlayerExporter;
 import org.bytewright.frontend.pages.PlayerAddPage;
 import org.bytewright.frontend.pages.PlayerEditPage;
+import org.bytewright.frontend.pages.PlayerManagementPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.lambda.components.ComponentFactory;
@@ -37,6 +38,7 @@ public class PlayerManagementPanel extends Panel {
     add(ComponentFactory.link("addPlayerLink", components -> setResponsePage(PlayerAddPage.class)));
     add(new DownloadLink("exportPlayerLink", LambdaModel.of(() -> makeFile(contest, players))));
     add(new PlayerListView("players", players));
+    add(new PlayerSummaryPanel("summaryView", contest));
   }
 
   private File makeFile(Contest contest, Set<Player> players) {
@@ -67,16 +69,16 @@ public class PlayerManagementPanel extends Panel {
       item.add(new Label("goClub", LambdaModel.of(player::getGoClub, player::setGoClub)));
       item.add(new Label("rank", LambdaModel.of(() -> player.getGoRank().getAbbreviation())));
       item.add(new Label("paymentStatus", LambdaModel.of(player::getPaymentStatus, player::setPaymentStatus)));
-      CheckBox student = new CheckBox("isStudent", LambdaModel.of(player::isStudent));
+      CheckBox student = new CheckBox("isDiscount", LambdaModel.of(player::isDiscounted));
       student.setEnabled(false);
       item.add(student);
-      CheckBox senior = new CheckBox("isSenior", LambdaModel.of(player::isSenior));
+      CheckBox senior = new CheckBox("isSeminar", LambdaModel.of(player::isSeminarMember));
       senior.setEnabled(false);
       item.add(senior);
-      CheckBox female = new CheckBox("isFemale", LambdaModel.of(player::isFemale));
+      CheckBox female = new CheckBox("isClub", LambdaModel.of(player::isGoClubMember));
       female.setEnabled(false);
       item.add(female);
-      CheckBox u10 = new CheckBox("isU10", LambdaModel.of(player::isU10));
+      CheckBox u10 = new CheckBox("isBreakfast", LambdaModel.of(player::isAttendsBreakfast));
       u10.setEnabled(false);
       item.add(u10);
       Form<String> playerEditForm = new Form<>("playerEditForm") {
@@ -100,6 +102,7 @@ public class PlayerManagementPanel extends Panel {
         @Override
         protected void onSubmit() {
           personService.deletePlayer(player);
+          setResponsePage(PlayerManagementPage.class);
         }
       };
       item.add(playerDeleteForm);

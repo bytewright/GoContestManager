@@ -31,7 +31,6 @@ public class PlayerParseForm extends Form<Player> {
 
   @Override
   protected void onSubmit() {
-    LOGGER.info("submitted! {}", textArea.getModelObject());
     try {
       PlayerImporter importer = new PlayerImporter();
       Player player = importer.parse(textArea.getModelObject());
@@ -40,7 +39,7 @@ public class PlayerParseForm extends Form<Player> {
       pageParameters.add(PlayerEditPage.PLAYER_PARAM, id);
       setResponsePage(PlayerEditPage.class, pageParameters);
     } catch (PlayerParseException e) {
-      LOGGER.error("Failed to parse valid player from parseInput");
+      LOGGER.error("Failed to parse valid player from parseInput!", e);
     }
   }
 }

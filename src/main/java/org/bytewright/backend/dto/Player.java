@@ -8,16 +8,31 @@ public class Player extends Person {
   private String goClub;
   private String city;
   private GoRank goRank;
+  private PaymentStatus paymentStatus;
+  private String registrationFormMessage;
+  private String country; // todo must be "internet code"
+  private boolean isNeedsSleepOver;
+  private boolean isAttendsBreakfast;
+  private boolean isGoClubMember;
+  private boolean isDiscounted;
   private boolean isFemale;
   private boolean isSenior;
   private boolean isStudent;
   private boolean isU10;
   private boolean isFirstContest;
   private boolean isSeminarMember;
-  private PaymentStatus paymentStatus;
-  private boolean isNeedsSleepOver;
-  private String registrationFormMessage;
-  private String country; // todo in Form, must be "internet code"
+
+  public boolean isAttendsBreakfast() {
+    return isAttendsBreakfast;
+  }
+
+  public void setAttendsBreakfast(Boolean aBoolean) {
+    isAttendsBreakfast = aBoolean;
+  }
+
+  public boolean isGoClubMember() {
+    return isGoClubMember;
+  }
 
   public int getAge() {
     return age;
@@ -149,5 +164,17 @@ public class Player extends Person {
 
   public void setCountry(String country) {
     this.country = country;
+  }
+
+  public void setGoClubMember(Boolean aBoolean) {
+    isGoClubMember = aBoolean;
+  }
+
+  public boolean isDiscounted() {
+    return isDiscounted;
+  }
+
+  public void setDiscounted(Boolean aBoolean) {
+    isDiscounted = aBoolean;
   }
 }

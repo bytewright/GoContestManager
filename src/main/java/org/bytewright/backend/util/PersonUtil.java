@@ -15,7 +15,7 @@ import org.bytewright.backend.dto.Player;
 
 public class PersonUtil {
   private static Random rnd = new Random();
-  private static AtomicLong nextId = new AtomicLong(1);
+  public static AtomicLong nextId = new AtomicLong(1);
 
   public static Helper rndHelper() {
     Helper helper = rndPerson(new Helper());

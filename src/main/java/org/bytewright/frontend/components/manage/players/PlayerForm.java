@@ -53,6 +53,7 @@ public class PlayerForm extends Form<Player> { // todo FormComponentPanel
     add(new EmailTextField("emailAddr", LambdaModel.of(player::getEmailAddr, player::setEmailAddr)).add(
         EmailAddressValidator.getInstance()));
     add(new TextField<>("club", LambdaModel.of(player::getGoClub, player::setGoClub), String.class));
+    add(new TextField<>("country", LambdaModel.of(player::getCountry, player::setCountry), String.class));
     add(new NumberTextField<>("age", LambdaModel.of(player::getAge, player::setAge), Integer.class));
     addGoRankFields("rankNum", "rank");
 
@@ -62,6 +63,9 @@ public class PlayerForm extends Form<Player> { // todo FormComponentPanel
     add(new CheckBox("isU10", LambdaModel.of(player::isU10, player::setU10)));
     add(new CheckBox("isFirstContest", LambdaModel.of(player::isFirstContest, player::setFirstContest)));
     add(new CheckBox("isSeminarMember", LambdaModel.of(player::isSeminarMember, player::setSeminarMember)));
+    add(new CheckBox("isAttendsBreakfast", LambdaModel.of(player::isAttendsBreakfast, player::setAttendsBreakfast)));
+    add(new CheckBox("isClubMember", LambdaModel.of(player::isGoClubMember, player::setGoClubMember)));
+    add(new CheckBox("isDiscounted", LambdaModel.of(player::isDiscounted, player::setDiscounted)));
 
     add(new PlayerValidator());
     add(new FeedbackPanel("feedback").setMaxMessages(3));
@@ -85,7 +89,6 @@ public class PlayerForm extends Form<Player> { // todo FormComponentPanel
         .filter(goRank -> goRank.getRank() == goRankModel.getRank())
         .findFirst().orElseThrow();
     player.setGoRank(newRank);
-    LOGGER.info("submitted! {}", player);
     personService.saveOrUpdatePlayer(contest, player);
     setResponsePage(PlayerManagementPage.class);
   }
