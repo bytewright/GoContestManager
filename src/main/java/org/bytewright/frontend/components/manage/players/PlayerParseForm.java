@@ -10,6 +10,7 @@ import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.PlayerImporter;
+import org.bytewright.backend.util.exceptions.PlayerParseException;
 import org.bytewright.frontend.pages.PlayerEditPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,15 @@ public class PlayerParseForm extends Form<Player> {
   @Override
   protected void onSubmit() {
     LOGGER.info("submitted! {}", textArea.getModelObject());
-    PlayerImporter importer = new PlayerImporter();
-    Long id = personService.saveOrUpdatePlayer(contest, importer.parse(textArea.getModelObject()));
-    PageParameters pageParameters = new PageParameters();
-    pageParameters.add(PlayerEditPage.PLAYER_PARAM, id);
-    setResponsePage(PlayerEditPage.class, pageParameters);
+    try {
+      PlayerImporter importer = new PlayerImporter();
+      Player player = importer.parse(textArea.getModelObject());
+      Long id = personService.saveOrUpdatePlayer(contest, player);
+      PageParameters pageParameters = new PageParameters();
+      pageParameters.add(PlayerEditPage.PLAYER_PARAM, id);
+      setResponsePage(PlayerEditPage.class, pageParameters);
+    } catch (PlayerParseException e) {
+      LOGGER.error("Failed to parse valid player from parseInput");
+    }
   }
 }

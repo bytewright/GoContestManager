@@ -1,12 +1,13 @@
 package org.bytewright.backend.util;
 
+import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.util.exceptions.PlayerParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.bytewright.backend.dto.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PlayerImporter {
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerImporter.class);
@@ -53,7 +54,7 @@ public class PlayerImporter {
       } else if ("18-54".equals(group)) {
         player.setAge(18);
       } else {
-        throw new IllegalStateException("Unexpected value: " + group);
+        throw new PlayerParseException("Unexpected value: " + group);
       }
     }
   }
@@ -70,7 +71,7 @@ public class PlayerImporter {
     Pattern pattern = Pattern.compile("Spielstärke (\\d) (\\S+)");
     Matcher matcher = pattern.matcher(textToParse);
     if (!matcher.find()) {
-      throw new IllegalArgumentException("Failed to parse name from " + textToParse);
+      throw new PlayerParseException("Failed to parse name from " + textToParse);
     }
     Optional<GoRankName> rankName = GoRankName.from(matcher.group(2));
     Optional<GoRank> goRank = GoRank.from(Integer.valueOf(matcher.group(1)), rankName.orElse(GoRankName.KYU));
@@ -81,7 +82,7 @@ public class PlayerImporter {
     Pattern pattern = Pattern.compile("Von: (.*) <(.*)>");
     Matcher matcher = pattern.matcher(textToParse);
     if (!matcher.find()) {
-      throw new IllegalArgumentException("Failed to parse name from " + textToParse);
+      throw new PlayerParseException("Failed to parse name from " + textToParse);
     }
     String nameCandidate = matcher.group(1);
     String mailCandidate = matcher.group(2);
