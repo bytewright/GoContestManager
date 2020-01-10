@@ -7,7 +7,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.ContestService;
-import org.bytewright.backend.services.UserService;
 import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.pages.HomePage;
 import org.slf4j.Logger;
@@ -17,8 +16,6 @@ public class ContestSelectionForm extends Form<String> {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContestSelectionForm.class);
   private final TextField<String> contestFormId;
 
-  @SpringBean
-  private UserService userService;
   @SpringBean
   private ContestService contestService;
 
@@ -34,8 +31,7 @@ public class ContestSelectionForm extends Form<String> {
     Contest contest = contestService.getContest(contestId)
         .orElseThrow(() -> new IllegalArgumentException("Contest with id " + contestId + " could not be found!"));
     LOGGER.info("Form submitted. contestId: {}; contest: {}", contestId, contest);
-    SessionInfo sessionInfo = userService.getSessionInfo();
-    sessionInfo.setSelectedContest(contest);
+    SessionInfo.setSSelectedContest(contest);
     setResponsePage(HomePage.class);
   }
 }

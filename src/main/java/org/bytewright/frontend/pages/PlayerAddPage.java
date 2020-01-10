@@ -7,9 +7,7 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.services.UserService;
 import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.components.manage.players.PlayerAddPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
@@ -20,17 +18,13 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 @ShiroSecurityConstraint(constraint = ShiroConstraint.IsAuthenticated, loginMessage = "Login message", unauthorizedMessage = "Not authorized message")
 public class PlayerAddPage extends GcmTemplate {
 
-  @SpringBean
-  private UserService userService;
-
   public static String getMountPath() {
     return "/players/add";
   }
 
   @Override
   protected Component getContent(String contentId) {
-    SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
+    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

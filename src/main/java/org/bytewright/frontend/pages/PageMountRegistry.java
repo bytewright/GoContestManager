@@ -3,9 +3,7 @@ package org.bytewright.frontend.pages;
 import java.util.Set;
 
 import org.bytewright.frontend.util.Mountable;
-import org.springframework.stereotype.Component;
 
-@Component
 public class PageMountRegistry {
   private static Set<Mountable> mountables = Set.of(
       Mountable.of(HomePage.getMountPath(), HomePage.class),
@@ -18,7 +16,7 @@ public class PageMountRegistry {
       Mountable.of(ContestCreationPage.getMountPath(), ContestCreationPage.class));
   // todo sonderwertungen tabelle
 
-  public Set<Mountable> getMountables() {
+  public static Set<Mountable> getMountables() {
     return mountables;
   }
 }

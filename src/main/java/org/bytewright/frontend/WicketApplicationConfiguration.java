@@ -1,7 +1,14 @@
 package org.bytewright.frontend;
 
+import java.time.Instant;
+
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.settings.SecuritySettings;
+import org.bytewright.backend.security.GoContestManagerSession;
+import org.bytewright.backend.services.ContestService;
 import org.bytewright.frontend.pages.LoginPage;
 import org.bytewright.frontend.pages.PageMountRegistry;
 import org.bytewright.frontend.pages.admin.SecuredPage;
@@ -18,11 +25,17 @@ import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplicatio
 public class WicketApplicationConfiguration extends WicketBootSecuredWebApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(WicketApplicationConfiguration.class);
 
-  private final PageMountRegistry pageMountRegistry;
-
   @Autowired
-  public WicketApplicationConfiguration(PageMountRegistry pageMountRegistry) {
-    this.pageMountRegistry = pageMountRegistry;
+  private ContestService contestService;
+
+  @Override
+  public Session newSession(Request request, Response response) {
+    /* class set by org.bytewright.backend.security.ShiroContextConfiguration.MyAuthenticatedWebSessionConfig.getAuthenticatedWebSessionClass */
+    GoContestManagerSession session = (GoContestManagerSession) super.newSession(request, response);
+    Instant now = Instant.now();
+    session.setCreationInstant(now);
+    session.setContest(contestService.getNextContest());
+    return session;
   }
 
   @Override
@@ -39,7 +52,7 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
         LoginPage.class, AccessDeniedPage.class, authz);
     securitySettings.setUnauthorizedComponentInstantiationListener(listener);
 
-    pageMountRegistry.getMountables().stream()
+    PageMountRegistry.getMountables().stream()
         .peek(mountable -> LOGGER.info("registering mount: {}", mountable))
         .forEach(mountable -> mountPage(mountable.getMountPath(), mountable.getPageClass()));
 

@@ -1,15 +1,13 @@
 package org.bytewright.backend;
 
-import org.bytewright.backend.util.SessionInfo;
+import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.annotation.SessionScope;
-
-import java.util.Properties;
 
 @Configuration
 public class BackendConfig {
@@ -23,11 +21,5 @@ public class BackendConfig {
     props.put("devMode", true);
     LOGGER.info("BuildProperties Bean is missing, creating fake");
     return new BuildProperties(props);
-  }
-
-  @Bean
-  @SessionScope
-  public SessionInfo sessionInfo() {
-    return new SessionInfo();
   }
 }

@@ -24,10 +24,10 @@ import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.dto.Player;
 import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.PersonUtil;
+import org.bytewright.backend.util.SessionInfo;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,11 +38,9 @@ public class ContestService {
       .mapToObj(value -> "jcc" + value)
       .map(value -> Pair.of(value, createDummyContest(value)))
       .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
-  @Autowired
-  private UserService userService;
 
   public void saveOrUpdateContestSettings(ContestSettings contestSettings) {
-    Contest selectedContest = userService.getSessionInfo().getSelectedContest();
+    Contest selectedContest = SessionInfo.getSSelectedContest();
     LOGGER.info("persisting changes to contest {}: {}", selectedContest, contestSettings);
   }
 

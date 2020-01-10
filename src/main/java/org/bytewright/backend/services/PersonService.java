@@ -3,6 +3,7 @@ package org.bytewright.backend.services;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
 import org.bytewright.backend.util.PersonUtil;
+import org.bytewright.backend.util.SessionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,6 @@ public class PersonService {
   private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
   @Autowired
   private ContestService contestService;
-  @Autowired
-  private UserService userService;
 
   public Player getPlayer(Long playerId) {
     // todo db lookup
@@ -32,11 +31,11 @@ public class PersonService {
   }
 
   public Long saveOrUpdatePlayer(Player player) {
-    return saveOrUpdatePlayer(userService.getSessionInfo().getSelectedContest(), player);
+    return saveOrUpdatePlayer(SessionInfo.getSSelectedContest(), player);
   }
 
   public void deletePlayer(Player player) {
-    Contest contest = userService.getSessionInfo().getSelectedContest();
+    Contest contest = SessionInfo.getSSelectedContest();
     LOGGER.info("Deleting Player {} from contest {}", player, contest);
     contest.getPlayers().remove(player);
   }

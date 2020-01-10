@@ -1,42 +1,25 @@
 package org.bytewright.backend.util;
 
-import org.bytewright.backend.dto.Contest;
-
-import java.time.Instant;
 import java.util.Optional;
 
+import org.apache.wicket.Session;
+import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.security.GoContestManagerSession;
+
 public class SessionInfo {
-  private Instant creationInstant;
-  private Contest selectedContest;
 
-  public Instant getCreationInstant() {
-    return creationInstant;
+  public static Contest getSSelectedContest() {
+    return getSSelectedContestOpt().orElseThrow(() -> new IllegalStateException("Selected contest is not set!"));
   }
 
-  public void setCreationInstant(Instant creationInstant) {
-    this.creationInstant = creationInstant;
+  public static void setSSelectedContest(Contest selectedContest) {
+    GoContestManagerSession session = (GoContestManagerSession) Session.get();
+    session.setContest(selectedContest);
   }
 
-  public Contest getSelectedContest() {
-    if (selectedContest == null) {
-      throw new IllegalStateException("Selected contest is not set!");
-    }
-    return selectedContest;
-  }
-
-  public void setSelectedContest(Contest selectedContest) {
-    this.selectedContest = selectedContest;
-  }
-
-  @Override
-  public String toString() {
-    return "SessionInfo{" +
-      "creationInstant=" + creationInstant +
-      ", selectedContest=" + selectedContest +
-      '}';
-  }
-
-  public Optional<Contest> getSelectedContestOpt() {
+  public static Optional<Contest> getSSelectedContestOpt() {
+    GoContestManagerSession session = (GoContestManagerSession) Session.get();
+    Contest selectedContest = session.getContest();
     return Optional.ofNullable(selectedContest);
   }
 }

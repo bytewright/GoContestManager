@@ -11,12 +11,10 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Person;
 import org.bytewright.backend.dto.Player;
-import org.bytewright.backend.services.UserService;
 import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.components.overview.PlayerManagementPanel;
@@ -31,9 +29,6 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 public class PlayerManagementPage extends GcmTemplate {
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerManagementPage.class);
 
-  @SpringBean
-  private UserService userService;
-
   public static String getMountPath() {
     return "/players/manage";
   }
@@ -44,8 +39,7 @@ public class PlayerManagementPage extends GcmTemplate {
 
   @Override
   protected Component getContent(String contentId, PageParameters parameters) {
-    SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
+    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

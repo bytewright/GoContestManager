@@ -2,6 +2,7 @@ package org.bytewright.backend.security;
 
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.TextConfigurationRealm;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,14 @@ public class ShiroContextConfiguration {
 
   @Bean
   public AuthenticatedWebSessionConfig authenticatedWebSessionConfig() {
-    return () -> ShiroAuthenticatedWebSession.class;
+    return new MyAuthenticatedWebSessionConfig();
+  }
+
+  static class MyAuthenticatedWebSessionConfig implements AuthenticatedWebSessionConfig {
+
+    @Override
+    public Class<? extends AbstractAuthenticatedWebSession> getAuthenticatedWebSessionClass() {
+      return GoContestManagerSession.class;
+    }
   }
 }

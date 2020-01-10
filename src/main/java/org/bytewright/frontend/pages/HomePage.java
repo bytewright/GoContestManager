@@ -9,7 +9,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.services.ContestService;
-import org.bytewright.backend.services.UserService;
 import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.components.home.HomePanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
@@ -25,8 +24,6 @@ public class HomePage extends GcmTemplate {
 
   @SpringBean
   private ContestService contestService;
-  @SpringBean
-  private UserService userService;
 
   public static String getMountPath() {
     return "/home";
@@ -34,16 +31,14 @@ public class HomePage extends GcmTemplate {
 
   @Override
   protected Component getContent(String contentId) {
-    SessionInfo sessionInfo = userService.getSessionInfo();
-    Optional<Contest> selectedContest = sessionInfo.getSelectedContestOpt();
+    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
     List<Contest> validContests = contestService.getValidContests().stream()
         .sorted(Comparator.comparing(Contest::getDateStart))
         .collect(Collectors.toList());
     if (selectedContest.isPresent() && !validContests.contains(selectedContest.get())) {
       LOGGER.info("User has selected invalid contest, resetting: {}", selectedContest);
-      sessionInfo.setSelectedContest(null);
+      SessionInfo.setSSelectedContest(null);
     }
-    LOGGER.debug("{}", sessionInfo);
     return new HomePanel(CONTENT_ID, validContests, selectedContest);
   }
 }
