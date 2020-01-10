@@ -1,8 +1,8 @@
 package org.bytewright.backend.util;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,9 +35,9 @@ import org.bytewright.backend.dto.Player;
  */
 public class PlayerExporter {
   private static final String MACMAHON_SEPARATOR = "|";
-  private Set<Player> players;
+  private Collection<Player> players;
 
-  public PlayerExporter(Set<Player> players) {
+  public PlayerExporter(Collection<Player> players) {
     this.players = players;
   }
 

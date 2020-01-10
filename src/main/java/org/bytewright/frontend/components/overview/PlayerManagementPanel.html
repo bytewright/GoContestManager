@@ -15,14 +15,14 @@
   </p>
   <div class="table">
     <div class="tr">
-      <div class="th">Name</div>
-      <div class="th">Surname</div>
-      <div class="th">Go Club</div>
-      <div class="th">Rank</div>
-      <div class="th">Payment</div>
+      <div class="th"><a wicket:id="sortName">Name</a></div>
+      <div class="th"><a wicket:id="sortSurname">Surname</a></div>
+      <div class="th"><a wicket:id="sortClub">Go Club</a></div>
+      <div class="th"><a wicket:id="sortRank">Rank</a></div>
+      <div class="th"><a wicket:id="sortPayment">Payment</a></div>
       <div class="th">Discount</div>
       <div class="th">Seminar</div>
-      <div class="th">Club</div>
+      <div class="th">Go Club</div>
       <div class="th">Breakfast</div>
       <div class="th">Admin</div>
     </div>
@@ -32,20 +32,26 @@
       <div class="td" wicket:id="goClub"></div>
       <div class="td" wicket:id="rank"></div>
       <div class="td" wicket:id="paymentStatus"></div>
-      <div class="td"><input type="checkbox" wicket:id="isDiscount"/></div>
-      <div class="td"><input type="checkbox" wicket:id="isSeminar"/></div>
-      <div class="td"><input type="checkbox" wicket:id="isClub"/></div>
-      <div class="td"><input type="checkbox" wicket:id="isBreakfast"/></div>
+      <div class="th"><input type="checkbox" wicket:id="isDiscount"/></div>
+      <div class="th"><input type="checkbox" wicket:id="isSeminar"/></div>
+      <div class="th"><input type="checkbox" wicket:id="isClub"/></div>
+      <div class="th"><input type="checkbox" wicket:id="isBreakfast"/></div>
       <div class="td">
-        <form wicket:id="playerEditForm">
-          <input type="submit" value="EDIT">
-        </form>
-        <form wicket:id="playerPaidForm">
-          <input type="submit" value="PAID">
-        </form>
-        <form onsubmit="return confirm('Do you really want to delete this player?');" wicket:id="playerDeleteForm">
-          <input type="submit" value="DEL">
-        </form>
+        <div>
+          <form wicket:id="playerEditForm">
+            <input type="submit" value="EDIT">
+          </form>
+        </div>
+        <div>
+          <form wicket:id="playerPaidForm">
+            <input type="submit" value="PAID">
+          </form>
+        </div>
+        <div>
+          <form onsubmit="return confirm('Do you really want to delete this player?');" wicket:id="playerDeleteForm">
+            <input type="submit" value="DEL">
+          </form>
+        </div>
       </div>
     </div>
   </div>

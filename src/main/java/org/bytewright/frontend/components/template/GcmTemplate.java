@@ -29,6 +29,7 @@ public class GcmTemplate extends WebPage {
     add(headerPanel);
     add(getContent(CONTENT_ID, parameters));
     add(footerPanel);
+    setStatelessHint(true);
   }
 
   @Override
