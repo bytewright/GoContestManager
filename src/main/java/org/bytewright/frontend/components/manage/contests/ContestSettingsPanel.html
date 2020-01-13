@@ -14,19 +14,19 @@
         Configure the Starting fee. The selected currency is used for all other monetary values as well.<br>
         This has to be in the lowest available currencyUnit, i.e. for EUR in Euro Cent:
       </p>
-      <input id="feeStart" style="width: 60px" type="number" wicket:id="feeStart"/>
+      <input id="feeStart" step="0.01" style="width: 60px" type="number" wicket:id="feeStart"/>
       <select id="currencyUnit" wicket:id="currencyUnit"></select><br/>
       <span>Fee for breakfast: </span>
-      <input id="feeBreakfast" style="width: 60px" type="number" wicket:id="feeBreakfast"/><br/>
+      <input id="feeBreakfast" step="0.01" style="width: 60px" type="number" wicket:id="feeBreakfast"/><br/>
       <p>
         Configure discounts applied to the starting fee:
       </p>
       <span>Discount go club members: </span>
-      <input id="discountClub" type="number" style="width: 60px" wicket:id="discountClub"/><br/>
+      <input id="discountClub" step="0.01" style="width: 60px" type="number" wicket:id="discountClub"/><br/>
       <span>Discount for students, pupils, unemployed,...: </span>
-      <input id="discount" style="width: 60px" type="number" wicket:id="discount"/><br/>
+      <input id="discount" step="0.01" style="width: 60px" type="number" wicket:id="discount"/><br/>
       <span>Discount for pre registered players: </span>
-      <input id="discountPreRegistered" style="width: 60px" type="number" wicket:id="discountPreRegistered"/><br/>
+      <input id="discountPreRegistered" step="0.01" style="width: 60px" type="number" wicket:id="discountPreRegistered"/><br/>
       <span>Go Ranks which do not have to pay anything: </span><br/>
       <select wicket:id="startFeeFreedRanks"></select>
       <p>

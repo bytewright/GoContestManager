@@ -1,11 +1,14 @@
 package org.bytewright.backend.dto;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import javax.money.MonetaryAmount;
+import javax.money.format.MonetaryAmountFormat;
+import javax.money.format.MonetaryFormats;
 
 import org.bytewright.backend.util.GoRank;
 import org.javamoney.moneta.Money;
@@ -25,11 +28,11 @@ public class ContestSettings implements Serializable {
   public ContestSettings() {
     /* Default settings */
     currencyUnit = Monetary.getCurrency("EUR");
-    feeStart = Money.of(1200, currencyUnit);
-    discountClubMember = Money.of(400, currencyUnit);
-    discount = Money.of(400, currencyUnit);
-    discountPreRegistered = Money.of(400, currencyUnit);
-    feeBreakfast = Money.of(650, currencyUnit);
+    feeStart = Money.of(12.00, currencyUnit);
+    discountClubMember = Money.of(4.00, currencyUnit);
+    discount = Money.of(4.00, currencyUnit);
+    discountPreRegistered = Money.of(4.00, currencyUnit);
+    feeBreakfast = Money.of(6.50, currencyUnit);
     roundCount = 5;
     startingFeeFreedRanks = Set.of(GoRank.KYU_30);
   }
@@ -42,7 +45,7 @@ public class ContestSettings implements Serializable {
     this.discount = discount;
   }
 
-  public void setDiscount(int discount) {
+  public void setDiscount(double discount) {
     this.discount = Money.of(discount, currencyUnit);
   }
 
@@ -62,7 +65,7 @@ public class ContestSettings implements Serializable {
     this.discountClubMember = discountClubMember;
   }
 
-  public void setDiscountClubMember(int discountClubMember) {
+  public void setDiscountClubMember(double discountClubMember) {
     this.discountClubMember = Money.of(discountClubMember, currencyUnit);
   }
 
@@ -74,7 +77,7 @@ public class ContestSettings implements Serializable {
     this.discountPreRegistered = discountPreRegistered;
   }
 
-  public void setDiscountPreRegistered(int discountPreRegistered) {
+  public void setDiscountPreRegistered(double discountPreRegistered) {
     this.discountPreRegistered = Money.of(discountPreRegistered, currencyUnit);
   }
 
@@ -86,7 +89,7 @@ public class ContestSettings implements Serializable {
     this.feeBreakfast = feeBreakfast;
   }
 
-  public void setFeeBreakfast(int feeBreakfast) {
+  public void setFeeBreakfast(double feeBreakfast) {
     this.feeBreakfast = Money.of(feeBreakfast, currencyUnit);
   }
 
@@ -106,7 +109,7 @@ public class ContestSettings implements Serializable {
     this.feeStart = feeStart;
   }
 
-  public void setFeeStart(int feeStart) {
+  public void setFeeStart(double feeStart) {
     this.feeStart = Money.of(feeStart, currencyUnit);
   }
 
@@ -120,12 +123,13 @@ public class ContestSettings implements Serializable {
 
   @Override
   public String toString() {
+    MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(Locale.GERMAN);
     return "ContestSettings{" +
-        "discount=" + discount +
-        ", discountClubMember=" + discountClubMember +
-        ", discountPreRegistered=" + discountPreRegistered +
-        ", feeBreakfast=" + feeBreakfast +
-        ", feeStart=" + feeStart +
+        "discount=" + amountFormat.format(discount) +
+        ", discountClubMember=" + amountFormat.format(discountClubMember) +
+        ", discountPreRegistered=" + amountFormat.format(discountPreRegistered) +
+        ", feeBreakfast=" + amountFormat.format(feeBreakfast) +
+        ", feeStart=" + amountFormat.format(feeStart) +
         ", currencyUnit=" + currencyUnit +
         ", roundCount=" + roundCount +
         ", startingFeeFreedRanks=" + startingFeeFreedRanks +

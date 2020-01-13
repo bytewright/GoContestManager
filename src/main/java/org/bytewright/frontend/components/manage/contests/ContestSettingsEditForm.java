@@ -11,7 +11,6 @@ import javax.money.Monetary;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
-import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.model.Model;
@@ -19,6 +18,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.backend.util.GoRank;
+import org.bytewright.frontend.components.MoneyField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,17 +32,12 @@ public class ContestSettingsEditForm extends Form<ContestSettings> {
     ContestSettings settings = model.getObject();
     IModel<CurrencyUnit> currencyUnitModel = LambdaModel.of(settings::getCurrencyUnit, settings::setCurrencyUnit);
     add(new DropDownChoice<>("roundCount", LambdaModel.of(settings::getRoundCount, settings::setRoundCount), intList()));
-    add(new NumberTextField<>("feeStart",
-        LambdaModel.of(() -> settings.getFeeStart().getNumber().intValue(), settings::setFeeStart)));
+    add(new MoneyField("feeStart", settings::getFeeStart, settings::setFeeStart));
     add(new DropDownChoice<>("currencyUnit", currencyUnitModel, new ArrayList<>(Monetary.getCurrencies())));
-    add(new NumberTextField<>("discount",
-        LambdaModel.of(() -> settings.getDiscount().getNumber().intValue(), settings::setDiscount)));
-    add(new NumberTextField<>("discountClub",
-        LambdaModel.of(() -> settings.getDiscountClubMember().getNumber().intValue(), settings::setDiscountClubMember)));
-    add(new NumberTextField<>("discountPreRegistered",
-        LambdaModel.of(() -> settings.getDiscountPreRegistered().getNumber().intValue(), settings::setDiscountPreRegistered)));
-    add(new NumberTextField<>("feeBreakfast",
-        LambdaModel.of(() -> settings.getFeeBreakfast().getNumber().intValue(), settings::setFeeBreakfast)));
+    add(new MoneyField("discount", settings::getDiscount, settings::setDiscount));
+    add(new MoneyField("discountClub", settings::getDiscountClubMember, settings::setDiscountClubMember));
+    add(new MoneyField("discountPreRegistered", settings::getDiscountPreRegistered, settings::setDiscountPreRegistered));
+    add(new MoneyField("feeBreakfast", settings::getFeeBreakfast, settings::setFeeBreakfast));
     List<GoRank> ranksList = List.of(GoRank.values());
     add(new ListMultipleChoice<>("startFeeFreedRanks",
         LambdaModel.of(settings::getStartingFeeFreedRanks, settings::setStartingFeeFreedRanks), ranksList));
@@ -59,4 +54,5 @@ public class ContestSettingsEditForm extends Form<ContestSettings> {
     LOGGER.info("Contest settings where changed: {}", getModelObject());
     contestService.saveOrUpdateContestSettings(getModelObject());
   }
+
 }
