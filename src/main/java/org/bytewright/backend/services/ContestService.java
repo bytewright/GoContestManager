@@ -22,9 +22,9 @@ import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.EarningsOverview;
 import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.PersonUtil;
-import org.bytewright.backend.util.SessionInfo;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class ContestService {
       .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 
   public void saveOrUpdateContestSettings(ContestSettings contestSettings) {
-    Contest selectedContest = SessionInfo.getSSelectedContest();
+    Contest selectedContest = GoContestManagerSession.get().getContest();
     LOGGER.info("persisting changes to contest {}: {}", selectedContest, contestSettings);
   }
 

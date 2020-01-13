@@ -6,8 +6,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.services.ContestService;
-import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.pages.HomePage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class ContestSelectionForm extends Form<String> {
     Contest contest = contestService.getContest(contestId)
         .orElseThrow(() -> new IllegalArgumentException("Contest with id " + contestId + " could not be found!"));
     LOGGER.info("Form submitted. contestId: {}; contest: {}", contestId, contest);
-    SessionInfo.setSSelectedContest(contest);
+    GoContestManagerSession.get().setContest(contest);
     setResponsePage(HomePage.class);
   }
 }

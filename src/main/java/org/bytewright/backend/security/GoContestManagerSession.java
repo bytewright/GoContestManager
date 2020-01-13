@@ -1,7 +1,9 @@
 package org.bytewright.backend.security;
 
 import java.time.Instant;
+import java.util.Optional;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
@@ -32,7 +34,7 @@ public class GoContestManagerSession extends AbstractAuthenticatedWebSession {
   }
 
   public Contest getContest() {
-    return contest;
+    return Optional.ofNullable(contest).orElseThrow(() -> new IllegalStateException("Selected contest is not set!"));
   }
 
   public void setContest(Contest contest) {
@@ -45,5 +47,20 @@ public class GoContestManagerSession extends AbstractAuthenticatedWebSession {
 
   public void setCreationInstant(Instant creationInstant) {
     this.creationInstant = creationInstant;
+  }
+
+  /**
+   * Return session of current user, provided by wicket
+   */
+  public static GoContestManagerSession get() {
+    Session session = Session.get();
+    if (session instanceof GoContestManagerSession) {
+      return (GoContestManagerSession) session;
+    }
+    throw new IllegalStateException("Session is of unexpected class: " + session.getClass());
+  }
+
+  public Optional<Contest> getContestOpt() {
+    return Optional.ofNullable(contest);
   }
 }

@@ -11,8 +11,8 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.services.PersonService;
-import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.components.manage.players.PlayerEditPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
 import org.bytewright.frontend.res.css.Marker;
@@ -36,7 +36,7 @@ public class PlayerEditPage extends GcmTemplate {
 
   @Override
   protected Component getContent(String contentId, PageParameters pageParameters) {
-    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
+    Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

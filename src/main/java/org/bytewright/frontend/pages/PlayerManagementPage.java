@@ -15,8 +15,8 @@ import org.apache.wicket.util.string.StringValue;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Person;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PaymentStatus;
-import org.bytewright.backend.util.SessionInfo;
 import org.bytewright.frontend.components.overview.PlayerManagementPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
 import org.bytewright.frontend.res.css.Marker;
@@ -39,7 +39,7 @@ public class PlayerManagementPage extends GcmTemplate {
 
   @Override
   protected Component getContent(String contentId, PageParameters parameters) {
-    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
+    Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }

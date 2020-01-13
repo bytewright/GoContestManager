@@ -3,6 +3,7 @@
 *.iml
 
 target/
+devdb/
 
 # Compiled class file
 *.class

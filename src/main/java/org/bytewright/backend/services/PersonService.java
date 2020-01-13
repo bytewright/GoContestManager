@@ -2,8 +2,8 @@ package org.bytewright.backend.services;
 
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PersonUtil;
-import org.bytewright.backend.util.SessionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,11 @@ public class PersonService {
   }
 
   public Long saveOrUpdatePlayer(Player player) {
-    return saveOrUpdatePlayer(SessionInfo.getSSelectedContest(), player);
+    return saveOrUpdatePlayer(GoContestManagerSession.get().getContest(), player);
   }
 
   public void deletePlayer(Player player) {
-    Contest contest = SessionInfo.getSSelectedContest();
+    Contest contest = GoContestManagerSession.get().getContest();
     LOGGER.info("Deleting Player {} from contest {}", player, contest);
     contest.getPlayers().remove(player);
   }

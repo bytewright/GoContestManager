@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.util.SessionInfo;
+import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.frontend.components.overview.OverviewPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;
 import org.bytewright.frontend.res.css.Marker;
@@ -31,7 +31,7 @@ public class OverviewPage extends GcmTemplate {
 
   @Override
   protected Component getContent(String contentId) {
-    Optional<Contest> selectedContest = SessionInfo.getSSelectedContestOpt();
+    Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
     if (selectedContest.isEmpty()) {
       return new Label(contentId, "Select a contest on the homepage!");
     }
