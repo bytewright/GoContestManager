@@ -2,6 +2,9 @@ spring:
   devtools:
     restart:
       additional-exclude: /**/*.js, /**/*.css, /**/*.html, /**/*.htm
+  jpa:
+    hibernate:
+      ddl-auto: none
 shiro:
   enabled: true
 wicket:

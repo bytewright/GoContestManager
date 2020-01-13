@@ -181,6 +181,17 @@
     </dependency>
     -->
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>1.25</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
 
     <sourceDirectory>src/main/java</sourceDirectory>

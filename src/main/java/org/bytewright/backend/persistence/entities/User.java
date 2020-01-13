@@ -1,4 +1,4 @@
-package org.bytewright.backend.persistance.entities;
+package org.bytewright.backend.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "gcm")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,6 @@ public class User {
   @Column(unique = true, name = "display_name")
   private String username;
 
-  @NotBlank
   @Size(max = 50)
   @Column(name = "first_name")
   private String firstName;
@@ -30,6 +29,7 @@ public class User {
   @Column(name = "last_name")
   private String lastName;
 
+  @NotBlank
   @Size(max = 100)
   @Column(name = "pw")
   private String password;
@@ -38,6 +38,12 @@ public class User {
   private String roles;
 
   public User() {
+  }
+
+  public User(String username, String password) {
+    super();
+    this.username = username;
+    this.password = password;
   }
 
   public Long getId() {

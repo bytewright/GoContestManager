@@ -56,7 +56,6 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
         .peek(mountable -> LOGGER.info("registering mount: {}", mountable))
         .forEach(mountable -> mountPage(mountable.getMountPath(), mountable.getPageClass()));
 
-    //    mountPage("home", getHomePage());
     mountPage("secure", SecuredPage.class);
   }
 }

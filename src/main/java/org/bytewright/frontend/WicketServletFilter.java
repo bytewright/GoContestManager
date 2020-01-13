@@ -21,7 +21,6 @@ public class WicketServletFilter extends WicketFilter {
 
   @Override
   public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
-    super.init(isServlet, filterConfig);
     LOGGER.info("Initialization of {} finished", this.getClass().getName());
   }
 }
