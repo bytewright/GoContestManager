@@ -1,36 +1,22 @@
 package org.bytewright.backend.security;
 
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.realm.text.TextConfigurationRealm;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.giffing.wicket.spring.boot.context.security.AuthenticatedWebSessionConfig;
 
 /**
- * https://github.com/ceefour/paxwicket-shiro/blob/master/app/src/main/java/com/hendyirawan/paxwicketshiro/app/ShiroRealm.java
+ * Here are all security relevant beans defined
  */
 @Configuration
 public class ShiroContextConfiguration {
-  private static final Logger LOGGER = LoggerFactory.getLogger(ShiroContextConfiguration.class);
 
   @Bean
   public Realm realm() {
-    // TODO actuall security with JPA: org.apache.shiro.realm.jdbc.JdbcRealm
-    TextConfigurationRealm realm = new TextConfigurationRealm();
-    realm.setUserDefinitions(""
-        + "admin=secret,admin\n"
-        + "guest=guestPassword");
-
-    realm.setRoleDefinitions(""
-        + "admin=*\n"
-        + "user=read");
-    realm.setCachingEnabled(false);
-    LOGGER.debug("Created Shiro Security Realm: {}", realm);
-    return realm;
+    /* The 'login-space' for this application. This manages the logged in users and checks access privileges */
+    return new ShiroJpaRepoRealm();
   }
 
   @Bean
@@ -42,6 +28,7 @@ public class ShiroContextConfiguration {
 
     @Override
     public Class<? extends AbstractAuthenticatedWebSession> getAuthenticatedWebSessionClass() {
+      /* Each User of this app has a session and each session is an instance of this class */
       return GoContestManagerSession.class;
     }
   }
