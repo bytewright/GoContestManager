@@ -9,6 +9,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.frontend.pages.ContestCreationPage;
 import org.slf4j.Logger;
@@ -27,10 +28,11 @@ public class ContestCreationForm extends Form<Contest> {
   public ContestCreationForm(String id, IModel<Contest> model) {
     super(id, model);
     contest = getModelObject();
-    add(new TextField<>("name", LambdaModel.of(contest::getName, contest::setName), String.class));
+    ContestSettings settings = contest.getContestSettings();
+    add(new TextField<>("name", LambdaModel.of(settings::getName, settings::setName), String.class));
     add(new TextField<>("uId", LambdaModel.of(contest::getUniqueId, contest::setuId), String.class));
-    add(new ZonedDateTimeField("startDate", LambdaModel.of(contest::getDateStart, contest::setDateStart)));
-    add(new ZonedDateTimeField("endDate", LambdaModel.of(contest::getDateEnd, contest::setDateEnd)));
+    add(new ZonedDateTimeField("startDate", LambdaModel.of(settings::getDateStart, settings::setDateStart)));
+    add(new ZonedDateTimeField("endDate", LambdaModel.of(settings::getDateEnd, settings::setDateEnd)));
   }
 
   @Override

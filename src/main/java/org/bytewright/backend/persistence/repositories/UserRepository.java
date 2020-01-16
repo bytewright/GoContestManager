@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.bytewright.backend.persistence.entities.User;
+import org.bytewright.backend.persistence.entities.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Transactional

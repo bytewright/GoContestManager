@@ -1,6 +1,7 @@
 package org.bytewright.backend.dto;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.Set;
 
@@ -22,7 +23,11 @@ public class ContestSettings implements Serializable {
   private MonetaryAmount feeStart;
   private CurrencyUnit currencyUnit;
 
+  private ZonedDateTime dateEnd;
+  private ZonedDateTime dateStart;
   private int roundCount;
+  private String name;
+  private Location location;
   private Set<GoRank> startingFeeFreedRanks;
 
   public ContestSettings() {
@@ -35,6 +40,42 @@ public class ContestSettings implements Serializable {
     feeBreakfast = Money.of(6.50, currencyUnit);
     roundCount = 5;
     startingFeeFreedRanks = Set.of(GoRank.KYU_30);
+    dateEnd = ZonedDateTime.now();
+    dateStart = ZonedDateTime.now();
+    name = "Go contest";
+    location = new Location();
+  }
+
+  public ZonedDateTime getDateEnd() {
+    return dateEnd;
+  }
+
+  public void setDateEnd(ZonedDateTime dateEnd) {
+    this.dateEnd = dateEnd;
+  }
+
+  public ZonedDateTime getDateStart() {
+    return dateStart;
+  }
+
+  public void setDateStart(ZonedDateTime dateStart) {
+    this.dateStart = dateStart;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   public MonetaryAmount getDiscount() {

@@ -80,4 +80,11 @@ public enum GoRank implements Serializable {
         .filter(goRank -> rankNum == goRank.getRank())
         .findFirst();
   }
+
+  public static GoRank fromAbbrv(String abbrv) {
+    return Arrays.stream(GoRank.values())
+        .filter(goRank -> goRank.getAbbreviation().equalsIgnoreCase(abbrv))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("There is no GoRank " + abbrv));
+  }
 }

@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS gcm.role_permissions;
+DROP TABLE IF EXISTS gcm.user_permissions;
+DROP TABLE IF EXISTS gcm.user_roles;
+DROP TABLE IF EXISTS gcm.permissions;
+DROP TABLE IF EXISTS gcm.roles;
 DROP TABLE IF EXISTS gcm.users;
 CREATE TABLE gcm.users
 (
@@ -9,7 +14,6 @@ CREATE TABLE gcm.users
     PRIMARY KEY (id),
     UNIQUE (display_name)
 );
-DROP TABLE IF EXISTS gcm.roles;
 CREATE TABLE gcm.roles
 (
     id   bigint(20)   NOT NULL AUTO_INCREMENT,
@@ -17,7 +21,6 @@ CREATE TABLE gcm.roles
     PRIMARY KEY (id),
     UNIQUE (name)
 );
-DROP TABLE IF EXISTS gcm.permissions;
 CREATE TABLE gcm.permissions
 (
     id   bigint(20)   NOT NULL AUTO_INCREMENT,
@@ -25,7 +28,6 @@ CREATE TABLE gcm.permissions
     PRIMARY KEY (id),
     UNIQUE (perm)
 );
-DROP TABLE IF EXISTS gcm.role_permissions;
 CREATE TABLE gcm.role_permissions
 (
     role_id       bigint(20) NOT NULL,
@@ -34,7 +36,6 @@ CREATE TABLE gcm.role_permissions
     FOREIGN KEY (role_id) REFERENCES gcm.roles (id),
     FOREIGN KEY (permission_id) REFERENCES gcm.permissions (id)
 );
-DROP TABLE IF EXISTS gcm.user_permissions;
 CREATE TABLE gcm.user_permissions
 (
     user_id       bigint(20) NOT NULL,
@@ -43,7 +44,6 @@ CREATE TABLE gcm.user_permissions
     FOREIGN KEY (user_id) REFERENCES gcm.users (id),
     FOREIGN KEY (permission_id) REFERENCES gcm.permissions (id)
 );
-DROP TABLE IF EXISTS gcm.user_roles;
 CREATE TABLE gcm.user_roles
 (
     role_id bigint(20) NOT NULL,

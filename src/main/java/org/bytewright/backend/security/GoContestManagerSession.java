@@ -23,13 +23,13 @@ public class GoContestManagerSession extends AbstractAuthenticatedWebSession {
 
   @Override
   public Roles getRoles() {
-    LOGGER.info("Roles are requested");
+    LOGGER.warn("TODO! Roles are requested", new Exception());
     return new Roles(Roles.ADMIN);
   }
 
   @Override
   public boolean isSignedIn() {
-    LOGGER.info("isSignedIn is requested");
+    LOGGER.warn("TODO! isSignedIn is requested", new Exception());
     return true;
   }
 

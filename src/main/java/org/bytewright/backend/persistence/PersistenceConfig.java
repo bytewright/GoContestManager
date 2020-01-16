@@ -1,7 +1,11 @@
 package org.bytewright.backend.persistence;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -23,8 +27,23 @@ public class PersistenceConfig {
     EmbeddedDatabase db = new EmbeddedDatabaseBuilder()
         .setType(EmbeddedDatabaseType.H2)
         .setScriptEncoding("UTF-8")
+        .addDefaultScripts()
+        .addScript("contestCreate.sql")
+        .addScript("contestDummies.sql")
         .build();
     LOGGER.info("Created DB: {}", db);
     return db;
+  }
+
+  @Bean
+  public ModelMapper modelMapper(List<Converter<?, ?>> converterList) {
+    /* This converts db entites to dtos used by frontend */
+    /* https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application */
+    ModelMapper modelMapper = new ModelMapper();
+    for (Converter<?, ?> converter : converterList) {
+      LOGGER.info("Registering converter {} with modelmapper", converter);
+      modelMapper.addConverter(converter);
+    }
+    return modelMapper;
   }
 }

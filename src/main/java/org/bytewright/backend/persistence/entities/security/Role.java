@@ -1,4 +1,4 @@
-package org.bytewright.backend.persistence.entities;
+package org.bytewright.backend.persistence.entities.security;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;

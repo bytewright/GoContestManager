@@ -6,6 +6,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.model.Model;
 import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.dto.ContestSettings;
 
 public class OverviewPanel extends Panel {
   private static final long serialVersionUID = 1L;
@@ -14,8 +15,9 @@ public class OverviewPanel extends Panel {
   public OverviewPanel(String contentId, Contest contest) {
     super(contentId);
     setDefaultModel(new CompoundPropertyModel<>(contest));
-    add(new Label("contestName", LambdaModel.of(contest::getName, contest::setName)));
-    add(new Label("contestDate", Model.of(contest.getDateStart())));
+    ContestSettings settings = contest.getContestSettings();
+    add(new Label("contestName", LambdaModel.of(settings::getName)));
+    add(new Label("contestDate", Model.of(settings.getDateStart())));
     add(new Label("playerCount", Model.of(contest.getPlayers().size())));
     add(new ContestManagementPanel(ID_CONTEST_MANAGEMENT, contest));
   }

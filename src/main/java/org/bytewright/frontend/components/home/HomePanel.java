@@ -15,11 +15,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.services.PropertiesService;
 import org.bytewright.frontend.res.css.Marker;
 import org.slf4j.Logger;
@@ -58,13 +58,13 @@ public class HomePanel extends Panel {
 
     @Override
     protected void populateItem(ListItem<Contest> item) {
-      IModel<Contest> model = item.getModel();
-      PropertyModel<String> identifier = new PropertyModel<>(model, "uId");
-      Form<String> selection = new ContestSelectionForm("contestSelection", identifier);
-      var nameLabel = new Label("contestName", new PropertyModel<>(model, "name"));
-      var startLabel = new Label("contestStart", new PropertyModel<>(model, "dateStart"));
-      var endLabel = new Label("contestEnd", new PropertyModel<>(model, "dateEnd"));
-      if (selectedContest != null && selectedContest.equals(model.getObject())) {
+      Contest model = item.getModel().getObject();
+      ContestSettings settings = model.getContestSettings();
+      Form<String> selection = new ContestSelectionForm("contestSelection", LambdaModel.of(model::getUniqueId));
+      var nameLabel = new Label("contestName", LambdaModel.of(settings::getName));
+      var startLabel = new Label("contestStart", LambdaModel.of(settings::getDateStart));
+      var endLabel = new Label("contestEnd", LambdaModel.of(settings::getDateEnd));
+      if (selectedContest != null && selectedContest.equals(model)) {
         nameLabel.add(new SetSelectedBehavior());
       }
       item.add(nameLabel);

@@ -5,17 +5,18 @@ import java.time.Duration;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.dto.ContestSettings;
 
 public class ContestManagementPanel extends Panel {
   public ContestManagementPanel(String contentId, Contest contest) {
     super(contentId);
-
-    add(new Label("contestName", contest.getName()));
-    add(new Label("contestStartDate", contest.getDateStart()));
-    add(new Label("contestEndDate", contest.getDateEnd()));
-    add(new Label("contestDuration", Duration.between(contest.getDateStart(), contest.getDateEnd()).toDays()));
-    add(new Label("contestLocation", contest.getLocation().getName()));
-    add(new Label("contestRounds", contest.getContestSettings().getRoundCount()));
+    ContestSettings settings = contest.getContestSettings();
+    add(new Label("contestName", settings.getName()));
+    add(new Label("contestStartDate", settings.getDateStart()));
+    add(new Label("contestEndDate", settings.getDateEnd()));
+    add(new Label("contestDuration", Duration.between(settings.getDateStart(), settings.getDateEnd()).toDays()));
+    add(new Label("contestLocation", settings.getLocation().getName()));
+    add(new Label("contestRounds", settings.getRoundCount()));
 
   }
 }

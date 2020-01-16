@@ -1,37 +1,22 @@
 package org.bytewright.backend.dto;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Contest implements Serializable {
   private ContestSettings contestSettings;
-  private ZonedDateTime dateEnd;
-  private ZonedDateTime dateStart;
   private Set<Helper> helpers;
-  private Location location;
-  private String name;
   private Set<Organiser> organisers;
   private Set<Player> players;
   private String uId;
 
   public Contest() {
-  }
-
-  public Location getLocation() {
-    return location;
-  }
-
-  public void setLocation(Location location) {
-    this.location = location;
-  }
-
-  public ZonedDateTime getDateEnd() {
-    return dateEnd;
-  }
-
-  public void setDateEnd(ZonedDateTime dateEnd) {
-    this.dateEnd = dateEnd;
+    uId = "NULL";
+    contestSettings = new ContestSettings();
+    helpers = new HashSet<>();
+    organisers = new HashSet<>();
+    players = new HashSet<>();
   }
 
   public ContestSettings getContestSettings() {
@@ -40,6 +25,14 @@ public class Contest implements Serializable {
 
   public void setContestSettings(ContestSettings contestSettings) {
     this.contestSettings = contestSettings;
+  }
+
+  public Set<Helper> getHelpers() {
+    return helpers;
+  }
+
+  public void setHelpers(Set<Helper> helpers) {
+    this.helpers = helpers;
   }
 
   public Set<Organiser> getOrganisers() {
@@ -58,14 +51,6 @@ public class Contest implements Serializable {
     this.players = players;
   }
 
-  public Set<Helper> getHelpers() {
-    return helpers;
-  }
-
-  public void setHelpers(Set<Helper> helpers) {
-    this.helpers = helpers;
-  }
-
   public String getUniqueId() {
     return uId;
   }
@@ -74,19 +59,14 @@ public class Contest implements Serializable {
     this.uId = uId;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public ZonedDateTime getDateStart() {
-    return dateStart;
-  }
-
-  public void setDateStart(ZonedDateTime dateStart) {
-    this.dateStart = dateStart;
+  @Override
+  public String toString() {
+    return "Contest{" +
+        "contestSettings=" + contestSettings +
+        ", helpers=" + helpers +
+        ", organisers=" + organisers +
+        ", players=" + players +
+        ", uId='" + uId + '\'' +
+        '}';
   }
 }

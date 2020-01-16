@@ -33,7 +33,7 @@ public class HomePage extends GcmTemplate {
   protected Component getContent(String contentId) {
     Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
     List<Contest> validContests = contestService.getValidContests().stream()
-        .sorted(Comparator.comparing(Contest::getDateStart))
+        .sorted(Comparator.comparing(contest -> contest.getContestSettings().getDateStart()))
         .collect(Collectors.toList());
     if (selectedContest.isPresent() && !validContests.contains(selectedContest.get())) {
       LOGGER.info("User has selected invalid contest, resetting: {}", selectedContest);

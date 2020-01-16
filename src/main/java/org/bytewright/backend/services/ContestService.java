@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
@@ -22,12 +23,15 @@ import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.EarningsOverview;
 import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.repositories.ContestRepository;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.backend.util.PersonUtil;
 import org.javamoney.moneta.Money;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,6 +42,10 @@ public class ContestService {
       .mapToObj(value -> "jcc" + value)
       .map(value -> Pair.of(value, createDummyContest(value)))
       .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+  @Autowired
+  private ContestRepository contestRepository;
+  @Autowired
+  private ModelMapper modelMapper;
 
   public void saveOrUpdateContestSettings(ContestSettings contestSettings) {
     Contest selectedContest = GoContestManagerSession.get().getContest();
@@ -52,9 +60,12 @@ public class ContestService {
 
   public List<Contest> getValidContests() {
     ZonedDateTime now = ZonedDateTime.now();
-    return knownContests.values().stream()
-        .filter(contest -> contest.getDateEnd().isAfter(now))
-        .sorted(Comparator.comparing(Contest::getDateStart))
+    return Stream.concat(contestRepository.findAll().stream()
+            .peek(contestEntity -> LOGGER.info("Found contest {} in db", contestEntity.getShortIdentifier()))
+            .map(contestEntity -> modelMapper.map(contestEntity, Contest.class)),
+        knownContests.values().stream())
+        .filter(contest -> contest.getContestSettings().getDateEnd().isAfter(now))
+        .sorted(Comparator.comparing(contest -> contest.getContestSettings().getDateStart()))
         .collect(Collectors.toList());
   }
 
@@ -64,10 +75,6 @@ public class ContestService {
 
   public Contest getNextContest() {
     return getValidContests().get(0);
-  }
-
-  public MonetaryAmount getTotalEarnings(Contest contest) {
-    return Money.of(2222, contest.getContestSettings().getCurrencyUnit());
   }
 
   public EarningsOverview getEarningsOverview(Contest contest) {
@@ -127,16 +134,16 @@ public class ContestService {
   private static Contest createDummyContest(String uId) {
     Contest contest = new Contest();
     contest.setuId(uId);
-    contest.setName("Jena CrossCut - " + uId);
-    contest.setDateStart(ZonedDateTime.now().plus(random.nextInt(400), ChronoUnit.DAYS));
-    contest.setDateEnd(contest.getDateStart().plus(random.nextInt(20), ChronoUnit.DAYS));
     Location location = new Location();
     location.setCity("Jena");
     location.setName("Schule abc bla");
     location.setStreet("Some Street");
     location.setStreetNum("1337");
-    contest.setLocation(location);
     ContestSettings contestSettings = new ContestSettings();
+    contestSettings.setName("Jena CrossCut - " + uId);
+    contestSettings.setDateStart(ZonedDateTime.now().plus(random.nextInt(400), ChronoUnit.DAYS));
+    contestSettings.setDateEnd(contestSettings.getDateStart().plus(random.nextInt(20), ChronoUnit.DAYS));
+    contestSettings.setLocation(location);
     contest.setContestSettings(contestSettings);
     contest.setOrganisers(Set.of(PersonUtil.rndOrga()));
     contest.setHelpers(Set.of(PersonUtil.rndHelper(), PersonUtil.rndHelper(), PersonUtil.rndHelper()));

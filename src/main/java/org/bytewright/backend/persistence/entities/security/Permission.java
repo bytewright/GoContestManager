@@ -1,4 +1,4 @@
-package org.bytewright.backend.persistence.entities;
+package org.bytewright.backend.persistence.entities.security;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
