@@ -12,7 +12,9 @@ import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
 import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ContestToDtoConverter implements Converter<ContestEntity, Contest> {
+  @Autowired
+  private ModelMapper modelMapper;
 
   @Override
   public Contest convert(MappingContext<ContestEntity, Contest> context) {
@@ -43,10 +47,11 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
     LocationEmbeddable locationEntity = source.getLocation();
     Location location = new Location();
     if (locationEntity != null) {
-      location.setCity(locationEntity.getCity());
-      location.setStreet(locationEntity.getStreet());
-      location.setStreetNum(locationEntity.getStreetNum());
-      location.setName(locationEntity.getName());
+      modelMapper.map(locationEntity, location);
+      //      location.setCity(locationEntity.getCity());
+      //      location.setStreet(locationEntity.getStreet());
+      //      location.setStreetNum(locationEntity.getStreetNum());
+      //      location.setName(locationEntity.getName());
     }
     settings.setLocation(location);
 

@@ -39,7 +39,7 @@ public class ContestCreationForm extends Form<Contest> {
   protected void onSubmit() {
     LOGGER.info("contest creation form submitted, adding new contest: {}", contest);
     PageParameters parameters = new PageParameters();
-    if (contestService.createContest()) {
+    if (contestService.createContest(getModelObject())) {
       parameters.add("success", Boolean.TRUE);
     } else {
       parameters.add("success", Boolean.FALSE);

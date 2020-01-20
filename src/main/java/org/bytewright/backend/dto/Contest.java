@@ -2,6 +2,7 @@ package org.bytewright.backend.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Contest implements Serializable {
@@ -17,6 +18,24 @@ public class Contest implements Serializable {
     helpers = new HashSet<>();
     organisers = new HashSet<>();
     players = new HashSet<>();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getHelpers(), getOrganisers(), getPlayers(), uId);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Contest contest = (Contest) o;
+    return getHelpers().equals(contest.getHelpers()) &&
+        getOrganisers().equals(contest.getOrganisers()) &&
+        getPlayers().equals(contest.getPlayers()) &&
+        uId.equals(contest.uId);
   }
 
   public ContestSettings getContestSettings() {

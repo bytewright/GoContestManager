@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.bytewright.backend.persistence.converter.GoRanksToString;
@@ -34,14 +35,14 @@ public class ContestEntity extends BaseAuditedEntity {
   @NotBlank
   @Size(min = 3, max = 100)
   private String contestName;
-  @NotBlank
+  @NotNull
   @Convert(converter = GoRanksToString.class)
   private Set<GoRank> startingFeeFreedRanks;
   @NotBlank
   private String timeZone;
-  @NotBlank
+  @NotNull
   private Instant startUtcTime;
-  @NotBlank
+  @NotNull
   private Instant endUtcTime;
   @Embedded
   private LocationEmbeddable location;

@@ -1,32 +1,25 @@
 package org.bytewright.backend.services;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.EarningsOverview;
-import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.repositories.ContestRepository;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PaymentStatus;
-import org.bytewright.backend.util.PersonUtil;
 import org.javamoney.moneta.Money;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -37,11 +30,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContestService {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContestService.class);
-  private static Random random = new Random();
-  private static Map<String, Contest> knownContests = IntStream.range(2020, 2035)
-      .mapToObj(value -> "jcc" + value)
-      .map(value -> Pair.of(value, createDummyContest(value)))
-      .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+
   @Autowired
   private ContestRepository contestRepository;
   @Autowired
@@ -49,32 +38,40 @@ public class ContestService {
 
   public void saveOrUpdateContestSettings(ContestSettings contestSettings) {
     Contest selectedContest = GoContestManagerSession.get().getContest();
+    ContestEntity entity = modelMapper.map(selectedContest, ContestEntity.class);
     LOGGER.info("persisting changes to contest {}: {}", selectedContest, contestSettings);
+    contestRepository.save(entity);
   }
 
   public Optional<Contest> getContest(String contestId) {
-    Contest contest = knownContests.get(contestId);
-    LOGGER.debug("contest with id {} requested, found: {}", contestId, contest);
-    return Optional.ofNullable(contest);
+    Optional<ContestEntity> entityOptional = contestRepository.findByShortIdentifier(contestId);
+    LOGGER.debug("contest with id {} requested, found: {}", contestId, entityOptional);
+    return entityOptional.map(contestEntity -> modelMapper.map(contestEntity, Contest.class));
   }
 
   public List<Contest> getValidContests() {
     ZonedDateTime now = ZonedDateTime.now();
-    return Stream.concat(contestRepository.findAll().stream()
-            .peek(contestEntity -> LOGGER.info("Found contest {} in db", contestEntity.getShortIdentifier()))
-            .map(contestEntity -> modelMapper.map(contestEntity, Contest.class)),
-        knownContests.values().stream())
+    return contestRepository.findAll().stream().map(contestEntity -> modelMapper.map(contestEntity, Contest.class))
         .filter(contest -> contest.getContestSettings().getDateEnd().isAfter(now))
         .sorted(Comparator.comparing(contest -> contest.getContestSettings().getDateStart()))
         .collect(Collectors.toList());
   }
 
-  public boolean createContest() {
-    return false;
+  public boolean createContest(Contest value) {
+    try {
+      ContestEntity entity = modelMapper.map(value, ContestEntity.class);
+      contestRepository.save(entity);
+    } catch (Exception e) {
+      LOGGER.error("Failed to save contest {}", value.getUniqueId(), e);
+      return false;
+    }
+    return true;
   }
 
   public Contest getNextContest() {
-    return getValidContests().get(0);
+    return contestRepository.findFirstByStartUtcTimeIsAfter(Instant.now())
+        .map(entity -> modelMapper.map(entity, Contest.class))
+        .orElseThrow();
   }
 
   public EarningsOverview getEarningsOverview(Contest contest) {
@@ -129,25 +126,5 @@ public class ContestService {
       totalFee = totalFee.add(contest.getContestSettings().getFeeBreakfast());
     }
     return totalFee;
-  }
-
-  private static Contest createDummyContest(String uId) {
-    Contest contest = new Contest();
-    contest.setuId(uId);
-    Location location = new Location();
-    location.setCity("Jena");
-    location.setName("Schule abc bla");
-    location.setStreet("Some Street");
-    location.setStreetNum("1337");
-    ContestSettings contestSettings = new ContestSettings();
-    contestSettings.setName("Jena CrossCut - " + uId);
-    contestSettings.setDateStart(ZonedDateTime.now().plus(random.nextInt(400), ChronoUnit.DAYS));
-    contestSettings.setDateEnd(contestSettings.getDateStart().plus(random.nextInt(20), ChronoUnit.DAYS));
-    contestSettings.setLocation(location);
-    contest.setContestSettings(contestSettings);
-    contest.setOrganisers(Set.of(PersonUtil.rndOrga()));
-    contest.setHelpers(Set.of(PersonUtil.rndHelper(), PersonUtil.rndHelper(), PersonUtil.rndHelper()));
-    contest.setPlayers(PersonUtil.rndPlayers(30));
-    return contest;
   }
 }

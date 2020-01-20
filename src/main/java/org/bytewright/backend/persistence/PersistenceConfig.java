@@ -1,10 +1,7 @@
 package org.bytewright.backend.persistence;
 
-import java.util.List;
-
 import javax.sql.DataSource;
 
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +33,9 @@ public class PersistenceConfig {
   }
 
   @Bean
-  public ModelMapper modelMapper(List<Converter<?, ?>> converterList) {
+  public ModelMapper modelMapper() {
     /* This converts db entites to dtos used by frontend */
     /* https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application */
-    ModelMapper modelMapper = new ModelMapper();
-    for (Converter<?, ?> converter : converterList) {
-      LOGGER.info("Registering converter {} with modelmapper", converter);
-      modelMapper.addConverter(converter);
-    }
-    return modelMapper;
+    return new ModelMapper();
   }
 }
