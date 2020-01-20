@@ -1,12 +1,17 @@
 package org.bytewright.backend.persistence.entities;
 
+import static javax.persistence.CascadeType.ALL;
+
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,6 +51,41 @@ public class ContestEntity extends BaseAuditedEntity {
   private Instant endUtcTime;
   @Embedded
   private LocationEmbeddable location;
+  @OneToMany(cascade = ALL, mappedBy = "contestEntity", orphanRemoval = true, fetch = FetchType.LAZY)
+  private Set<OrganizerEntity> organizers;
+  @OneToMany(cascade = ALL, mappedBy = "contestEntity", orphanRemoval = true, fetch = FetchType.LAZY)
+  private Set<PlayerEntity> players;
+  @OneToMany(cascade = ALL, mappedBy = "contestEntity", orphanRemoval = true, fetch = FetchType.LAZY)
+  private Set<HelperEntity> helpers;
+
+  public Set<OrganizerEntity> getOrganizers() {
+    return organizers;
+  }
+
+  public void setOrganizers(Set<OrganizerEntity> organizers) {
+    this.organizers = organizers;
+  }
+
+  public Set<PlayerEntity> getPlayers() {
+    return players;
+  }
+
+  public void setPlayers(Set<PlayerEntity> players) {
+    if (this.players == null) {
+      this.players = new HashSet<>();
+    } else {
+      this.players.clear();
+    }
+    this.players.addAll(players);
+  }
+
+  public Set<HelperEntity> getHelpers() {
+    return helpers;
+  }
+
+  public void setHelpers(Set<HelperEntity> helpers) {
+    this.helpers = helpers;
+  }
 
   @Override
   public String toString() {

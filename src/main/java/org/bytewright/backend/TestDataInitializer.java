@@ -14,6 +14,7 @@ import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.services.ContestService;
+import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.PersonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ public class TestDataInitializer {
   private static final Logger LOGGER = LoggerFactory.getLogger(TestDataInitializer.class);
   @Autowired
   private ContestService contestService;
+  @Autowired
+  private PersonService personService;
   private Random rnd = new SecureRandom();
 
   @EventListener
@@ -45,8 +48,18 @@ public class TestDataInitializer {
     LOGGER.debug("Creating {} contest... Ids: {}", contestMap.size(), String.join(",", contestMap.keySet()));
     for (Map.Entry<String, Contest> entry : contestMap.entrySet()) {
       contestService.createContest(entry.getValue());
+      Contest contest = createPersons(entry.getValue());
+      contestService.update(contest);
     }
 
+  }
+
+  private Contest createPersons(Contest contest) {
+    String uId = contest.getUniqueId();
+    contest.setOrganisers(Set.of(PersonUtil.rndOrga(uId)));
+    contest.setHelpers(Set.of(PersonUtil.rndHelper(uId), PersonUtil.rndHelper(uId), PersonUtil.rndHelper(uId)));
+    contest.setPlayers(PersonUtil.rndPlayers(uId, 30));
+    return contest;
   }
 
   private Contest createDummyContest(String uId) {
@@ -63,9 +76,9 @@ public class TestDataInitializer {
     contestSettings.setDateEnd(contestSettings.getDateStart().plus(rnd.nextInt(20), ChronoUnit.DAYS));
     contestSettings.setLocation(location);
     contest.setContestSettings(contestSettings);
-    contest.setOrganisers(Set.of(PersonUtil.rndOrga()));
-    contest.setHelpers(Set.of(PersonUtil.rndHelper(), PersonUtil.rndHelper(), PersonUtil.rndHelper()));
-    contest.setPlayers(PersonUtil.rndPlayers(30));
+    contest.setOrganisers(Set.of());
+    contest.setHelpers(Set.of());
+    contest.setPlayers(Set.of());
     return contest;
   }
 }

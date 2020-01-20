@@ -1,6 +1,7 @@
 package org.bytewright.backend.persistence.converter;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -9,38 +10,27 @@ import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.Location;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
+import org.bytewright.backend.persistence.entities.PlayerEntity;
 import org.bytewright.backend.persistence.repositories.ContestRepository;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContestToEntityConverter implements Converter<Contest, ContestEntity> {
+public class ContestToEntityConverter extends AbstractToEntityConverter<Contest, ContestEntity> {
   @Autowired
   private ContestRepository contestRepository;
   @Autowired
   private ModelMapper modelMapper;
 
   @Override
-  public ContestEntity convert(MappingContext<Contest, ContestEntity> context) {
-    Contest source = context.getSource();
-    if (source == null) {
-      return null;
-    }
-    Optional<ContestEntity> entityOptional = contestRepository.findByShortIdentifier(source.getUniqueId());
-    return entityOptional
-        .map(contestEntity -> updateValuesFromDto(contestEntity, source))
-        .orElseGet(() -> createNewEntity(source));
-  }
-
-  private ContestEntity createNewEntity(Contest source) {
+  public ContestEntity createNewEntity(@Nonnull Contest source) {
     ContestEntity entity = new ContestEntity();
     return updateValuesFromDto(entity, source);
   }
 
-  private ContestEntity updateValuesFromDto(@Nonnull ContestEntity entity, @Nonnull Contest source) {
+  @Override
+  public ContestEntity updateValuesFromDto(@Nonnull ContestEntity entity, @Nonnull Contest source) {
     ContestSettings contestSettings = source.getContestSettings();
     entity.setShortIdentifier(source.getUniqueId());
     entity.setContestName(contestSettings.getName());
@@ -61,7 +51,15 @@ public class ContestToEntityConverter implements Converter<Contest, ContestEntit
       modelMapper.map(location, LocationEmbeddable.class);
     }
     entity.setLocation(embeddable);
+    entity.setPlayers(source.getPlayers().stream()
+        .map(player -> modelMapper.map(player, PlayerEntity.class))
+        .collect(Collectors.toSet()));
     //todo player usw...
     return entity;
+  }
+
+  @Override
+  protected Optional<ContestEntity> findOperation(@Nonnull Contest source) {
+    return contestRepository.findByShortIdentifier(source.getUniqueId());
   }
 }

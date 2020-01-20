@@ -3,12 +3,15 @@ package org.bytewright.backend.persistence.converter;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.money.Monetary;
 
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.ContestSettings;
 import org.bytewright.backend.dto.Location;
+import org.bytewright.backend.dto.Player;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
 import org.modelmapper.Converter;
@@ -48,10 +51,6 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
     Location location = new Location();
     if (locationEntity != null) {
       modelMapper.map(locationEntity, location);
-      //      location.setCity(locationEntity.getCity());
-      //      location.setStreet(locationEntity.getStreet());
-      //      location.setStreetNum(locationEntity.getStreetNum());
-      //      location.setName(locationEntity.getName());
     }
     settings.setLocation(location);
 
@@ -60,8 +59,11 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
       contest = new Contest();
     }
     contest.setuId(source.getShortIdentifier());
+    Set<Player> playerSet = source.getPlayers().stream()
+        .map(entity -> modelMapper.map(entity, Player.class))
+        .collect(Collectors.toSet());
+    contest.setPlayers(playerSet);
     contest.setHelpers(new HashSet<>());
-    contest.setPlayers(new HashSet<>());
     contest.setOrganisers(new HashSet<>());
     contest.setContestSettings(settings);
     return contest;

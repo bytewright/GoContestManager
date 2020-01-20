@@ -1,6 +1,8 @@
 package org.bytewright.backend.persistence.entities;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -10,15 +12,27 @@ public abstract class AbstractPersonEntity extends BaseAuditedEntity {
 
   @Size(min = 1, max = 100)
   @Column(name = "email")
-  private String emailAddr;
+  protected String emailAddr;
   @NotBlank
   @Size(max = 100)
   @Column(name = "first_name")
-  private String name;
+  protected String name;
   @NotBlank
   @Size(max = 100)
   @Column(name = "last_name")
-  private String surname;
+  protected String surname;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "contest_id", nullable = false)
+  protected ContestEntity contestEntity;
+
+  public ContestEntity getContestEntity() {
+    return contestEntity;
+  }
+
+  public void setContestEntity(ContestEntity contestEntity) {
+    this.contestEntity = contestEntity;
+  }
 
   public String getEmailAddr() {
     return emailAddr;

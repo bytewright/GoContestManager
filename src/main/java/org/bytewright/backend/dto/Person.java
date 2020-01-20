@@ -7,6 +7,15 @@ public class Person implements Serializable {
   private String emailAddr;
   private String name;
   private String surname;
+  private String contestIdentifier;
+
+  public String getContestIdentifier() {
+    return contestIdentifier;
+  }
+
+  public void setContestIdentifier(String contestIdentifier) {
+    this.contestIdentifier = contestIdentifier;
+  }
 
   public Long getUniqueId() {
     return uniqueId;

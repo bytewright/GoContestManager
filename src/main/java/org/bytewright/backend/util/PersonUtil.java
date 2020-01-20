@@ -17,7 +17,7 @@ public class PersonUtil {
   private static Random rnd = new Random();
   public static AtomicLong nextId = new AtomicLong(1);
 
-  public static Helper rndHelper() {
+  public static Helper rndHelper(String contestId) {
     Helper helper = rndPerson(new Helper());
     helper.setPhoneNumber(rnd.ints(10).mapToObj(Integer::toString).collect(Collectors.joining()));
     Location rndAdress = new Location();
@@ -25,10 +25,11 @@ public class PersonUtil {
     rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
     rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
     helper.setAddress(rndAdress);
+    helper.setContestIdentifier(contestId);
     return helper;
   }
 
-  public static Organiser rndOrga() {
+  public static Organiser rndOrga(String contestId) {
     Organiser organiser = rndPerson(new Organiser());
     organiser.setPhoneNumber(rnd.ints(10).mapToObj(Integer::toString).collect(Collectors.joining()));
     Location rndAdress = new Location();
@@ -36,12 +37,16 @@ public class PersonUtil {
     rndAdress.setStreetNum(Integer.toString(rnd.nextInt(500)));
     rndAdress.setCity(6 + generateRandomWord(rnd.nextInt(6)));
     organiser.setAddress(rndAdress);
+    organiser.setContestIdentifier(contestId);
     return organiser;
   }
 
-  public static Player rndPlayer() {
+  public static Player rndPlayer(String contestId) {
     Player player = rndPerson(new Player());
+    player.setCity(generateRandomWord(8));
+    player.setCountry("DE");
     player.setGoClub(generateRandomWord(8));
+    player.setContestIdentifier(contestId);
     GoRank[] values = GoRank.values();
     GoRank rank = Arrays.stream(values)
         .skip(rnd.nextInt(values.length - 1))
@@ -58,9 +63,9 @@ public class PersonUtil {
     return player;
   }
 
-  public static Set<Player> rndPlayers(int num) {
+  public static Set<Player> rndPlayers(String contestId, int num) {
     return IntStream.range(0, num)
-        .mapToObj(value -> rndPlayer())
+        .mapToObj(value -> rndPlayer(contestId))
         .collect(Collectors.toSet());
   }
 
@@ -74,7 +79,7 @@ public class PersonUtil {
   }
 
   private static <T extends Person> T rndPerson(T person) {
-    person.setUniqueId(nextId.getAndIncrement());
+    //    person.setUniqueId(nextId.getAndIncrement());
     person.setName(generateRandomWord(3 + rnd.nextInt(12)));
     person.setSurname(generateRandomWord(3 + rnd.nextInt(12)));
     person.setEmailAddr(person.getName() + "." + person.getSurname() + "@some.mail.com");

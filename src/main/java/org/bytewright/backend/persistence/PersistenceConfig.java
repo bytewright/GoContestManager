@@ -25,8 +25,6 @@ public class PersistenceConfig {
         .setType(EmbeddedDatabaseType.H2)
         .setScriptEncoding("UTF-8")
         .addDefaultScripts()
-        .addScript("contestCreate.sql")
-        .addScript("contestDummies.sql")
         .build();
     LOGGER.info("Created DB: {}", db);
     return db;

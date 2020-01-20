@@ -32,10 +32,7 @@ public class Contest implements Serializable {
     if (o == null || getClass() != o.getClass())
       return false;
     Contest contest = (Contest) o;
-    return getHelpers().equals(contest.getHelpers()) &&
-        getOrganisers().equals(contest.getOrganisers()) &&
-        getPlayers().equals(contest.getPlayers()) &&
-        uId.equals(contest.uId);
+    return uId.equals(contest.uId);
   }
 
   public ContestSettings getContestSettings() {

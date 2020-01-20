@@ -1,9 +1,6 @@
 package org.bytewright.frontend.pages;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -32,13 +29,11 @@ public class HomePage extends GcmTemplate {
   @Override
   protected Component getContent(String contentId) {
     Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
-    List<Contest> validContests = contestService.getValidContests().stream()
-        .sorted(Comparator.comparing(contest -> contest.getContestSettings().getDateStart()))
-        .collect(Collectors.toList());
-    if (selectedContest.isPresent() && !validContests.contains(selectedContest.get())) {
-      LOGGER.info("User has selected invalid contest, resetting: {}", selectedContest);
+
+    if (selectedContest.isPresent() && !contestService.isValid(selectedContest.get())) {
+      LOGGER.info("Users selected contest not in valid contests, deleting this as selected: {}", selectedContest);
       GoContestManagerSession.get().setContest(null);
     }
-    return new HomePanel(CONTENT_ID, validContests, selectedContest);
+    return new HomePanel(CONTENT_ID, contestService.getValidContests(), selectedContest);
   }
 }
