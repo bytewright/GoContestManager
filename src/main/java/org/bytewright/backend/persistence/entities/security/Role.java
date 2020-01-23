@@ -1,5 +1,6 @@
 package org.bytewright.backend.persistence.entities.security;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "roles", schema = "gcm")
-public class Role {
+public class Role implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;

@@ -1,5 +1,8 @@
 package org.bytewright.frontend.components.template;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -7,9 +10,13 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.bytewright.frontend.res.css.Marker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class GcmTemplate extends WebPage {
+public abstract class GcmTemplate extends WebPage {
+  private static final Logger LOGGER = LoggerFactory.getLogger(GcmTemplate.class);
   protected static final String CONTENT_ID = "contentComponent";
   private Component footerPanel;
   private Component headerPanel;
@@ -35,9 +42,16 @@ public class GcmTemplate extends WebPage {
   @Override
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
-    PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "baseStyle.css");
-    CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
-    response.render(cssItem);
+    Stream.concat(
+        Stream.of(new PackageResourceReference(Marker.class, "baseStyle.css")),
+        getHeaderRenderContent(response).stream())
+        .peek(resourceReference -> LOGGER.info("Rendering {} to head", resourceReference.getName()))
+        .map(CssHeaderItem::forReference)
+        .forEach(response::render);
+  }
+
+  protected List<ResourceReference> getHeaderRenderContent(IHeaderResponse response) {
+    return List.of();
   }
 
   public Component getHeaderPanel() {
@@ -48,9 +62,7 @@ public class GcmTemplate extends WebPage {
     return footerPanel;
   }
 
-  protected Component getContent(String contentId, PageParameters parameters) {
-    return getContent(contentId);
-  }
+  protected abstract Component getContent(String contentId, PageParameters parameters);
 
   protected Component getContent(String contentId) {
     return new Label(CONTENT_ID, "Put your content here");

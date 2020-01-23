@@ -1,5 +1,7 @@
 package org.bytewright.backend.persistence.entities.security;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,7 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 @Entity
 @Table(name = "permissions", schema = "gcm")
-public class Permission {
+public class Permission implements Serializable {
   private static String PERM_PAIR_DELIMITER = ":";
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

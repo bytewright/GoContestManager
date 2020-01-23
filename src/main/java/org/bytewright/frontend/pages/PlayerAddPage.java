@@ -1,12 +1,14 @@
 package org.bytewright.frontend.pages;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.frontend.components.manage.players.PlayerAddPanel;
@@ -33,14 +35,15 @@ public class PlayerAddPage extends GcmTemplate {
   }
 
   @Override
-  public void renderHead(IHeaderResponse response) {
-    super.renderHead(response);
-    PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "style.css");
-    CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
-    response.render(cssItem);
-    cssFile = new PackageResourceReference(Marker.class, "div-as-table.css");
-    response.render(CssHeaderItem.forReference(cssFile));
-    cssFile = new PackageResourceReference(Marker.class, "feedbackPanel.css");
-    response.render(CssHeaderItem.forReference(cssFile));
+  protected List<ResourceReference> getHeaderRenderContent(IHeaderResponse response) {
+    return List.of(
+        new PackageResourceReference(Marker.class, "style.css"),
+        new PackageResourceReference(Marker.class, "div-as-table.css"),
+        new PackageResourceReference(Marker.class, "feedbackPanel.css"));
+  }
+
+  @Override
+  protected Component getContent(String contentId, PageParameters parameters) {
+    return getContent(contentId);
   }
 }

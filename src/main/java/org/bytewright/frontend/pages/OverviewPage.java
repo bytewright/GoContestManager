@@ -1,13 +1,14 @@
 package org.bytewright.frontend.pages;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.frontend.components.overview.OverviewPanel;
@@ -30,6 +31,11 @@ public class OverviewPage extends GcmTemplate {
   }
 
   @Override
+  protected List<ResourceReference> getHeaderRenderContent(IHeaderResponse response) {
+    return List.of(new PackageResourceReference(Marker.class, "style.css"));
+  }
+
+  @Override
   protected Component getContent(String contentId) {
     Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
     if (selectedContest.isEmpty()) {
@@ -40,10 +46,7 @@ public class OverviewPage extends GcmTemplate {
   }
 
   @Override
-  public void renderHead(IHeaderResponse response) {
-    super.renderHead(response);
-    PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "style.css");
-    CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
-    response.render(cssItem);
+  protected Component getContent(String contentId, PageParameters parameters) {
+    return getContent(contentId);
   }
 }

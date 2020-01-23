@@ -3,6 +3,7 @@ package org.bytewright.frontend.pages;
 import java.util.Optional;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
@@ -27,7 +28,7 @@ public class HomePage extends GcmTemplate {
   }
 
   @Override
-  protected Component getContent(String contentId) {
+  protected Component getContent(String contentId, PageParameters parameters) {
     Optional<Contest> selectedContest = GoContestManagerSession.get().getContestOpt();
 
     if (selectedContest.isPresent() && !contestService.isValid(selectedContest.get())) {
@@ -35,5 +36,10 @@ public class HomePage extends GcmTemplate {
       GoContestManagerSession.get().setContest(null);
     }
     return new HomePanel(CONTENT_ID, contestService.getValidContests(), selectedContest);
+  }
+
+  @Override
+  protected Component getContent(String contentId) {
+    return getContent(contentId, null);
   }
 }

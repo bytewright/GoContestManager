@@ -1,16 +1,17 @@
 package org.bytewright.frontend.pages;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
 import org.bytewright.backend.dto.Contest;
 import org.bytewright.backend.dto.Person;
@@ -87,12 +88,9 @@ public class PlayerManagementPage extends GcmTemplate {
   }
 
   @Override
-  public void renderHead(IHeaderResponse response) {
-    super.renderHead(response);
-    PackageResourceReference cssFile = new PackageResourceReference(Marker.class, "style.css");
-    CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
-    response.render(cssItem);
-    cssFile = new PackageResourceReference(Marker.class, "div-as-table.css");
-    response.render(CssHeaderItem.forReference(cssFile));
+  protected List<ResourceReference> getHeaderRenderContent(IHeaderResponse response) {
+    return List.of(
+        new PackageResourceReference(Marker.class, "style.css"),
+        new PackageResourceReference(Marker.class, "div-as-table.css"));
   }
 }
