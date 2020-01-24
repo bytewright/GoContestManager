@@ -10,8 +10,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 /**
  * a colon delimited string like contests:create
  * general permissions:
@@ -34,6 +32,13 @@ public class Permission implements Serializable {
   @Size(max = 255)
   private String perm;
 
+  public Permission() {
+  }
+
+  public Permission(String permission) {
+    this.perm = permission;
+  }
+
   public int getId() {
     return id;
   }
@@ -48,11 +53,6 @@ public class Permission implements Serializable {
 
   public void setPerm(String perm) {
     this.perm = perm;
-  }
-
-  public Pair<String, String> getPermission() {
-    String[] split = getPerm().split(PERM_PAIR_DELIMITER);
-    return Pair.of(split[0], split[1]);
   }
 
   @Override

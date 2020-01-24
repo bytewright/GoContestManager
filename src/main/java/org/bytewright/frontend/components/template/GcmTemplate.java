@@ -1,5 +1,6 @@
 package org.bytewright.frontend.components.template;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -43,11 +44,18 @@ public abstract class GcmTemplate extends WebPage {
   public void renderHead(IHeaderResponse response) {
     super.renderHead(response);
     Stream.concat(
-        Stream.of(new PackageResourceReference(Marker.class, "baseStyle.css")),
+        getBaseCss().stream(),
         getHeaderRenderContent(response).stream())
         .peek(resourceReference -> LOGGER.info("Rendering {} to head", resourceReference.getName()))
         .map(CssHeaderItem::forReference)
         .forEach(response::render);
+  }
+
+  private Collection<PackageResourceReference> getBaseCss() {
+    return List.of(
+        new PackageResourceReference(Marker.class, "baseStyle.css"),
+        new PackageResourceReference(Marker.class, "naviStyle.css")
+    );
   }
 
   protected List<ResourceReference> getHeaderRenderContent(IHeaderResponse response) {

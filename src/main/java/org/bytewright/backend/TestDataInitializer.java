@@ -14,8 +14,11 @@ import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.persistence.dtos.ContestSettings;
 import org.bytewright.backend.persistence.dtos.Location;
 import org.bytewright.backend.services.ContestService;
+import org.bytewright.backend.services.PageService;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.PersonUtil;
+import org.bytewright.frontend.pages.PageMountRegistry;
+import org.bytewright.frontend.util.Mountable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,8 @@ public class TestDataInitializer {
   private ContestService contestService;
   @Autowired
   private PersonService personService;
+  @Autowired
+  private PageService pageService;
   private Random rnd = new SecureRandom();
 
   @EventListener
@@ -38,6 +43,13 @@ public class TestDataInitializer {
   public void onContextRefreshedEvent(ContextRefreshedEvent event) {
     LOGGER.warn("Creating fake data for testing");
     createContests();
+    createPages();
+  }
+
+  private void createPages() {
+    for (Mountable mountable : PageMountRegistry.getMountables()) {
+      pageService.createPage(mountable);
+    }
   }
 
   private void createContests() {

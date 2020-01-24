@@ -35,6 +35,7 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
     Instant now = Instant.now();
     session.setCreationInstant(now);
     session.setContest(contestService.getNextContest());
+    session.setUserDbId(-1);
     return session;
   }
 

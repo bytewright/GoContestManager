@@ -1,5 +1,6 @@
 package org.bytewright.backend.persistence.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class BaseAuditedEntity {
+public abstract class BaseAuditedEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   protected Long id;

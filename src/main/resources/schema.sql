@@ -2,6 +2,7 @@ CREATE SCHEMA IF NOT EXISTS gcm;
 DROP TABLE IF EXISTS gcm.role_permissions;
 DROP TABLE IF EXISTS gcm.user_permissions;
 DROP TABLE IF EXISTS gcm.user_roles;
+DROP TABLE IF EXISTS gcm.pages;
 DROP TABLE IF EXISTS gcm.permissions;
 DROP TABLE IF EXISTS gcm.roles;
 DROP TABLE IF EXISTS gcm.users;
@@ -142,4 +143,17 @@ CREATE TABLE gcm.helpers
     contest_id    bigint(20)   NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_HelperToContest FOREIGN KEY (contest_id) REFERENCES gcm.contests (id)
+);
+
+CREATE TABLE gcm.pages
+(
+    id                  bigint(20)   NOT NULL AUTO_INCREMENT,
+    last_modified       DATETIME     DEFAULT NOW(),
+    page_url_path       varchar(200) NOT NULL,
+    display_in_navi     boolean      default false,
+    anchor_name         varchar(200) DEFAULT NULL,
+    page_class          varchar(200) DEFAULT NULL,
+    required_permission bigint(20)   DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_PageToPermission FOREIGN KEY (required_permission) REFERENCES gcm.permissions (id)
 );

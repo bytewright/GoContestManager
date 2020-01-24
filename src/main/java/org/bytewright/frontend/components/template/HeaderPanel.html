@@ -8,15 +8,12 @@
 <wicket:panel>
   <img height="50px" src="404" width="600px">
   <div id="headerNav">
+
     <wicket:link>
       <ul class="headerLinkList">
-        <li class="headerLinkList"><a href="HomePage.html">Home</a></li>
-        <li class="headerLinkList"><a href="OverviewPage.html">overview</a></li>
-        <li class="headerLinkList"><a href="PlayerManagementPage.html">Player Management</a></li>
-        <li class="headerLinkList"><a href="ContestSettingsPage.html">Contest Management</a></li>
-        <li class="headerLinkList"><a href="ContestCreationPage.html">Create Contest</a></li>
-        <li class="headerLinkList"><a href="LoginPage.html">login</a></li>
-        <li class="headerLinkList"><a href="/admin/ManageSiteUsers.html">manage</a></li>
+        <li class="headerLinkList" wicket:id="headerLinkList">
+          <a wicket:id="href"></a>
+        </li>
       </ul>
     </wicket:link>
   </div>

@@ -25,6 +25,7 @@ public class PersistenceConfig {
         .setType(EmbeddedDatabaseType.H2)
         .setScriptEncoding("UTF-8")
         .addDefaultScripts()
+        .setName("gcmDB")
         .build();
     LOGGER.info("Created DB: {}", db);
     return db;
