@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.frontend.res.css.Marker;
 
 public class ContestCreationPanel extends Panel {

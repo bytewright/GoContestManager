@@ -1,6 +1,6 @@
-package org.bytewright.backend.dto;
+package org.bytewright.backend.persistence.dtos;
 
-public class Helper extends Person {
+public class Organiser extends Person {
   private String phoneNumber;
   private Location address;
 

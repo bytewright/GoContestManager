@@ -5,8 +5,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.model.Model;
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
 
 public class OverviewPanel extends Panel {
   private static final long serialVersionUID = 1L;

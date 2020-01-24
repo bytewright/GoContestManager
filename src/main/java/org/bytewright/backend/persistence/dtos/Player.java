@@ -1,4 +1,4 @@
-package org.bytewright.backend.dto;
+package org.bytewright.backend.persistence.dtos;
 
 import org.bytewright.backend.util.GoRank;
 import org.bytewright.backend.util.PaymentStatus;

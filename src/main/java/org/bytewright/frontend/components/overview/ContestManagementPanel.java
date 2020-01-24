@@ -4,8 +4,8 @@ import java.time.Duration;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
 
 public class ContestManagementPanel extends Panel {
   public ContestManagementPanel(String contentId, Contest contest) {

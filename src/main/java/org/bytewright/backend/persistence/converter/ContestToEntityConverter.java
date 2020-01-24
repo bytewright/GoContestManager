@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
-import org.bytewright.backend.dto.Location;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
+import org.bytewright.backend.persistence.dtos.Location;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
 import org.bytewright.backend.persistence.entities.PlayerEntity;

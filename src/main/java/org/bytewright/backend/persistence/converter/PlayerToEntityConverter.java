@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.entities.PlayerEntity;
 import org.bytewright.backend.persistence.repositories.ContestRepository;

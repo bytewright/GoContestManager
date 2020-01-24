@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.apache.wicket.Component;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.frontend.components.home.HomePanel;

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.frontend.components.manage.contests.ContestSettingsPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;

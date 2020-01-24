@@ -1,4 +1,4 @@
-package org.bytewright.backend.dto;
+package org.bytewright.backend.persistence.dtos;
 
 import java.io.Serializable;
 import java.util.HashSet;

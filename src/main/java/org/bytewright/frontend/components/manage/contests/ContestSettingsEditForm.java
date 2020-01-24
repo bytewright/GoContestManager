@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.dto.ContestSettings;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.backend.util.GoRank;
 import org.bytewright.frontend.components.MoneyField;

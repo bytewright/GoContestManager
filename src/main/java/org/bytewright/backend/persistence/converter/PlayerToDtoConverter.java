@@ -1,6 +1,6 @@
 package org.bytewright.backend.persistence.converter;
 
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.persistence.entities.PlayerEntity;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;

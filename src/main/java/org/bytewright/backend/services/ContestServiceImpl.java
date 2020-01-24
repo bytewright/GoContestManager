@@ -13,10 +13,10 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import javax.transaction.Transactional;
 
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
-import org.bytewright.backend.dto.EarningsOverview;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
+import org.bytewright.backend.persistence.dtos.EarningsOverview;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.persistence.entities.ContestEntity;
 import org.bytewright.backend.persistence.repositories.ContestRepository;
 import org.bytewright.backend.security.GoContestManagerSession;

@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.PaymentStatus;
 import org.bytewright.frontend.pages.PlayerEditPage;

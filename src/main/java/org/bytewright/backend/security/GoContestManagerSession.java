@@ -7,7 +7,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 package org.bytewright.backend.services;
 
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.util.PersonUtil;
 import org.slf4j.Logger;

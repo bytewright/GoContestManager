@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.frontend.components.overview.OverviewPanel;
 import org.bytewright.frontend.components.template.GcmTemplate;

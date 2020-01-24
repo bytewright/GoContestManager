@@ -6,9 +6,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.EarningsOverview;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.EarningsOverview;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.services.ContestService;
 
 public class PlayerSummaryPanel extends Panel {

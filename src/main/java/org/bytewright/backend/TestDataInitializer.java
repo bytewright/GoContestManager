@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
-import org.bytewright.backend.dto.Location;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
+import org.bytewright.backend.persistence.dtos.Location;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.PersonUtil;

@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Player;
 
 /**
  * https://www.cgerlach.de/go/macmahon-documentation.html

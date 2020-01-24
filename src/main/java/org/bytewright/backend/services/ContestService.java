@@ -6,10 +6,10 @@ import java.util.Optional;
 import javax.money.MonetaryAmount;
 import javax.transaction.Transactional;
 
-import org.bytewright.backend.dto.Contest;
-import org.bytewright.backend.dto.ContestSettings;
-import org.bytewright.backend.dto.EarningsOverview;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.ContestSettings;
+import org.bytewright.backend.persistence.dtos.EarningsOverview;
+import org.bytewright.backend.persistence.dtos.Player;
 
 public interface ContestService {
   @Transactional

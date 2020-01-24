@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.util.exceptions.PlayerParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

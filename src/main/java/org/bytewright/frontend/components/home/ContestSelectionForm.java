@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.bytewright.backend.dto.Contest;
+import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.services.ContestService;
 import org.bytewright.frontend.pages.HomePage;

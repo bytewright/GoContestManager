@@ -7,11 +7,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.bytewright.backend.dto.Helper;
-import org.bytewright.backend.dto.Location;
-import org.bytewright.backend.dto.Organiser;
-import org.bytewright.backend.dto.Person;
-import org.bytewright.backend.dto.Player;
+import org.bytewright.backend.persistence.dtos.Helper;
+import org.bytewright.backend.persistence.dtos.Location;
+import org.bytewright.backend.persistence.dtos.Organiser;
+import org.bytewright.backend.persistence.dtos.Person;
+import org.bytewright.backend.persistence.dtos.Player;
 
 public class PersonUtil {
   private static Random rnd = new Random();
