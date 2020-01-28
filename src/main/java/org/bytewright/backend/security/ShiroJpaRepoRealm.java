@@ -59,7 +59,9 @@ public class ShiroJpaRepoRealm extends AuthorizingRealm {
     info.setStringPermissions(permNames);
 
     if (roleNames.contains("admin")) {
-      LOGGER.debug("Admin '{}' logged in at: {}", user.getUsername(), Instant.now());
+      LOGGER.debug("Admin '{}' ({} {}, id {}) logged in at: {}", user.getUsername(), user.getId(), user.getFirstName(),
+          user.getLastName(),
+          Instant.now());
     }
 
     return info;
@@ -76,6 +78,8 @@ public class ShiroJpaRepoRealm extends AuthorizingRealm {
       return null;
     }
     User user = userOpt.get();
+    GoContestManagerSession.get().setUserDbId(user.getId());
+
     SimpleAccount simpleAccount = new SimpleAccount(
         user.getUsername(),
         user.getPassword(),

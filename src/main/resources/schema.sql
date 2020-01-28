@@ -15,9 +15,10 @@ CREATE TABLE gcm.users
 (
     id           bigint(20)   NOT NULL AUTO_INCREMENT,
     display_name varchar(255) NOT NULL,
-    first_name   varchar(255) DEFAULT NULL,
-    last_name    varchar(255) DEFAULT NULL,
-    pw           varchar(255) NOT NULL,
+    first_name   varchar(50)  NOT NULL,
+    last_name    varchar(50)  NOT NULL,
+    email_addr   varchar(200) NOT NULL,
+    pw           varchar(100) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (display_name)
 );

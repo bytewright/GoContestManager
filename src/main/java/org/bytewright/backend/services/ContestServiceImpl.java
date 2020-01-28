@@ -35,6 +35,8 @@ public class ContestServiceImpl implements ContestService {
   @Autowired
   private ContestRepository contestRepository;
   @Autowired
+  private PersonService personService;
+  @Autowired
   private ModelMapper modelMapper;
 
   @Override
@@ -65,16 +67,45 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional
+  @Transactional(Transactional.TxType.REQUIRES_NEW)
   public boolean createContest(Contest value) {
+    String uniqueId = value.getUniqueId();
     try {
+      if (isIllegalIdentifier(uniqueId) || contestRepository.findByShortIdentifier(uniqueId).isPresent()) {
+        LOGGER.info("Tried to create contest with identifier {}, but this identifier is already in use or illegal", uniqueId);
+        return false;
+      }
+      ContestSettings settings = value.getContestSettings();
+      if (validContestDates(settings)) {
+        LOGGER.info("Tried to create contest with identifier {}, But contest dates are invalid: {}", uniqueId, settings);
+        return false;
+      }
       ContestEntity entity = modelMapper.map(value, ContestEntity.class);
-      contestRepository.save(entity);
+      ContestEntity contestEntity = contestRepository.save(entity);
+      LOGGER.info("Persisted contest {}, id: {}", contestEntity.getShortIdentifier(), contestEntity.getId());
     } catch (Exception e) {
-      LOGGER.error("Failed to save contest {}", value.getUniqueId(), e);
+      LOGGER.error("Failed to save contest {}", uniqueId, e);
       return false;
     }
     return true;
+  }
+
+  @Override
+  @Transactional(Transactional.TxType.REQUIRES_NEW)
+  public void update(Contest contest) {
+    try {
+      ContestEntity entity = modelMapper.map(contest, ContestEntity.class);
+      if (entity.getId() == null) {
+        throw new IllegalStateException("entity for contest was not found: " + contest.getUniqueId());
+      }
+      contestRepository.save(entity);
+    } catch (Exception e) {
+      LOGGER.error("Failed to save contest {}", contest.getUniqueId(), e);
+    }
+  }
+
+  private boolean validContestDates(ContestSettings settings) {
+    return settings.getDateStart().isAfter(settings.getDateEnd()) || settings.getDateEnd().isAfter(ZonedDateTime.now());
   }
 
   @Override
@@ -142,18 +173,9 @@ public class ContestServiceImpl implements ContestService {
     return totalFee;
   }
 
-  @Override
-  @Transactional
-  public void update(Contest contest) {
-    try {
-      ContestEntity entity = modelMapper.map(contest, ContestEntity.class);
-      if (entity.getId() == null) {
-        throw new IllegalStateException("entity for contest was not found: " + contest.getUniqueId());
-      }
-      contestRepository.save(entity);
-    } catch (Exception e) {
-      LOGGER.error("Failed to save contest {}", contest.getUniqueId(), e);
-    }
+  private boolean isIllegalIdentifier(String uniqueId) {
+    // todo schimpfwortfilter?
+    return "NULL".equals(uniqueId);
   }
 
   @Override

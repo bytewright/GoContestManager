@@ -22,7 +22,6 @@ import org.apache.wicket.validation.INullAcceptingValidator;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.persistence.dtos.Player;
 import org.bytewright.backend.services.PersonService;
 import org.bytewright.backend.util.GoRank;
@@ -33,17 +32,14 @@ import org.slf4j.LoggerFactory;
 
 public class PlayerForm extends Form<Player> { // todo FormComponentPanel
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerForm.class);
-  private final Contest contest;
-  private final Player player;
   private final GoRankModel goRankModel;
 
   @SpringBean
   private PersonService personService;
 
-  public PlayerForm(String contentId, IModel<Player> model, Contest contest) {
+  public PlayerForm(String contentId, IModel<Player> model) {
     super(contentId, model);
-    this.contest = contest;
-    this.player = model.getObject();
+    Player player = model.getObject();
     if (player.getGoRank() == null)
       this.goRankModel = new GoRankModel();
     else
@@ -84,12 +80,13 @@ public class PlayerForm extends Form<Player> { // todo FormComponentPanel
 
   @Override
   protected void onSubmit() {
+    Player modelObject = getModelObject();
     GoRank newRank = Arrays.stream(GoRank.values())
         .filter(goRank -> goRank.getGoRankName().equals(goRankModel.getGoRankName()))
         .filter(goRank -> goRank.getRank() == goRankModel.getRank())
         .findFirst().orElseThrow();
-    player.setGoRank(newRank);
-    personService.saveOrUpdatePlayer(contest, player);
+    modelObject.setGoRank(newRank);
+    personService.saveOrUpdatePlayer(modelObject);
     setResponsePage(PlayerManagementPage.class);
   }
 

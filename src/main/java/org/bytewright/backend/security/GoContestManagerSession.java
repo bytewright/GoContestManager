@@ -15,7 +15,7 @@ public class GoContestManagerSession extends AbstractAuthenticatedWebSession {
   private static final Logger LOGGER = LoggerFactory.getLogger(GoContestManagerSession.class);
   private Contest contest;
   private Instant creationInstant;
-  private int userDbId;
+  private long userDbId;
 
   public GoContestManagerSession(Request request) {
     super(request);
@@ -65,11 +65,11 @@ public class GoContestManagerSession extends AbstractAuthenticatedWebSession {
     return Optional.ofNullable(contest);
   }
 
-  public int getUserDbId() {
+  public long getUserDbId() {
     return userDbId;
   }
 
-  public void setUserDbId(int userDbId) {
+  public void setUserDbId(long userDbId) {
     this.userDbId = userDbId;
   }
 }

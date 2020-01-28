@@ -41,6 +41,11 @@ public class User implements Serializable {
   @Column(name = "pw")
   private String password;
 
+  @NotBlank
+  @Size(max = 200)
+  @Column(name = "email_addr")
+  private String emailAddress;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", schema = "gcm",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -128,5 +133,13 @@ public class User implements Serializable {
         ", roles=" + roles +
         ", permissions=" + permissions +
         '}';
+  }
+
+  public String getEmailAddress() {
+    return emailAddress;
+  }
+
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
   }
 }

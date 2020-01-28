@@ -13,11 +13,11 @@ INSERT INTO gcm.permissions (id, perm)
 VALUES (3, 'contest:view');
 
 INSERT INTO gcm.users
-VALUES (1, 'admin', null, null, 'secret');
+VALUES (1, 'admin', 'admin', 'admin', 'admin@gcm.de', 'secret');
 INSERT INTO gcm.users
-VALUES (2, 'orga1', null, null, 'secret');
+VALUES (2, 'orga1', 'Max', 'Mustermann', 'testOrga@gcm.de', 'secret');
 INSERT INTO gcm.users
-VALUES (3, 'guest', null, null, 'guest');
+VALUES (3, 'guest', 'Alice', 'Bob', 'guest@gcm.de', 'guest');
 
 
 INSERT INTO gcm.role_permissions (role_id, permission_id)

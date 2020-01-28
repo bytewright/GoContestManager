@@ -13,8 +13,9 @@ public class PlayerAddPanel extends Panel {
     super(contentId);
     Player player = new Player();
     player.setPaymentStatus(PaymentStatus.NOT_PAID);
-    Form<Player> playerAddForm = new PlayerForm("playerAdd", Model.of(player), contest);
-    Form<Player> playerParseForm = new PlayerParseForm("playerParse", Model.of(player), contest);
+    player.setContestIdentifier(contest.getUniqueId());
+    Form<Player> playerAddForm = new PlayerForm("playerAdd", Model.of(player));
+    Form<Player> playerParseForm = new PlayerParseForm("playerParse", Model.of(player));
 
     add(playerAddForm);
     add(playerParseForm);

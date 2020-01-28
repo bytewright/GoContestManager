@@ -9,6 +9,10 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
 @ShiroSecurityConstraint(constraint = ShiroConstraint.HasPermission, value = "contest:create", loginMessage = "Login message", unauthorizedMessage = "Not authorized message")
 public class ContestCreationPage extends GcmTemplate {
+  @Override
+  protected Component getContent(String contentId) {
+    return getContent(contentId, null);
+  }
 
   @Override
   protected Component getContent(String contentId, PageParameters parameters) {

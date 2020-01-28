@@ -10,7 +10,7 @@ public class PlayerEditPanel extends Panel {
   public PlayerEditPanel(String contentId, Contest contest, Player player) {
     super(contentId);
 
-    Form<Player> playerEditForm = new PlayerForm("playerEdit", Model.of(player), contest);
+    Form<Player> playerEditForm = new PlayerForm("playerEdit", Model.of(player));
     add(playerEditForm);
   }
 }

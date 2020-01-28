@@ -16,9 +16,9 @@ public class ContestCreationPanel extends Panel {
   public ContestCreationPanel(String contentId, PageParameters parameters) {
     super(contentId);
 
-    boolean success = parameters.get("success").toBoolean();
     IModel<String> successMsg = LambdaModel.of(() -> "");
-    if (!parameters.isEmpty()) {
+    if (parameters != null && !parameters.isEmpty()) {
+      boolean success = parameters.get("success").toBoolean();
       successMsg = LambdaModel.of(() -> success ? "Contest created successfully!" : "Contest could not be created");
     }
     Form<Contest> selection = new ContestCreationForm("contestCreation");

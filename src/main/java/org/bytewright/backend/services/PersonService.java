@@ -1,9 +1,11 @@
 package org.bytewright.backend.services;
 
-import org.bytewright.backend.persistence.dtos.Contest;
+import javax.annotation.Nullable;
+
 import org.bytewright.backend.persistence.dtos.Player;
-import org.bytewright.backend.security.GoContestManagerSession;
-import org.bytewright.backend.util.PersonUtil;
+import org.bytewright.backend.persistence.entities.PlayerEntity;
+import org.bytewright.backend.persistence.repositories.PlayerRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +15,26 @@ import org.springframework.stereotype.Component;
 public class PersonService {
   private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
   @Autowired
-  private ContestService contestService;
+  private PlayerRepository playerRepository;
+  @Autowired
+  private ModelMapper modelMapper;
 
+  @Nullable
   public Player getPlayer(Long playerId) {
-    // todo db lookup
-    return contestService.getValidContests().stream()
-        .flatMap(contest -> contest.getPlayers().stream())
-        .filter(player -> player.getUniqueId().equals(playerId))
-        .findFirst().orElseThrow();
-  }
-
-  public Long saveOrUpdatePlayer(Contest contest, Player player) {
-    LOGGER.info("Adding/Updating Player {} to contest {}", player, contest.getUniqueId());
-    player.setUniqueId(PersonUtil.nextId.getAndIncrement());
-    contest.getPlayers().add(player);
-    return player.getUniqueId();
+    return playerRepository.findById(playerId)
+        .map(entity -> modelMapper.map(entity, Player.class))
+        .orElse(null);
   }
 
   public Long saveOrUpdatePlayer(Player player) {
-    return saveOrUpdatePlayer(GoContestManagerSession.get().getContest(), player);
+    PlayerEntity playerEntity = modelMapper.map(player, PlayerEntity.class);
+    LOGGER.info("Adding/Updating Player {} to contest {}", player, playerEntity.getContestEntity().getShortIdentifier());
+    return playerRepository.save(playerEntity).getId();
   }
 
   public void deletePlayer(Player player) {
-    Contest contest = GoContestManagerSession.get().getContest();
-    LOGGER.info("Deleting Player {} from contest {}", player, contest);
-    contest.getPlayers().remove(player);
+    PlayerEntity playerEntity = modelMapper.map(player, PlayerEntity.class);
+    LOGGER.info("Deleting Player {} from contest {}", player, playerEntity.getContestEntity().getShortIdentifier());
+    playerRepository.delete(playerEntity);
   }
 }

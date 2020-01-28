@@ -46,7 +46,7 @@ public abstract class GcmTemplate extends WebPage {
     Stream.concat(
         getBaseCss().stream(),
         getHeaderRenderContent(response).stream())
-        .peek(resourceReference -> LOGGER.info("Rendering {} to head", resourceReference.getName()))
+        .peek(resourceReference -> LOGGER.trace("Rendering {} to head", resourceReference.getName()))
         .map(CssHeaderItem::forReference)
         .forEach(response::render);
   }
