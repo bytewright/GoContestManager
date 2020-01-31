@@ -30,7 +30,7 @@ public class SpringBootApp {
     registration.addUrlPatterns("/*");
     registration.addInitParameter("applicationClassName", wicketApplication.getClass().getCanonicalName());
     registration.addInitParameter("configuration", RuntimeConfigurationType.DEVELOPMENT.name());
-    registration.setName("myWicketFilter");
+    registration.setName("WicketApplicationGCM");
     registration.setOrder(1);
     LOGGER.info("Created Wicket Filter Registration: {}", registration);
     return registration;

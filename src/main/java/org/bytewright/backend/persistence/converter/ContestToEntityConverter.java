@@ -1,6 +1,7 @@
 package org.bytewright.backend.persistence.converter;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -9,7 +10,9 @@ import org.bytewright.backend.persistence.dtos.Contest;
 import org.bytewright.backend.persistence.dtos.ContestSettings;
 import org.bytewright.backend.persistence.dtos.Location;
 import org.bytewright.backend.persistence.entities.ContestEntity;
+import org.bytewright.backend.persistence.entities.HelperEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
+import org.bytewright.backend.persistence.entities.OrganizerEntity;
 import org.bytewright.backend.persistence.entities.PlayerEntity;
 import org.bytewright.backend.persistence.repositories.ContestRepository;
 import org.modelmapper.ModelMapper;
@@ -51,10 +54,19 @@ public class ContestToEntityConverter extends AbstractToEntityConverter<Contest,
       modelMapper.map(location, LocationEmbeddable.class);
     }
     entity.setLocation(embeddable);
-    entity.setPlayers(source.getPlayers().stream()
+    Set<PlayerEntity> playerEntities = source.getPlayers().stream()
         .map(player -> modelMapper.map(player, PlayerEntity.class))
-        .collect(Collectors.toSet()));
-    //todo player usw...
+        .collect(Collectors.toSet());
+    entity.setPlayers(playerEntities);
+
+    Set<OrganizerEntity> organizerEntities = source.getOrganisers().stream()
+        .map(organiser -> modelMapper.map(organiser, OrganizerEntity.class))
+        .collect(Collectors.toSet());
+    entity.setOrganizers(organizerEntities);
+    Set<HelperEntity> helperEntities = source.getHelpers().stream()
+        .map(helper -> modelMapper.map(helper, HelperEntity.class))
+        .collect(Collectors.toSet());
+    entity.setHelpers(helperEntities);
     return entity;
   }
 

@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 public class ContestCreationForm extends Form<Contest> {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContestCreationForm.class);
-  private final Contest contest;
   @SpringBean
   private ContestService contestService;
 
@@ -27,7 +26,7 @@ public class ContestCreationForm extends Form<Contest> {
 
   public ContestCreationForm(String id, IModel<Contest> model) {
     super(id, model);
-    contest = getModelObject();
+    Contest contest = getModelObject();
     ContestSettings settings = contest.getContestSettings();
     add(new TextField<>("name", LambdaModel.of(settings::getName, settings::setName), String.class));
     add(new TextField<>("uId", LambdaModel.of(contest::getUniqueId, contest::setuId), String.class));
@@ -37,9 +36,10 @@ public class ContestCreationForm extends Form<Contest> {
 
   @Override
   protected void onSubmit() {
+    Contest contest = getModelObject();
     LOGGER.info("contest creation form submitted, adding new contest: {}", contest);
     PageParameters parameters = new PageParameters();
-    if (contestService.createContest(getModelObject())) {
+    if (contestService.createContest(contest)) {
       parameters.add("success", Boolean.TRUE);
     } else {
       parameters.add("success", Boolean.FALSE);

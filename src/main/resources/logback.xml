@@ -20,6 +20,7 @@
   <!--  </appender>-->
 
   <logger name="org.bytewright" level="debug" />
+  <logger name="org.apache.wicket.Localizer" level="debug" />
   <logger name="com.giffing.wicket.spring.boot.starter.app.WicketBootStandardWebApplication" level="warn" />
   <logger name="org.springframework.context.support.PostProcessorRegistrationDelegate" level="warn" />
   <!--  <logger name="org.apache.wicket.page.PageAccessSynchronizer" level="debug" />-->

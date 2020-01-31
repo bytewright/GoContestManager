@@ -6,6 +6,8 @@ import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.resource.loader.BundleStringResourceLoader;
+import org.apache.wicket.settings.ResourceSettings;
 import org.apache.wicket.settings.SecuritySettings;
 import org.bytewright.backend.security.GoContestManagerSession;
 import org.bytewright.backend.services.ContestService;
@@ -56,7 +58,9 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
     PageMountRegistry.getMountables().stream()
         .peek(mountable -> LOGGER.info("registering mount: {}", mountable))
         .forEach(mountable -> mountPage(mountable.getMountPath(), mountable.getPageClass()));
-
     mountPage("secure", SecuredPage.class);
+    ResourceSettings resourceSettings = getResourceSettings();
+    resourceSettings.getStringResourceLoaders()
+        .add(new BundleStringResourceLoader("org.bytewright.WicketApplicationGCM"));
   }
 }

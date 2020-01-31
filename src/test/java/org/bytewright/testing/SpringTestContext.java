@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-@ComponentScan({ "org.bytewright" })
+@ComponentScan({ "org/org.bytewright" })
 public class SpringTestContext {
   @Bean
   @Primary

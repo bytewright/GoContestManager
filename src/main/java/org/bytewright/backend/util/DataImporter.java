@@ -1,5 +1,7 @@
-package org.bytewright.backend;
+package org.bytewright.backend.util;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -16,50 +18,40 @@ import org.bytewright.backend.persistence.entities.HelperEntity;
 import org.bytewright.backend.persistence.entities.LocationEmbeddable;
 import org.bytewright.backend.persistence.entities.OrganizerEntity;
 import org.bytewright.backend.persistence.entities.PlayerEntity;
-import org.bytewright.backend.persistence.repositories.ContestRepository;
-import org.bytewright.backend.services.PageService;
-import org.bytewright.backend.util.GoRank;
-import org.bytewright.backend.util.PaymentStatus;
-import org.bytewright.frontend.pages.PageMountRegistry;
-import org.bytewright.frontend.util.Mountable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TestDataInitializer {
-  private static final Logger LOGGER = LoggerFactory.getLogger(TestDataInitializer.class);
-  @Autowired
-  private ContestRepository contestRepository;
-  @Autowired
-  private PageService pageService;
+public class DataImporter {
+  private static final Logger LOGGER = LoggerFactory.getLogger(DataImporter.class);
+
   private Random rnd = new SecureRandom();
 
-  @EventListener
-  @Async
-  public void onContextRefreshedEvent(ContextRefreshedEvent event) {
-    LOGGER.warn("Creating fake data for testing");
-    createContests();
-    createPages();
-  }
-
-  private void createPages() {
-    for (Mountable mountable : PageMountRegistry.getMountables()) {
-      pageService.createPage(mountable);
+  public List<ContestEntity> getContestsFromFile(String fileName) {
+    List<ContestEntity> entityList;
+    Path path = Path.of(fileName);
+    if (Files.exists(path)) {
+      LOGGER.info("Importing contests from path: {}", path);
+      entityList = importFile(path);
+    } else {
+      LOGGER.warn("Creating fake data for testing, no file found at {}", path);
+      entityList = createContests();
     }
+    LOGGER.debug("Importing {} contest...", entityList.size());
+    return entityList;
   }
 
-  private void createContests() {
-    List<ContestEntity> entityList = IntStream.range(2020, 2035)
+  private List<ContestEntity> importFile(Path path) {
+    // todo import contests from json file
+    return List.of();
+  }
+
+  private List<ContestEntity> createContests() {
+    return IntStream.range(2020, 2035)
         .mapToObj(value -> "jcc" + value)
         .map(this::createContestEntity)
         .collect(Collectors.toList());
-    LOGGER.debug("Creating {} contest...", entityList.size());
-    contestRepository.saveAll(entityList);
   }
 
   private ContestEntity createContestEntity(String contestId) {
