@@ -4,7 +4,7 @@ div.table {
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
+    width: 95%;
 }
 
 div.tr {
@@ -13,13 +13,13 @@ div.tr {
 
 div.td {
     display: table-cell;
-    border: thin solid red;
+    border: thin solid #162049;
     padding: 5px;
 }
 
 div.th {
     display: table-cell;
-    border: thin solid red;
+    border: thin solid #162049;
     text-align: center;
     padding: 5px;
 }

@@ -11,13 +11,17 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.LambdaModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.bytewright.backend.persistence.dtos.Contest;
+import org.bytewright.backend.persistence.dtos.EarningsOverview;
 import org.bytewright.backend.persistence.dtos.Player;
+import org.bytewright.backend.services.ContestService;
 import org.bytewright.backend.util.PlayerExporter;
 import org.bytewright.frontend.components.PlayerListView;
 import org.bytewright.frontend.pages.PlayerAddPage;
@@ -27,8 +31,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.lambda.components.ComponentFactory;
 
+// TODO https://www.w3schools.com/howto/howto_js_sticky_header.asp
 public class PlayerManagementPanel extends Panel {
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerManagementPanel.class);
+  @SpringBean
+  private ContestService contestService;
 
   public PlayerManagementPanel(String contentId, Contest contest,
       Pair<String, Predicate<Player>> filterPredicate, Pair<String, Comparator<Player>> comparator) {
@@ -49,9 +56,19 @@ public class PlayerManagementPanel extends Panel {
 
     /* table body */
     add(new PlayerListView("players", players));
+    createSummary(contest, players);
+  }
 
-    /* botom summary */
-    add(new PlayerSummaryPanel("summaryView", contest));
+  private void createSummary(Contest contest, List<Player> players) {
+    EarningsOverview earningsOverview = contestService.getEarningsOverview(contest);
+    add(new Label("playerNum", players.size()));
+    add(new Label("seminarSum", players.stream().filter(Player::isSeminarMember).count()));
+    add(new Label("breakfastNum", LambdaModel.of(earningsOverview::getBreakfastCount)));
+    add(new Label("totalCurrentRev", LambdaModel.of(earningsOverview::getTotalCurrentEarnings)));
+    add(new Label("totalRev", LambdaModel.of(earningsOverview::getTotalEarnings)));
+    add(new Label("startingFees", LambdaModel.of(earningsOverview::getStartFeeEarnings)));
+    add(new Label("breakfastFees", LambdaModel.of(earningsOverview::getBreakfastEarnings)));
+    add(new Label("sumClubs", players.stream().map(Player::getGoClub).distinct().count()));
   }
 
   private SerializableConsumer<Link<Void>> parameters(String name, String value, String currentValue) {

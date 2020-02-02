@@ -29,18 +29,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Transactional
 public class ContestServiceImpl implements ContestService {
   private static final Logger LOGGER = LoggerFactory.getLogger(ContestServiceImpl.class);
 
   @Autowired
   private ContestRepository contestRepository;
   @Autowired
-  private PersonService personService;
-  @Autowired
   private ModelMapper modelMapper;
 
   @Override
-  @Transactional
   public void saveOrUpdateContestSettings(ContestSettings contestSettings) {
     Contest selectedContest = GoContestManagerSession.get().getContest();
     ContestEntity entity = modelMapper.map(selectedContest, ContestEntity.class);
@@ -49,7 +47,6 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional
   public Optional<Contest> getContest(String contestId) {
     Optional<ContestEntity> entityOptional = contestRepository.findByShortIdentifier(contestId);
     LOGGER.debug("contest with id {} requested, found: {}", contestId, entityOptional);
@@ -57,7 +54,6 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional
   public List<Contest> getValidContests() {
     ZonedDateTime now = ZonedDateTime.now();
     return contestRepository.findAll().stream().map(contestEntity -> modelMapper.map(contestEntity, Contest.class))
@@ -67,7 +63,6 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional(Transactional.TxType.REQUIRES_NEW)
   public boolean createContest(Contest value) {
     String uniqueId = value.getUniqueId();
     try {
@@ -91,7 +86,6 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional(Transactional.TxType.REQUIRES_NEW)
   public void update(Contest contest) {
     try {
       ContestEntity entity = modelMapper.map(contest, ContestEntity.class);
@@ -109,7 +103,6 @@ public class ContestServiceImpl implements ContestService {
   }
 
   @Override
-  @Transactional
   public Contest getNextContest() {
     return contestRepository.findFirstByStartUtcTimeIsAfter(Instant.now())
         .map(entity -> modelMapper.map(entity, Contest.class))

@@ -26,7 +26,7 @@ import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplicatio
 @ApplicationInitExtension
 public class WicketApplicationConfiguration extends WicketBootSecuredWebApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(WicketApplicationConfiguration.class);
-
+  public static final String BUNDLE_NAME = "org.bytewright.WicketApplicationGCM";
   @Autowired
   private ContestService contestService;
 
@@ -59,8 +59,9 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
         .peek(mountable -> LOGGER.info("registering mount: {}", mountable))
         .forEach(mountable -> mountPage(mountable.getMountPath(), mountable.getPageClass()));
     mountPage("secure", SecuredPage.class);
+
     ResourceSettings resourceSettings = getResourceSettings();
-    resourceSettings.getStringResourceLoaders()
-        .add(new BundleStringResourceLoader("org.bytewright.WicketApplicationGCM"));
+    LOGGER.info("Loading translations from bundle {}", BUNDLE_NAME);
+    resourceSettings.getStringResourceLoaders().add(new BundleStringResourceLoader(BUNDLE_NAME));
   }
 }

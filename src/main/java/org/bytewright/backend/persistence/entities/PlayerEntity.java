@@ -13,6 +13,8 @@ import org.bytewright.backend.persistence.converter.PaymentStatusToString;
 import org.bytewright.backend.util.GoRank;
 import org.bytewright.backend.util.PaymentStatus;
 
+import com.google.common.base.MoreObjects;
+
 @Entity
 @Table(name = "players", schema = "gcm")
 public class PlayerEntity extends AbstractPersonEntity {
@@ -57,30 +59,31 @@ public class PlayerEntity extends AbstractPersonEntity {
 
   @Override
   public String toString() {
-    return "PlayerEntity{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", surname='" + surname + '\'' +
-        ", emailAddr='" + emailAddr + '\'' +
-        ", age=" + age +
-        ", city='" + city + '\'' +
-        ", goClub='" + goClub + '\'' +
-        ", country='" + country + '\'' +
-        ", goRank=" + goRank +
-        ", paymentStatus=" + paymentStatus +
-        ", registrationFormMessage='" + registrationFormMessage + '\'' +
-        ", isNeedsSleepOver=" + isNeedsSleepOver +
-        ", isAttendsBreakfast=" + isAttendsBreakfast +
-        ", isGoClubMember=" + isGoClubMember +
-        ", isDiscounted=" + isDiscounted +
-        ", isFemale=" + isFemale +
-        ", isSenior=" + isSenior +
-        ", isStudent=" + isStudent +
-        ", isU10=" + isU10 +
-        ", isFirstContest=" + isFirstContest +
-        ", isSeminarMember=" + isSeminarMember +
-        ", lastModified=" + lastModified +
-        '}';
+    return MoreObjects.toStringHelper(this)
+        .add("id", id)
+        .add("name", name)
+        .add("surname", surname)
+        .add("goClub", goClub)
+        .add("goRank", goRank)
+        .add("city", city)
+        .add("age", age)
+        .add("country", country)
+        .add("emailAddr", emailAddr)
+        .add("paymentStatus", paymentStatus)
+        .add("registrationFormMessage", registrationFormMessage)
+        .add("isNeedsSleepOver", isNeedsSleepOver)
+        .add("isAttendsBreakfast", isAttendsBreakfast)
+        .add("isGoClubMember", isGoClubMember)
+        .add("isDiscounted", isDiscounted)
+        .add("isFemale", isFemale)
+        .add("isSenior", isSenior)
+        .add("isStudent", isStudent)
+        .add("isU10", isU10)
+        .add("isFirstContest", isFirstContest)
+        .add("isSeminarMember", isSeminarMember)
+        .add("contestEntityId", contestEntity.getId())
+        .add("lastModified", lastModified)
+        .toString();
   }
 
   public int getAge() {

@@ -32,18 +32,18 @@ public class PlayerListView extends ListView<Player> {
     item.add(new Label("goClub", LambdaModel.of(player::getGoClub, player::setGoClub)));
     item.add(new Label("rank", LambdaModel.of(() -> player.getGoRank().getAbbreviation())));
     item.add(new Label("paymentStatus", LambdaModel.of(player::getPaymentStatus, player::setPaymentStatus)));
-    CheckBox student = new CheckBox("isDiscount", LambdaModel.of(player::isDiscounted));
-    student.setEnabled(false);
-    item.add(student);
-    CheckBox senior = new CheckBox("isSeminar", LambdaModel.of(player::isSeminarMember));
-    senior.setEnabled(false);
-    item.add(senior);
-    CheckBox female = new CheckBox("isClub", LambdaModel.of(player::isGoClubMember));
-    female.setEnabled(false);
-    item.add(female);
-    CheckBox u10 = new CheckBox("isBreakfast", LambdaModel.of(player::isAttendsBreakfast));
-    u10.setEnabled(false);
-    item.add(u10);
+    CheckBox discount = new CheckBox("isDiscount", LambdaModel.of(player::isDiscounted));
+    discount.setEnabled(false);
+    item.add(discount);
+    CheckBox seminar = new CheckBox("isSeminar", LambdaModel.of(player::isSeminarMember));
+    seminar.setEnabled(false);
+    item.add(seminar);
+    CheckBox clubMember = new CheckBox("isClub", LambdaModel.of(player::isGoClubMember));
+    clubMember.setEnabled(false);
+    item.add(clubMember);
+    CheckBox breakfast = new CheckBox("isBreakfast", LambdaModel.of(player::isAttendsBreakfast));
+    breakfast.setEnabled(false);
+    item.add(breakfast);
     Form<String> playerEditForm = new Form<>("playerEditForm") {
       @Override
       protected void onSubmit() {
