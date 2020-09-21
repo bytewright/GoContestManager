@@ -2,6 +2,8 @@ package org.bytewright.backend.persistence;
 
 import javax.sql.DataSource;
 
+import org.bytewright.backend.persistence.entities.EntitiesMarker;
+import org.bytewright.backend.persistence.repositories.ReposMarker;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +15,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-@EnableJpaRepositories(basePackages = "org.bytewright.backend.persistence.repositories")
-@EntityScan(basePackages = "org.bytewright.backend.persistence.entities")
+@EnableJpaRepositories(basePackageClasses = ReposMarker.class)
+@EntityScan(basePackageClasses = EntitiesMarker.class)
 @Configuration
 public class PersistenceConfig {
   private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceConfig.class);
