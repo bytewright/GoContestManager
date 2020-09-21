@@ -1,0 +1,11 @@
+<suppressions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns='https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd'
+  xsi:schemaLocation='https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd'>
+  <suppress>
+    <notes><![CDATA[
+        This suppresses all CVE entries that have a score below CVSS 5.
+        ]]></notes>
+    <cvssBelow>5</cvssBelow>
+  </suppress>
+
+</suppressions>

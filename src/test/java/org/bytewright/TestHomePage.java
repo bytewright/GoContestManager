@@ -1,6 +1,5 @@
 package org.bytewright;
 
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.bytewright.frontend.pages.HomePage;
 import org.bytewright.testing.BaseWicketPageTest;
 import org.junit.Test;
