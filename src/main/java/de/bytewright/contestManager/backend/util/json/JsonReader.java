@@ -35,9 +35,9 @@ public class JsonReader {
   }
 
   private SimpleModule getProjectModule() {
+    /* All other types are auto converted by jackson */
     SimpleModule module = new SimpleModule("ContestDeserializer",
         new Version(1, 0, 0, null, null, null));
-    //    module.addDeserializer(Contest.class, new ContestDeserializer());
     module.addDeserializer(GoRank.class, new GoRankDeserializer());
     return module;
   }
