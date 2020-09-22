@@ -17,7 +17,7 @@ Security is implemented using apache shiro.
 
 App entry point is org.bytewright.SpringBootApp,
 Wicket is implemented as a request filter and configured in class:
-org.bytewright.frontend.WicketApplicationConfiguration
+de.bytewright.contestManager.frontend.WicketApplicationConfiguration
 
 Wicket uses backend services for data retrieval which are wired by spring
 using annotation `@SpringBean`:
@@ -28,7 +28,7 @@ using annotation `@SpringBean`:
 
 ### Data storage
 Uses an `H2` embedded db for easy local development, see:
-org.bytewright.backend.persistence.PersistenceConfig
+de.bytewright.contestManager.backend.persistence.PersistenceConfig
 
 ## Usage
 Currently, everything is initialized during startup
