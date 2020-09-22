@@ -5,6 +5,7 @@
 target/
 devdb/
 contestImports/
+.*json
 
 # Compiled class file
 *.class
