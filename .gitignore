@@ -4,6 +4,7 @@
 
 target/
 devdb/
+contestImports/
 
 # Compiled class file
 *.class
