@@ -64,7 +64,7 @@ CREATE TABLE gcm.contests
 (
     id                       bigint(20)   NOT NULL AUTO_INCREMENT,
     last_modified            DATETIME     DEFAULT NOW(),
-    short_identifier         varchar(10)  NOT NULL,
+    short_identifier         varchar(30)  NOT NULL,
     contest_name             varchar(100) NOT NULL,
     currency_unit_code       varchar(4)   NOT NULL,
     discount_general_amount  double       DEFAULT 0,

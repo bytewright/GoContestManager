@@ -10,35 +10,33 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import de.bytewright.contestManager.backend.persistence.entities.ContestEntity;
-import de.bytewright.contestManager.backend.persistence.repositories.ContestRepository;
+import de.bytewright.contestManager.backend.init.ContestImporter;
 import de.bytewright.contestManager.backend.services.PageService;
-import de.bytewright.contestManager.backend.util.DataImporter;
 import de.bytewright.contestManager.frontend.pages.PageMountRegistry;
 import de.bytewright.contestManager.frontend.util.Mountable;
 
 @Component
 public class DataInitializer {
   private static final Logger LOGGER = LoggerFactory.getLogger(DataInitializer.class);
-  @Autowired
-  private ContestRepository contestRepository;
+
   @Autowired
   private PageService pageService;
   @Autowired
-  private DataImporter dataImporter;
+  private ContestImporter contestImporter;
 
   @EventListener
   @Async
   public void onContextRefreshedEvent(ContextRefreshedEvent event) {
+    LOGGER.info("AppContext is refreshed, starting to populate pages and contests: {}", event);
     createPages();
-    List<ContestEntity> entityList = dataImporter.getContestsFromFile("import.json");
-    contestRepository.saveAll(entityList);
+    contestImporter.importContests();
   }
 
   private void createPages() {
-    for (Mountable mountable : PageMountRegistry.getMountables()) {
+    List<Mountable> mountables = PageMountRegistry.getMountables();
+    LOGGER.info("Found {} mountable Pages for wicket", mountables.size());
+    for (Mountable mountable : mountables) {
       pageService.createPage(mountable);
     }
   }
-
 }

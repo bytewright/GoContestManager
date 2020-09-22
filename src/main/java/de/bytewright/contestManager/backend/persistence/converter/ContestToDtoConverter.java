@@ -59,7 +59,7 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
     if (contest == null) {
       contest = new Contest();
     }
-    contest.setuId(source.getShortIdentifier());
+    contest.setUniqueID(source.getShortIdentifier());
     Set<Player> playerSet = source.getPlayers().stream()
         .map(entity -> modelMapper.map(entity, Player.class))
         .collect(Collectors.toSet());

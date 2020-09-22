@@ -30,7 +30,7 @@ public class ContestCreationForm extends Form<Contest> {
     Contest contest = getModelObject();
     ContestSettings settings = contest.getContestSettings();
     add(new TextField<>("name", LambdaModel.of(settings::getName, settings::setName), String.class));
-    add(new TextField<>("uId", LambdaModel.of(contest::getUniqueId, contest::setuId), String.class));
+    add(new TextField<>("uId", LambdaModel.of(contest::getUniqueId, contest::setUniqueID), String.class));
     add(new ZonedDateTimeField("startDate", LambdaModel.of(settings::getDateStart, settings::setDateStart)));
     add(new ZonedDateTimeField("endDate", LambdaModel.of(settings::getDateEnd, settings::setDateEnd)));
   }

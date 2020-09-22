@@ -34,7 +34,7 @@ public class OrganiserToEntityConverter extends AbstractToEntityConverter<Organi
   @Override
   protected OrganizerEntity updateValuesFromDto(@Nonnull OrganizerEntity entity, @Nonnull Organiser source) {
     ContestEntity contestEntity = contestRepository.findByShortIdentifier(source.getContestIdentifier())
-        .orElseThrow(() -> new IllegalArgumentException("Can't find orga with id: " + source.getContestIdentifier()));
+        .orElseThrow(() -> new IllegalArgumentException("Can't find contest with id: " + source.getContestIdentifier()));
     entity.setId(source.getUniqueId());
     entity.setEmailAddr(source.getEmailAddr());
     entity.setName(source.getName());

@@ -1,7 +1,5 @@
-package de.bytewright.contestManager.backend.util;
+package de.bytewright.contestManager.backend.init;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,34 +20,33 @@ import de.bytewright.contestManager.backend.persistence.entities.HelperEntity;
 import de.bytewright.contestManager.backend.persistence.entities.LocationEmbeddable;
 import de.bytewright.contestManager.backend.persistence.entities.OrganizerEntity;
 import de.bytewright.contestManager.backend.persistence.entities.PlayerEntity;
+import de.bytewright.contestManager.backend.util.GoRank;
+import de.bytewright.contestManager.backend.util.PaymentStatus;
 
+/**
+ * mostly for testing...
+ */
 @Component
-public class DataImporter {
-  private static final Logger LOGGER = LoggerFactory.getLogger(DataImporter.class);
+public class DataImporterForFakeData implements DataImporter {
+  private static final Logger LOGGER = LoggerFactory.getLogger(DataImporterForFakeData.class);
 
   private final Random rnd = new SecureRandom();
 
-  public List<ContestEntity> getContestsFromFile(String fileName) {
-    List<ContestEntity> entityList;
-    Path path = Path.of(fileName);
-    if (Files.exists(path)) {
-      LOGGER.info("Importing contests from path: {}", path);
-      entityList = importFile(path);
-    } else {
-      LOGGER.warn("Creating fake data for testing, no file found at {}", path);
-      entityList = createContests();
-    }
+  @Override
+  public List<ContestEntity> importContests() {
+    LOGGER.warn("Creating fake data for testing");
+    List<ContestEntity> entityList = createContests(5);
     LOGGER.debug("Importing {} contest...", entityList.size());
     return entityList;
   }
 
-  private List<ContestEntity> importFile(Path path) {
-    // todo import contests from json file
-    return List.of();
+  @Override
+  public int getOrder() {
+    return 1_000;
   }
 
-  private List<ContestEntity> createContests() {
-    return IntStream.range(2020, 2035)
+  private List<ContestEntity> createContests(int i) {
+    return IntStream.range(2020, 2020 + i)
         .mapToObj(value -> "jcc" + value)
         .map(this::createContestEntity)
         .collect(Collectors.toList());

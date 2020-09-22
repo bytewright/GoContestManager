@@ -25,7 +25,7 @@ import de.bytewright.contestManager.backend.util.GoRank;
 public class ContestEntity extends BaseAuditedEntity {
 
   @NotBlank
-  @Size(min = 3, max = 10)
+  @Size(min = 4, max = 20)
   @Column(unique = true)
   private String shortIdentifier;
   @NotBlank
@@ -38,7 +38,7 @@ public class ContestEntity extends BaseAuditedEntity {
   private double feeBreakfastAmount;
   private int roundCount;
   @NotBlank
-  @Size(min = 3, max = 100)
+  @Size(min = 4, max = 100)
   private String contestName;
   @NotNull
   @Convert(converter = GoRanksToString.class)
@@ -57,6 +57,7 @@ public class ContestEntity extends BaseAuditedEntity {
   private Set<PlayerEntity> players;
   @OneToMany(cascade = ALL, mappedBy = "contestEntity", orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<HelperEntity> helpers;
+  // todo nullable url to contest website or description
 
   public Set<OrganizerEntity> getOrganizers() {
     return organizers;

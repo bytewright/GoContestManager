@@ -55,6 +55,7 @@ public class ContestToEntityConverter extends AbstractToEntityConverter<Contest,
       modelMapper.map(location, LocationEmbeddable.class);
     }
     entity.setLocation(embeddable);
+    contestRepository.save(entity); // the persons need the entity already persisted
     Set<PlayerEntity> playerEntities = source.getPlayers().stream()
         .map(player -> modelMapper.map(player, PlayerEntity.class))
         .collect(Collectors.toSet());

@@ -1,31 +1,33 @@
 {
   "uniqueID" : "MyContest2020",
-  "longName" : "My demo contest",
-  "startDate" : "2020-10-30T17:30:00.00Z",
-  "endDate" : "2020-11-01T16:00:00.00Z",
-  "roundCount" : 8,
-  "startingFee" : 25,
-  "discountGeneral" : 3.5,
-  "discountClub" : 5,
-  "discountPreReg" : 2,
-  "currency" : "EUR",
-  "location" : {
-    "city" : "DemoCity",
-    "name" : "Demo conference location",
-    "street" : "Demo-street-with-long-name-for-testing",
-    "streetNum" : "42A"
+  "contestSettings" : {
+    "name" : "My demo contest",
+    "dateStart" : "2020-10-30T17:30:00.00Z",
+    "dateEnd" : "2020-11-01T16:00:00.00Z",
+    "roundCount" : 8,
+    "discount" : 3.5,
+    "discountClubMember" : 5,
+    "discountPreRegistered" : 2,
+    "feeStart" : 25,
+    "currencyUnit" : "EUR",
+    "location" : {
+      "city" : "DemoCity",
+      "name" : "Demo conference location",
+      "street" : "Demo-street-with-long-name-for-testing",
+      "streetNum" : "42A"
+    },
+    "startingFeeFreedRanks" : [
+      "30K",
+      "29K"
+    ]
   },
-  "freeRanks" : [
-    "30K",
-    "29K"
-  ],
-  "organizers" : [
+  "organisers" : [
     {
       "name" : "Max",
       "surname" : "Mustermann",
-      "email" : "max.muster@mail.com",
+      "emailAddr" : "max.muster@mail.com",
       "phoneNumber" : "123456",
-      "location" : {
+      "address" : {
         "city" : "Democity",
         "name" : "",
         "street" : "Unter-der-Brücke",

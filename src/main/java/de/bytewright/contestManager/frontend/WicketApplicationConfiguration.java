@@ -27,7 +27,7 @@ import de.bytewright.contestManager.frontend.pages.admin.SecuredPage;
 @ApplicationInitExtension
 public class WicketApplicationConfiguration extends WicketBootSecuredWebApplication {
   private static final Logger LOGGER = LoggerFactory.getLogger(WicketApplicationConfiguration.class);
-  public static final String BUNDLE_NAME = "org.bytewright.WicketApplicationGCM";
+  public static final String BUNDLE_NAME = "de.bytewright.contestManager.WicketApplicationGCM";
   @Autowired
   private ContestService contestService;
 
@@ -62,7 +62,13 @@ public class WicketApplicationConfiguration extends WicketBootSecuredWebApplicat
     mountPage("secure", SecuredPage.class);
 
     ResourceSettings resourceSettings = getResourceSettings();
+    BundleStringResourceLoader bundleStringResourceLoader = new BundleStringResourceLoader(BUNDLE_NAME);
     LOGGER.info("Loading translations from bundle {}", BUNDLE_NAME);
-    resourceSettings.getStringResourceLoaders().add(new BundleStringResourceLoader(BUNDLE_NAME));
+    String testKeyMustBePresent = bundleStringResourceLoader.loadStringResource(String.class,
+        "testKeyMustBePresent", null, null, null);
+    if (testKeyMustBePresent == null) {
+      throw new IllegalStateException("Failed to access Message keys at " + BUNDLE_NAME);
+    }
+    resourceSettings.getStringResourceLoaders().add(bundleStringResourceLoader);
   }
 }

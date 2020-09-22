@@ -8,8 +8,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableTransactionManagement
 public class BackendConfig {
   private static final Logger LOGGER = LoggerFactory.getLogger(BackendConfig.class);
 

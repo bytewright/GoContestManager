@@ -10,10 +10,10 @@ public class Contest implements Serializable {
   private Set<Helper> helpers;
   private Set<Organiser> organisers;
   private Set<Player> players;
-  private String uId;
+  private String uniqueID;
 
   public Contest() {
-    uId = "NULL";
+    uniqueID = "NULL";
     contestSettings = new ContestSettings();
     helpers = new HashSet<>();
     organisers = new HashSet<>();
@@ -22,7 +22,7 @@ public class Contest implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getHelpers(), getOrganisers(), getPlayers(), uId);
+    return Objects.hash(getHelpers(), getOrganisers(), getPlayers(), uniqueID);
   }
 
   @Override
@@ -32,7 +32,7 @@ public class Contest implements Serializable {
     if (o == null || getClass() != o.getClass())
       return false;
     Contest contest = (Contest) o;
-    return uId.equals(contest.uId);
+    return uniqueID.equals(contest.uniqueID);
   }
 
   public ContestSettings getContestSettings() {
@@ -67,14 +67,6 @@ public class Contest implements Serializable {
     this.players = players;
   }
 
-  public String getUniqueId() {
-    return uId;
-  }
-
-  public void setuId(String uId) {
-    this.uId = uId;
-  }
-
   @Override
   public String toString() {
     return "Contest{" +
@@ -82,7 +74,15 @@ public class Contest implements Serializable {
         ", helpers=" + helpers +
         ", organisers=" + organisers +
         ", players=" + players +
-        ", uId='" + uId + '\'' +
+        ", uId='" + uniqueID + '\'' +
         '}';
+  }
+
+  public String getUniqueId() {
+    return uniqueID;
+  }
+
+  public void setUniqueID(String uniqueID) {
+    this.uniqueID = uniqueID;
   }
 }
