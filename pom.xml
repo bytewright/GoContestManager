@@ -26,7 +26,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>contestManager</name>
-  <description></description>
+  <description>build using AdoptOpenJDK 11.0.6</description>
 
   <organization>
     <name>Go Jena</name>
@@ -56,6 +56,17 @@
     <junit.version>4.12</junit.version>
   </properties>
 
+  <!--  <dependencyManagement>-->
+  <!--  Kann glaube ich weg -->
+  <!--    <dependencies>-->
+  <!--      <dependency>-->
+  <!--        <groupId>org.yaml</groupId>-->
+  <!--        <artifactId>snakeyaml</artifactId>-->
+  <!--        <version>1.25</version>-->
+  <!--      </dependency>-->
+  <!--    </dependencies>-->
+  <!--  </dependencyManagement>-->
+
   <dependencies>
     <!--  WICKET DEPENDENCIES -->
     <dependency>
@@ -63,6 +74,7 @@
       <artifactId>wicket-spring-boot-starter</artifactId>
       <version>${wicket-boot.version}</version>
       <!-- dictates spring boot version -->
+      <!-- https://github.com/MarcGiffing/wicket-spring-boot -->
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
@@ -195,16 +207,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.25</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>

@@ -1,7 +1,11 @@
+server:
+  port: 48080
+  http2:
+    enabled: true
 spring:
-  devtools:
-    restart:
-      additional-exclude: /**/*.js, /**/*.css, /**/*.html, /**/*.htm
+  #  devtools:
+  #    restart:
+  #      additional-exclude: /**/*.js, /**/*.css, /**/*.html, /**/*.htm
   jpa:
     hibernate:
       ddl-auto: none
