@@ -10,10 +10,15 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import de.bytewright.contestManager.backend.persistence.dtos.Player;
 import de.bytewright.contestManager.backend.util.exceptions.PlayerParseException;
 
+/**
+ * Specific for mail format used by kreuzschnitt
+ */
+@Service
 public class PlayerImporter {
   private static final Logger LOGGER = LoggerFactory.getLogger(PlayerImporter.class);
 
