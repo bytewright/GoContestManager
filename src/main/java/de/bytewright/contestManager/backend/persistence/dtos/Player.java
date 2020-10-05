@@ -154,7 +154,7 @@ public class Player extends Person {
         ", isSeminarMember=" + isSeminarMember +
         ", paymentStatus=" + paymentStatus +
         ", isNeedsSleepOver=" + isNeedsSleepOver +
-        ", registrationFormMessage='" + registrationFormMessage + '\'' +
+        ", registrationFormMessage.len='" + registrationFormMessage.length() + '\'' +
         '}';
   }
 

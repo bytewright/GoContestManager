@@ -34,5 +34,8 @@
         "streetNum" : "1"
       }
     }
-  ]
+  ],
+  "extraData" : {
+    "bla" : "test"
+  }
 }

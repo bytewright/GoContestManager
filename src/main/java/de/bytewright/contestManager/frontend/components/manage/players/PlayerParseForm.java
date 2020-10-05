@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import de.bytewright.contestManager.backend.persistence.dtos.Player;
 import de.bytewright.contestManager.backend.services.PersonService;
-import de.bytewright.contestManager.backend.util.PlayerImporter;
+import de.bytewright.contestManager.backend.services.PlayerImporter;
 import de.bytewright.contestManager.backend.util.exceptions.PlayerParseException;
 import de.bytewright.contestManager.frontend.pages.PlayerEditPage;
 
@@ -20,6 +20,8 @@ public class PlayerParseForm extends Form<Player> {
   private final TextArea<String> textArea;
   @SpringBean
   private PersonService personService;
+  @SpringBean
+  private PlayerImporter importer;
 
   public PlayerParseForm(String contentId, IModel<Player> model) {
     super(contentId, model);
@@ -30,7 +32,6 @@ public class PlayerParseForm extends Form<Player> {
   @Override
   protected void onSubmit() {
     try {
-      PlayerImporter importer = new PlayerImporter();
       Player player = importer.parse(textArea.getModelObject());
       Long id = personService.saveOrUpdatePlayer(player);
       PageParameters pageParameters = new PageParameters();

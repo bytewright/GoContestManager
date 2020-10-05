@@ -1,26 +1,30 @@
 package de.bytewright.contestManager.backend.contestSpecific;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
-import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.internet.MimeMultipart;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import de.bytewright.contestManager.backend.persistence.dtos.Contest;
 import de.bytewright.contestManager.backend.persistence.dtos.Player;
-import de.bytewright.contestManager.backend.util.PlayerImporter;
+import de.bytewright.contestManager.backend.persistence.entities.PlayerEntity;
+import de.bytewright.contestManager.backend.persistence.repositories.PlayerRepository;
+import de.bytewright.contestManager.backend.services.ContestService;
+import de.bytewright.contestManager.backend.services.PlayerImporter;
+import de.bytewright.contestManager.backend.util.mail.ImapMailFetcher;
 
 /**
  * code parts from https://alvinalexander.com/blog/post/java/i-need-get-all-of-my-email-addresses-out-of-imap-mailbox/
@@ -30,69 +34,61 @@ public class KreuzschnittMailFetcher {
   private static final Logger LOGGER = LoggerFactory.getLogger(KreuzschnittMailFetcher.class);
   @Autowired
   private PlayerImporter playerImporter;
+  @Autowired
+  private ModelMapper modelMapper;
+  @Autowired
+  private ImapMailFetcher imapMailFetcher;
+  @Autowired
+  private ContestService contestService;
+  @Autowired
+  private PlayerRepository playerRepository;
 
   public List<Player> processMails() {
-    List<String> stringList = getAllMailContents();
+    Contest kreuzschnitt2020 = contestService.getContest("Kreuzschnitt2020").orElseThrow();
+    Map<String, String> extraData = kreuzschnitt2020.getExtraData();
+    String host = extraData.get("host");
+    String username = extraData.get("username");
+    String pass = extraData.get("pass");
+    String emailSubject = extraData.get("emailSubject");
+    List<String> stringList = getAllMailContents(host, username, pass, emailSubject);
     List<Player> playerList = stringList.stream()
-        .map(playerImporter::parse)
+        .map(textToParse -> playerImporter.parse(textToParse))
         .collect(Collectors.toList());
+    playerList.forEach(player -> player.setContestIdentifier(kreuzschnitt2020.getUniqueId()));
     LOGGER.info("Found playerList for kreuzschnitt: {}", playerList);
-    // TODO convert to players for contest
-    return List.of();
+    for (Player player : playerList) {
+      PlayerEntity map = modelMapper.map(player, PlayerEntity.class);
+      playerRepository.save(map);
+    }
+
+    return playerList;
   }
 
-  private List<String> getAllMailContents() {
-    List<String> mailList = List.of();
-    Properties props = new Properties();
-
-    String host = "";
-    String username = "uname";
-    String password = "secret";
-    String provider = "imap";
-    LOGGER.info("Connecting to ({}) {} using username {}", provider, host, username);
+  private List<String> getAllMailContents(String host, String username, String pass, String emailSubject) {
+    List<String> messages = imapMailFetcher.getMessages(host, username, pass, emailSubject,
+        message -> true, this::getMailContent);
     try {
-      Session session = Session.getDefaultInstance(props, null);
-      try (Store store = session.getStore(provider)) {
-        store.connect(host, username, password);
-        Folder inbox = store.getFolder("INBOX");
-        inbox.open(Folder.READ_ONLY);
-
-        mailList = Arrays.stream(inbox.getMessages())
-            .filter(this::isRegistrationMail)
-            .map(this::getMailContent)
-            .flatMap(Optional::stream)
-            .collect(Collectors.toList());
-
-        LOGGER.info("Got {} mails from server: {}", mailList.size(), mailList);
-
-        //close the inbox folder but do not
-        //remove the messages from the server
-        inbox.close(false);
-      }
-    } catch (NoSuchProviderException nspe) {
-      LOGGER.error("invalid provider name", nspe);
-    } catch (MessagingException me) {
-      LOGGER.error("messaging exception", me);
+      Files.writeString(Path.of("Mails.txt"), String.join("\n|||\n", messages));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    return mailList;
+    return messages;
   }
 
   private Optional<String> getMailContent(Message message) {
     try {
-      return Optional.ofNullable((String) message.getContent());
+      Object content = message.getContent();
+      if (content instanceof MimeMultipart) {
+        MimeMultipart multipart = (MimeMultipart) content;
+        LOGGER.info("Found multipart Message with {} parts: {}", multipart.getCount(), multipart);
+      } else if (content instanceof String) {
+        return Optional.of((String) content);
+      } else {
+        LOGGER.info("Found mail content of type {}: {}", content.getClass(), content);
+      }
     } catch (MessagingException | IOException e) {
       e.printStackTrace();
     }
     return Optional.empty();
-  }
-
-  private boolean isRegistrationMail(Message message) {
-    try {
-      String subject = message.getSubject();
-      return subject.equals("Anmeldung");
-    } catch (MessagingException e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 }

@@ -2,7 +2,9 @@ package de.bytewright.contestManager.backend.persistence.converter;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,8 @@ import javax.money.Monetary;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +30,9 @@ import de.bytewright.contestManager.backend.persistence.entities.LocationEmbedda
  */
 @Component
 public class ContestToDtoConverter implements Converter<ContestEntity, Contest> {
+  public static final String EXTRA_DATA_KEY_VALUE_SEPARATOR = "'''";
+  public static final String EXTRA_DATA_ENTRY_SEPARATOR = "''''''";
+  private static final Logger LOGGER = LoggerFactory.getLogger(ContestToDtoConverter.class);
   @Autowired
   private ModelMapper modelMapper;
 
@@ -48,6 +55,7 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
     settings.setDiscountPreRegistered(source.getDiscountPreRegAmount());
     settings.setRoundCount(source.getRoundCount());
     settings.setStartingFeeFreedRanks(source.getStartingFeeFreedRanks());
+
     LocationEmbeddable locationEntity = source.getLocation();
     Location location = new Location();
     if (locationEntity != null) {
@@ -67,6 +75,17 @@ public class ContestToDtoConverter implements Converter<ContestEntity, Contest> 
     contest.setHelpers(new HashSet<>());
     contest.setOrganisers(new HashSet<>());
     contest.setContestSettings(settings);
+
+    if (source.getExtraData() != null && !source.getExtraData().isEmpty()) {
+      try {
+        Map<String, String> stringMap = Arrays.stream(source.getExtraData().split(EXTRA_DATA_ENTRY_SEPARATOR))
+            .map(s -> s.split(EXTRA_DATA_KEY_VALUE_SEPARATOR))
+            .collect(Collectors.toMap(strings -> strings[0], strings -> strings[1]));
+        contest.setExtraData(stringMap);
+      } catch (Exception e) {
+        LOGGER.error("Failed to parse extradata from entity id={}: {}", source.getId(), source.getExtraData());
+      }
+    }
     return contest;
   }
 }

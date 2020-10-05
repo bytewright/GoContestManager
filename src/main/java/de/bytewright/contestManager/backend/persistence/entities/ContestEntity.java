@@ -5,7 +5,9 @@ import static javax.persistence.CascadeType.ALL;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
@@ -57,7 +59,18 @@ public class ContestEntity extends BaseAuditedEntity {
   private Set<PlayerEntity> players;
   @OneToMany(cascade = ALL, mappedBy = "contestEntity", orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<HelperEntity> helpers;
+  @Nullable
+  private String extraData;
   // todo nullable url to contest website or description
+
+  @Nullable
+  public String getExtraData() {
+    return extraData;
+  }
+
+  public void setExtraData(@Nullable String extraData) {
+    this.extraData = extraData;
+  }
 
   public Set<OrganizerEntity> getOrganizers() {
     return organizers;
@@ -90,24 +103,28 @@ public class ContestEntity extends BaseAuditedEntity {
 
   @Override
   public String toString() {
-    return "ContestEntity{" +
-        "shortIdentifier='" + shortIdentifier + '\'' +
-        ", currencyUnitCode='" + currencyUnitCode + '\'' +
-        ", discountGeneralAmount=" + discountGeneralAmount +
-        ", discountClubAmount=" + discountClubAmount +
-        ", discountPreRegAmount=" + discountPreRegAmount +
-        ", feeStartAmount=" + feeStartAmount +
-        ", feeBreakfastAmount=" + feeBreakfastAmount +
-        ", roundCount=" + roundCount +
-        ", contestName='" + contestName + '\'' +
-        ", startingFeeFreedRanks=" + startingFeeFreedRanks +
-        ", timeZone='" + timeZone + '\'' +
-        ", startUtcTime=" + startUtcTime +
-        ", endUtcTime=" + endUtcTime +
-        ", location=" + location +
-        ", id=" + id +
-        ", lastModified=" + lastModified +
-        '}';
+    return new StringJoiner(", ", ContestEntity.class.getSimpleName() + "[", "]")
+        .add("id=" + id)
+        .add("lastModified=" + lastModified)
+        .add("shortIdentifier='" + shortIdentifier + "'")
+        .add("currencyUnitCode='" + currencyUnitCode + "'")
+        .add("discountGeneralAmount=" + discountGeneralAmount)
+        .add("discountClubAmount=" + discountClubAmount)
+        .add("discountPreRegAmount=" + discountPreRegAmount)
+        .add("feeStartAmount=" + feeStartAmount)
+        .add("feeBreakfastAmount=" + feeBreakfastAmount)
+        .add("roundCount=" + roundCount)
+        .add("contestName='" + contestName + "'")
+        .add("startingFeeFreedRanks=" + startingFeeFreedRanks)
+        .add("timeZone='" + timeZone + "'")
+        .add("startUtcTime=" + startUtcTime)
+        .add("endUtcTime=" + endUtcTime)
+        .add("location=" + location)
+        .add("organizers=" + organizers)
+        .add("playerCount=" + players.size())
+        .add("helperCount=" + helpers.size())
+        .add("extraData='" + extraData + "'")
+        .toString();
   }
 
   public String getShortIdentifier() {

@@ -1,9 +1,12 @@
 package de.bytewright.contestManager.backend.persistence.dtos;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 public class Contest implements Serializable {
   private ContestSettings contestSettings;
@@ -11,6 +14,7 @@ public class Contest implements Serializable {
   private Set<Organiser> organisers;
   private Set<Player> players;
   private String uniqueID;
+  private Map<String, String> extraData;
 
   public Contest() {
     uniqueID = "NULL";
@@ -18,6 +22,7 @@ public class Contest implements Serializable {
     helpers = new HashSet<>();
     organisers = new HashSet<>();
     players = new HashSet<>();
+    extraData = new HashMap<>();
   }
 
   @Override
@@ -67,22 +72,31 @@ public class Contest implements Serializable {
     this.players = players;
   }
 
-  @Override
-  public String toString() {
-    return "Contest{" +
-        "contestSettings=" + contestSettings +
-        ", helpers=" + helpers +
-        ", organisers=" + organisers +
-        ", players=" + players +
-        ", uId='" + uniqueID + '\'' +
-        '}';
-  }
-
   public String getUniqueId() {
     return uniqueID;
   }
 
   public void setUniqueID(String uniqueID) {
     this.uniqueID = uniqueID;
+  }
+
+  public Map<String, String> getExtraData() {
+    return extraData;
+  }
+
+  public void setExtraData(Map<String, String> extraData) {
+    this.extraData = extraData;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Contest.class.getSimpleName() + "[", "]")
+        .add("contestSettings=" + contestSettings)
+        .add("helpers=" + helpers)
+        .add("organisers=" + organisers)
+        .add("players=" + players)
+        .add("uniqueID='" + uniqueID + "'")
+        .add("extradata=" + extraData)
+        .toString();
   }
 }

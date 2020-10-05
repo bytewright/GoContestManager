@@ -1,5 +1,8 @@
 package de.bytewright.contestManager.backend.persistence.converter;
 
+import static de.bytewright.contestManager.backend.persistence.converter.ContestToDtoConverter.EXTRA_DATA_ENTRY_SEPARATOR;
+import static de.bytewright.contestManager.backend.persistence.converter.ContestToDtoConverter.EXTRA_DATA_KEY_VALUE_SEPARATOR;
+
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,6 +52,12 @@ public class ContestToEntityConverter extends AbstractToEntityConverter<Contest,
     entity.setFeeStartAmount(contestSettings.getFeeStart().getNumber().doubleValue());
     entity.setFeeBreakfastAmount(contestSettings.getFeeBreakfast().getNumber().doubleValue());
     entity.setStartingFeeFreedRanks(contestSettings.getStartingFeeFreedRanks());
+    String reducedExtraData = source.getExtraData()
+        .entrySet()
+        .stream()
+        .map(entry -> entry.getKey() + EXTRA_DATA_KEY_VALUE_SEPARATOR + entry.getValue())
+        .collect(Collectors.joining(EXTRA_DATA_ENTRY_SEPARATOR));
+    entity.setExtraData(reducedExtraData);
     Location location = contestSettings.getLocation();
     LocationEmbeddable embeddable = new LocationEmbeddable();
     if (location != null) {
